@@ -92,7 +92,7 @@ const UsersData = props => {
 
     let data = accountStatus.data;
     const tableData = { columns, data };
-    const  {isLoading } = state
+    /*const  {isLoading } = state*/
     useEffect(() => {
         accounts();
     }, [page]);
