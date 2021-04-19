@@ -1,7 +1,7 @@
 import React, { useState, Fragment, Component, useEffect, PureComponent } from 'react';
 //import ReactDOM from 'react-dom';
 //import NavBar from '../Components/navbar/NavBar';
-import SideBar from '../Components/sidebar/SideBar';
+import SideBar from '../../sidebar/SideBar';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import classnames from 'classnames'

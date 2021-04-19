@@ -1,7 +1,7 @@
 import React, { useState, Fragment, Component, useEffect, PureComponent } from 'react';
 
 import axios from 'axios';
-import EditSideBar from './sidebar/EditSideBar';
+import EditSideBar from '../../sidebar/EditSideBar';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import classnames from 'classnames'

@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Demography from './Components/Demography';
+
 import Dashboard from './Components/Dashboard';
 import Login from './Components/pages/authentication/Login'
 import Register from './Components/pages/authentication/Register'
 import Users from './Components/user/Users';
 import Add from './Components/user/Add'
 import Edit from './Components/user/Edit';
-import InitialPresentation from './Components/InitialPresentation';
-import Pathology from './Components/Pathology';
+import InitialPresentation from './Components/patient/InitialPresentation/InitialPresentation';
+import Pathology from './Components/patient/Pathology/Pathology';
 import Treatment from './Components/Treatment';
 import FollowUp from './Components/FollowUp';
 import HealthEconomics from './Components/HealthEconomics';
-import DemographyEdit from './Components/DemographyEdit';
-import InitialPresentationEdit from './Components/InitialPresentationEdit';
-import EditPathology from './Components/EditPathology';
-import EditTreatment from './Components/EditTreatment';
-import EditFollowUp from './Components/EditFollowUp';
-import EditHealthEconomics from './Components/EditHealthEconomics';
-import store from 'store';
+import Demography from './Components/patient/Demography/Demography';
+import DemographyEdit from './Components/Demography/DemographyEdit';
+import InitialPresentationEdit from './Components/InitialPresentation/InitialPresentationEdit';
+import EditPathology from './Components/Pathology/EditPathology';
+import EditTreatment from './Components/patient/Treatment/EditTreatment';
+import EditFollowUp from './Components/patient/FollowUp/EditFollowUp';
+import EditHealthEconomics from './Components/patient/HealthEconomics/EditHealthEconomics';
 import Logout from './Components/pages/authentication/Logout';
 
 //const App = () => {
