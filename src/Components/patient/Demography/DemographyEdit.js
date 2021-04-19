@@ -1,16 +1,16 @@
 import React, { Fragment, PureComponent } from 'react';
 //import ReactDOM from 'react-dom';
 //import NavBar from '../Components/navbar/NavBar';
-import EditSideBar from '../Components/sidebar/EditSideBar';
+import EditSideBar from '../../sidebar/EditSideBar';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {Redirect, withRouter} from 'react-router-dom'
 import moment from 'moment'
 
-import './mainstyle.css';
-import './animate.css';
-import './vertical-menu.css';
-import './perfect-scrollbar.css';
+import '../../mainstyle.css';
+import '../../animate.css';
+import '../../vertical-menu.css';
+import '../../perfect-scrollbar.css';
 
 //import Flatpickr from 'react-flatpickr'
 import { Card, CardHeader, CardBody, Label, Button, Row, Col } from 'reactstrap'

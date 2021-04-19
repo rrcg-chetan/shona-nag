@@ -9,13 +9,13 @@ import Add from './Components/user/Add'
 import Edit from './Components/user/Edit';
 import InitialPresentation from './Components/patient/InitialPresentation/InitialPresentation';
 import Pathology from './Components/patient/Pathology/Pathology';
-import Treatment from './Components/Treatment';
-import FollowUp from './Components/FollowUp';
-import HealthEconomics from './Components/HealthEconomics';
+import Treatment from './Components/patient/Treatment/Treatment';
+import FollowUp from './Components/patient/FollowUp/FollowUp';
+import HealthEconomics from './Components/patient/HealthEconomics/HealthEconomics';
 import Demography from './Components/patient/Demography/Demography';
-import DemographyEdit from './Components/Demography/DemographyEdit';
-import InitialPresentationEdit from './Components/InitialPresentation/InitialPresentationEdit';
-import EditPathology from './Components/Pathology/EditPathology';
+import DemographyEdit from './Components/patient/Demography/DemographyEdit';
+import InitialPresentationEdit from './Components/patient/InitialPresentation/InitialPresentationEdit';
+import EditPathology from './Components/patient/Pathology/EditPathology';
 import EditTreatment from './Components/patient/Treatment/EditTreatment';
 import EditFollowUp from './Components/patient/FollowUp/EditFollowUp';
 import EditHealthEconomics from './Components/patient/HealthEconomics/EditHealthEconomics';
@@ -42,12 +42,10 @@ class App extends React.Component {
             <div>
                 <Router>
                     <Switch>
-                    if({store.get('loggedIn')} == false){
+                    <>
                         <Route path='/login' component={Login} exact></Route>
-                    }else{
-                        <><Route path='/' exact render={props => (
-                        <Dashboard {...props} logindata={this.state.loginInfo} handleLogin={this.handleLogin} />
-                    )}></Route>
+                        <Route path='/' component={Dashboard} exact></Route>
+                        <Route path='/dashboard' component={Dashboard} exact></Route>
                         <Route path='/logout' component={Logout} exact></Route>
                         <Route path='/demography' component={Demography} exact></Route>
                         <Route path='/dashboard' component={Dashboard} exact></Route>
@@ -66,7 +64,6 @@ class App extends React.Component {
                         <Route path='/follow-up/edit/:code' component={EditFollowUp} exact></Route>
                         <Route path='/health-economics/:code' component={HealthEconomics} exact></Route>
                         <Route path='/health-economics/edit/:code' component={EditHealthEconomics} exact></Route></>
-                    }
                     
                     </Switch>
                 </Router>

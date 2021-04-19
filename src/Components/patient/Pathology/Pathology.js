@@ -33,10 +33,10 @@ import classnames from 'classnames'
 import {withRouter} from 'react-router-dom'
 import moment from 'moment'
 
-import './mainstyle.css';
-import './animate.css';
-import './vertical-menu.css';
-import './perfect-scrollbar.css';
+import '../../mainstyle.css';
+import '../../animate.css';
+import '../../vertical-menu.css';
+import '../../perfect-scrollbar.css';
 
 import { Card, CardHeader, CardTitle, CardBody, Label, Button, Row, Col } from 'reactstrap'
 import {

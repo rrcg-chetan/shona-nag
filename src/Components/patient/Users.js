@@ -3,10 +3,10 @@ import React, { useState, Fragment, useEffect, ReactFragment } from 'react';
 //import NavBar from '../Components/navbar/NavBar';
 import DashboardSideBar from '../Components/sidebar/DashboardSideBar';
 
-import './mainstyle.css';
-import './animate.css';
-import './vertical-menu.css';
-import './perfect-scrollbar.css';
+import '../../mainstyle.css';
+import '../../animate.css';
+import '../../vertical-menu.css';
+import '../../perfect-scrollbar.css';
 
 import User from './User';
 import { Button } from 'react-bootstrap';
