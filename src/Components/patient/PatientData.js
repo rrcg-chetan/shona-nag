@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PatientsData from '../Components/patinet/PatientsData';
 
-const UserData = () => {
+const PatientData = () => {
     return (
         <>
             <div className="card">
@@ -14,4 +14,4 @@ const UserData = () => {
     );
 };
 
-export default UserData;
+export default PatientData;
