@@ -82,10 +82,9 @@ const UsersData = props => {
         axios.get(`https://shona-nag-cms.herokuapp.com/question?page=${page}&per_page=${countPerPage}&submited_by=${userid}&role=${role}`).then(response => {
             setAccountStatus(response.data);
             setIsLoading(false)
-            this.setState({ isLoading: false })
+            
         }).catch(err => {
-            setAccountStatus([]);
-            setIsLoading(false)            
+            setAccountStatus([]);             
         });
         
                     
@@ -116,9 +115,10 @@ const UsersData = props => {
         <>
             <div className="card">
                 <a href="/demography"><Button className="position-right-dash">Add New</Button></a>
-                {!isLoading ? (
+                
                 <DataTableExtensions {...tableData}>    
-                <DataTable
+                {!isLoading ? (
+                    <DataTable
                     columns={columns.data}
                     data={accountStatus.data}
                     highlightOnHover
@@ -136,8 +136,7 @@ const UsersData = props => {
                     defaultSortField="id"
                     defaultSortAsc={false}                      
                     PageLength={3}                
-                    /> 
-                    </DataTableExtensions>            
+                    />
                 ) : (
                   <div className="center"><svg width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40">
                   <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
@@ -154,7 +153,9 @@ const UsersData = props => {
                       repeatCount="indefinite"/>
                     </path>
                   </svg></div>
-                )}
+                )} 
+                    </DataTableExtensions>            
+               
             </div>
         </>
     );
