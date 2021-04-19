@@ -81,10 +81,11 @@ const UsersData = props => {
         const role = user.role
         axios.get(`https://shona-nag-cms.herokuapp.com/question?page=${page}&per_page=${countPerPage}&submited_by=${userid}&role=${role}`).then(response => {
             setAccountStatus(response.data);
-            setIsLoading({isLoading: false})
+            setIsLoading(false)
+            this.setState({ isLoading: false })
         }).catch(err => {
             setAccountStatus([]);
-            setIsLoading({isLoading: false})
+            setIsLoading(false)            
         });
         
                     
