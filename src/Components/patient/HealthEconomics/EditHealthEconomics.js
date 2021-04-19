@@ -129,7 +129,6 @@ return (
                   <AvGroup>            
                     <Label for='patienthasinsurance'>Patient has insurance</Label>
                     <AvInput type='select' name='patienthasinsurance' id='patienthasinsurance' required value={patient.patient_has_insurance} onChange={(e) => this.showHasInsurance(e.target.value)}>
-                        <option value="" selected>Select</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>                         
                       </AvInput>                      

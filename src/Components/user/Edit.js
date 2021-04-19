@@ -139,44 +139,7 @@ import { Redirect, useHistory, useParams } from 'react-router';
           return <Redirect to={`/`}></Redirect>
           //history.push(`/users/edit/${user.userid}`)
         }
-        /*const accdis = user.acc_dis
-        const pasnever = user.pass_never
-        const muschange = user.must_change
-        const cantechange = user.cant_change
-
-        if(accdis == "true"){
-          //alert(accdis)
-          document.getElementById("acc_dis").checked = true
-        }
-        if(pasnever == "true"){
-          //alert(pasnever)
-          document.getElementById("pass_never").checked = true
-        }
-        if(muschange == "true"){
-          //alert(muschange)
-          document.getElementById("must_change").checked = true
-        }
-        if(cantechange == "true"){
-          //alert(cantechange)
-          document.getElementById("cant_change").checked = true
-        }*/
-        /*const updateUserDetails = () => {
-          axios.put(`https://shona-nag-cms.herokuapp.com/updateuser/${id}`, {
-            login_name: loginname, country: country, centre: centre, user_role: userrole, timezone: timezone, culture: culture, acc_dis: acc_dis, pass_never: pass_never, must_change: must_change, cant_change: cant_change, user_title: title, first_name: firstname, last_name: lastname, name: firstname +' '+ lastname, email: email, street_address: street_address, city: city, phone_1: phone_1, phone_2: phone_2, fax: fax, dateofbirth: dateofbirth
-          })
-          .then(function (response) {
-            //console.log(JSON.stringify(response.data));
-            if(response.data){
-              //console.log(response.data.data[0]);
-              setUserStatus(response.data.data[0]);
-            }else{
-              setUserStatus(response.data);
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        }*/
+        
         
         const onSubmit = async e => {
           e.preventDefault();
