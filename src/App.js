@@ -4,7 +4,7 @@ import Demography from './Components/Demography';
 import Dashboard from './Components/Dashboard';
 import Login from './Components/pages/authentication/Login'
 import Register from './Components/pages/authentication/Register'
-import Users from './Components/Users';
+import Users from './Components/user/Users';
 import Add from './Components/user/Add'
 import Edit from './Components/user/Edit';
 import InitialPresentation from './Components/InitialPresentation';
