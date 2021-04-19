@@ -48,6 +48,7 @@ class Login extends PureComponent {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem("users", JSON.stringify(response.data.users));
         //console.log(localStorage.getItem('users'));
+        this.setState({ loading: false });
         history.push('/dashboard')                
       }else{
         this.setState({
