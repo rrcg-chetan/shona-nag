@@ -66,7 +66,7 @@ class Login extends PureComponent {
   } 
 
   render(){
-    const { email, password} = this.state;
+    const { email, password, loading} = this.state;
     const { history } = this.props;
     const user = this.getUser();    
     if(user == "null" || user == null || user == '' || user == undefined){
