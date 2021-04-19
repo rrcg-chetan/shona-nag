@@ -31,11 +31,13 @@ class Login extends PureComponent {
       loginStatus: '',
       email: '',
       password: '',
-      loginInfo: "user_not_logged_in",      
+      loginInfo: "user_not_logged_in",    
+      loading: false,  
     }
   }
   
   login = e => {
+    this.setState({ loading: true });
     const { history } = this.props;
     axios.post("https://shona-nag-cms.herokuapp.com/login", { withCredentials: true, email: this.state.email, password: this.state.password }, {            
     })
@@ -133,8 +135,10 @@ class Login extends PureComponent {
               <FormGroup>
                 <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
               </FormGroup>
-              <Button color='primary' block disabled={!email.length || !password.length} onClick={this.login}>
-                Sign in
+              <Button color='primary' block disabled={loading} onClick={this.login}>
+                {loading && (<i className="fa fa-refresh fa-spin" style={{ marginRight: "5px" }}/>)}
+                {loading && <span>Singing In...</span>}
+                {!loading && <span>Sign In</span>}
               </Button>
             </AvForm>
             <p className='text-center mt-2'>
