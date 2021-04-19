@@ -29,7 +29,7 @@ import {
 import axios from 'axios';
 import { ContinuousColorLegend } from 'react-vis';
 
-class InitialPresentation extends React.Component {
+class InitialPresentationEdit extends React.Component {
   constructor(props){
     super(props);
     let param = this.props.location.pathname;
@@ -579,4 +579,4 @@ return (
 }
 }
 
-export default withRouter(InitialPresentation);
+export default withRouter(InitialPresentationEdit);
