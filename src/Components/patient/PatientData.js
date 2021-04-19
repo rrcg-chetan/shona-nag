@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import UsersData from '../Components/UsersData';
+import PatientsData from '../Components/patinet/PatientsData';
 
 const UserData = () => {
     return (
@@ -7,7 +7,7 @@ const UserData = () => {
             <div className="card">
                 <div className="card-body">
                     <h3>User Data</h3>
-                    <UsersData />
+                    <PatientsData />
                 </div>
             </div>            
         </>
