@@ -1,14 +1,14 @@
 import React, { useState, Fragment, useEffect, ReactFragment } from 'react';
 //import ReactDOM from 'react-dom';
 //import NavBar from '../Components/navbar/NavBar';
-import DashboardSideBar from '../Components/sidebar/DashboardSideBar';
+import DashboardSideBar from '../sidebar/DashboardSideBar';
 
 import './mainstyle.css';
 import './animate.css';
 import './vertical-menu.css';
 import './perfect-scrollbar.css';
 
-import User from './User';
+import User from '../user/User';
 import { Button } from 'react-bootstrap';
 
 
