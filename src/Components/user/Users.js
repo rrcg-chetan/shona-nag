@@ -8,7 +8,7 @@ import './animate.css';
 import './vertical-menu.css';
 import './perfect-scrollbar.css';
 
-import User from './User';
+import User from '../../Components/user/User';
 import { Button } from 'react-bootstrap';
 
 
