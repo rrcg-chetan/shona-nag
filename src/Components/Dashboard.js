@@ -2,7 +2,6 @@ import React, { useEffect, useState, Component } from 'react';
 //import ReactDOM from 'react-dom';
 //import NavBar from '../Components/navbar/NavBar';
 import DashboardSideBar from '../Components/sidebar/DashboardSideBar';
-import UsersData from '../Components/UsersData';
 import Alerts from '../Components/Alerts';
 import DataQueries from '../Components/DataQueries';
 
@@ -14,6 +13,7 @@ import Documents from './Documents';
 import UserData from './UserData';
 import store from 'store';
 import { Redirect, withRouter } from'react-router-dom'
+import PatientsData from './patient/PatientsData';
   
 class Dashboard extends React.Component {
   constructor(props){
@@ -43,7 +43,7 @@ class Dashboard extends React.Component {
         <DashboardSideBar />
         <div className="content-wrapper animate__animated animate__fadeIn">
           <div className="app-content content overflow-hidden1 ">
-            <UsersData />
+            <PatientsData />
             <div className="row match-height">
               <div className="col-md-12 col-lg-6">
                 <Alerts />
