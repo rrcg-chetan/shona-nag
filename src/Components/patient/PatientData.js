@@ -6,7 +6,7 @@ const UserData = () => {
         <>
             <div className="card">
                 <div className="card-body">
-                    <h3>User Data</h3>
+                    <h3>Patient Data</h3>
                     <PatientsData />
                 </div>
             </div>            
