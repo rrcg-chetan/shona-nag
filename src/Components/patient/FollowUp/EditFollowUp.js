@@ -185,7 +185,7 @@ componentDidMount() {
   handleChangeLFU(date) {
     this.setState({
       startDateLFU: date,
-      date_of_last_followup: moment(date).format('DD-MM-YYYY')
+      date_of_last_follow_up: moment(date).format('DD-MM-YYYY')
     })
   }
   
@@ -321,7 +321,7 @@ return (
                   <AvGroup>
                       <Label for='dateoflastfollowup'>Date of Last Follow Up</Label><br />
                       <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control date-picker-block w-100" dateFormat="dd-MM-yyyy" name="dolf" id="dolf" selected={this.state.startDateLFU} onSelect={this.handleSelect} onChange={this.handleChangeLFU} />       
-                      <AvInput type="text" value={patient.date_of_last_follow_up} name="date_of_last_followup" id="date_of_last_followup" className="custom-date-input" onChange={(e) => this.setState({ date_of_last_follow_up: e.target.value })} />                 
+                      <AvInput type="text" value={patient.date_of_last_follow_up} name="dateoflastfollowup" id="dateoflastfollowup" className="custom-date-input" onChange={(e) => this.setState({ date_of_last_follow_up: e.target.value })} />                 
                       <AvFeedback>Please enter Date of Last Follow Up!</AvFeedback>
                     </AvGroup>
                 </div>
