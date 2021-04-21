@@ -4127,6 +4127,9 @@ input[name="Liver"]:nth-child(1) {
 .react-datepicker-popper {
   z-index: 999;
 }
+.main-menu .navbar-header .navbar-brand .brand-text {
+  font-size: 1rem !important;
+}
 .date-picker-block {
   z-index: 999999;
   position: relative;
