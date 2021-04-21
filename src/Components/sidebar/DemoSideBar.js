@@ -90,7 +90,7 @@ const SideBar = props => {
       <ul className="nav navbar-nav flex-row">
          <li className="nav-item mr-auto">
             <a aria-current="page" className="navbar-brand active" href="/">
-               <h2 className="brand-text mb-0">Triple Negative Breast Cancer Registry</h2>
+               <h2 className="brand-text mb-0">Triple Negative Breast<br />Cancer Registry</h2>
             </a>
          </li>
          <li className="nav-item nav-toggle">
