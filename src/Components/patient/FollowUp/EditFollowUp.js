@@ -255,7 +255,7 @@ return (
                     <AvGroup>
                         <Label for='date_of_recurrence'>Date of Recurrence</Label><br />
                         <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control date-picker-block w-100" dateFormat="dd-MM-yyyy" name="date_of_recurrence" id="date_of_recurrence" selected={ this.state.startDateDOR } onSelect={this.handleSelect} onChange={this.handleChangeDOR} /> 
-                        <AvInput type="text" value={patient.date_of_recurrence} name="dateofrecurrence" id="dateofrecurrence" className="custom-date-input" onChange={(e) => this.setState({ date_of_recurrence: this.state.startDateDOR})} />
+                        <AvInput type="text" value={patient.date_of_recurrence} name="dateofrecurrence" id="dateofrecurrence" className="custom-date-input" onChange={(e) => this.setState({ date_of_recurrence: e.target.value})} />
                         <AvFeedback>Please enter Date of Recurrence!</AvFeedback>
                       </AvGroup>
                   </div>
@@ -313,7 +313,7 @@ return (
                   <AvGroup>
                       <Label for='dateofdeath'>Date of Death</Label><br />
                       <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control date-picker-block w-100" dateFormat="dd-MM-yyyy" name="dod" id="dod" selected={this.state.startDateDOD} onSelect={this.handleSelect} onChange={this.handleChangeDOD} />    
-                      <AvInput type="text" value={patient.date_of_death} name="dateofdeath" id="dateofdeath" className="custom-date-input" onChange={(e) => this.setState({ date_of_death: this.state.startDateDOD})} />                    
+                      <AvInput type="text" value={patient.date_of_death} name="dateofdeath" id="dateofdeath" className="custom-date-input" onChange={(e) => this.setState({ date_of_death: e.target.value})} />                    
                       <AvFeedback>Please enter Date of Death!</AvFeedback>
                     </AvGroup>
                 </div>
@@ -321,7 +321,7 @@ return (
                   <AvGroup>
                       <Label for='dateoflastfollowup'>Date of Last Follow Up</Label><br />
                       <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control date-picker-block w-100" dateFormat="dd-MM-yyyy" name="dolf" id="dolf" selected={this.state.startDateLFU} onSelect={this.handleSelect} onChange={this.handleChangeLFU} />       
-                      <AvInput type="text" value={patient.date_of_last_follow_up} name="date_of_last_followup" id="date_of_last_followup" className="custom-date-input" onChange={(e) => this.setState({ date_of_last_follow_up: this.state.startDateLFU })} />                 
+                      <AvInput type="text" value={patient.date_of_last_follow_up} name="date_of_last_followup" id="date_of_last_followup" className="custom-date-input" onChange={(e) => this.setState({ date_of_last_follow_up: e.target.value })} />                 
                       <AvFeedback>Please enter Date of Last Follow Up!</AvFeedback>
                     </AvGroup>
                 </div>
