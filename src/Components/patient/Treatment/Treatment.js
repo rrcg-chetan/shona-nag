@@ -17,6 +17,7 @@ import {
   AvForm,
   AvGroup,
   AvField,
+  AvTextArea,
   AvInput,
   AvFeedback,
   AvRadioGroup,
@@ -56,7 +57,18 @@ class Treatment extends React.Component {
       showIfPresentedWithMetastases: false,
       showNGSDoneAtDiagnosis: false,
       showNGSDoneAtRecurrence: false,
+      showIfAndroReceptor: false,
+      showPIK3CAmStatus: false,
+      showNGSPerformed: false,
+      showFirstLineTherapy: false,
+      showSecondLineTherapy: false,
+      showThirdLineTherapy: false,
+      showFourthLineTherapy:  false,
+      showPalliativeRadiotherapy: false,
+      showIntrathecalChemo: false,
 
+      startDate: new Date(),
+      startDateID: new Date(),
       fertilitydiscussedifother: "",
       fertilityoptionundertaken: "",      
       fertilitydiscussed: "",
@@ -102,6 +114,7 @@ class Treatment extends React.Component {
       ngsdoneatrecurrence: "",
       ngsdoneatrecurrenceifyes: "",
       ngsdoneatrecurrenceifyesidentifiedtargets: "",
+      if_present_with_metastases: "", biomarker_testing: "", gBRCAm: "", brca_deletion: "", brca_duplication: "", androgen_receptor: "", androgen_receptor_positive: "", tumor_mutation_type: "", tumor_mutation_value: "", msi_status: "", pik3cam_status: "", pik3cam_mutation_detected: "", ngs_performed: "", ngs_performed_if_yes_findings: "", first_line_therapy_yes: "", second_line_therapy_yes: "", third_line_therapy_yes: "", fourth_line_therapy_yes: "", first_line_therapy_other: "", second_line_therapy_other: "", third_line_therapy_other: "", fourth_line_therapy_other: "", bone_metastsis: "", bisphosphonates: "", rank_i_inhibitor: "", pallative_radiotherapy: "", p_r_date: "", p_r_site: "", p_r_schedule: "", p_r_dose: "", p_r_other_comments: "", leptomeningeal_metastasis_radio_therapy: "", intratelcal_chemo: "", intratelcal_chemo_if_yes: "", intratelcal_chemo_date: "", intratelcal_chemo_regimen: "",
     };
     this.showFertilityOption = this.showFertilityOption.bind(this);
     this.showFertilityDiscussed = this.showFertilityDiscussed.bind(this);
@@ -127,6 +140,17 @@ class Treatment extends React.Component {
     this.showIfPresentedWithMetastases = this.showIfPresentedWithMetastases.bind(this);
     this.showNGSDoneAtDiagnosis = this.showNGSDoneAtDiagnosis.bind(this);
     this.showNGSDoneAtRecurrence = this.showNGSDoneAtRecurrence.bind(this);
+    this.showIfAndroReceptor = this.showIfAndroReceptor.bind(this);
+    this.showPIK3CAmStatus = this.showPIK3CAmStatus.bind(this);
+    this.showNGSPerformed = this.showNGSPerformed.bind(this);
+    this.showFirstLineTherapy = this.showFirstLineTherapy.bind(this);
+    this.showSecondLineTherapy = this.showSecondLineTherapy.bind(this);
+    this.showThirdLineTherapy = this.showThirdLineTherapy.bind(this);
+    this.showFourthLineTherapy = this.showFourthLineTherapy.bind(this);
+    this.showPalliativeRadiotherapy = this.showPalliativeRadiotherapy.bind(this);
+    this.showIntrathecalChemo = this.showIntrathecalChemo.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeID = this.handleChangeID.bind(this);
     /*this.handleInputMetastasesChange = this.handleInputMetastasesChange.bind(this);
     this.handleInputTreatmentChange = this.handleInputTreatmentChange.bind(this);      */  
     //console.log(code)
@@ -136,7 +160,7 @@ class Treatment extends React.Component {
     //alert(this.state.metastases_types)
     //alert(this.state.code)
     const { history } = this.props;
-   axios.post(`https://shona-nag-cms.herokuapp.com/patienttreatmentdetails`, { fertilitydiscussed: this.state.fertilitydiscussed, fertilityoptionundertaken: this.state.fertilityoptionundertaken, fertilitydiscussedifother: this.state.fertilitydiscussedifother, neoadjuvanttherapy: this.state.neoadjuvanttherapy, neoadjuvanttherapyifyes: this.state.neoadjuvanttherapyifyes, neoadjuvantthereayifyesother: this.state.neoadjuvantthereayifyesother, ovariansuppression: this.state.ovariansuppression, ovariansuppressionifyes: this.state.ovariansuppressionifyes, responsetoneoadjuvantchemotherapy: this.state.responsetoneoadjuvantchemotherapy, ifprogression: this.state.ifprogression, ifprogressionandother: this.state.ifprogressionandother, primarysurgery: this.state.primarysurgery, nodalsurgery: this.state.nodalsurgery, ifnodalsurgeryandother: this.state.ifnodalsurgeryandother, reconstructiondone: this.state.reconstructiondone, timingofreconstruction: this.state.timingofreconstruction, typeofreconstruction: this.state.typeofreconstruction, typeofreconstructionother: this.state.typeofreconstructionother, adjuvantchemotherapy: this.state.adjuvantchemotherapy, adjuvantchemotherapyifyes: this.state.adjuvantchemotherapyifyes, adjuvantchemotherapyother: this.state.adjuvantchemotherapyother, adjuvantbonemodify: this.state.adjuvantbonemodify, fertilityoptionundertakenbone: this.state.fertilityoptionundertakenbone, fertilityoptionundertakenboneother: this.state.fertilityoptionundertakenboneother, fertilityoptionundertakenboneotherifother: this.state.fertilityoptionundertakenboneotherifother, her2targetedtherapy: this.state.her2targetedtherapy, her2targetedtherapyduration: this.state.her2targetedtherapyduration, her2targetedtherapydurationifother: this.state.her2targetedtherapydurationifother, dualantiher2: this.state.dualantiher2, dualantiher2ifyes: this.state.dualantiher2ifyes, adjuvantradiotherapy: this.state.adjuvantradiotherapy, adjuvantradiotherapyifyes: this.state.adjuvantradiotherapyifyes, adjuvantradiotherapyifyesother: this.state.adjuvantradiotherapyifyesother, adjuvantendocrinetherapy: this.state.adjuvantendocrinetherapy, adjuvantendocrinetherapyifyes: this.state.adjuvantendocrinetherapyifyes, recommendeddurationadjuvantendocrinetherapy: this.state.recommendeddurationadjuvantendocrinetherapy, recommendeddurationadjuvantendocrinetherapyifother: this.state.recommendeddurationadjuvantendocrinetherapyifother, reasonforstoppingaet: this.state.reasonforstoppingaet, ifpresentedwithmetastases: this.state.ifpresentedwithmetastases, ifpresentedwithmetastasesifother: this.state.ifpresentedwithmetastasesifother, ngsdoneatdiagnosis: this.state.ngsdoneatdiagnosis, ngsdoneatdiagnosisifyes: this.state.ngsdoneatdiagnosisifyes, ngsdoneatdiagnosisifyesidentifiedtargets: this.state.ngsdoneatdiagnosisifyesidentifiedtargets, ngsdoneatrecurrence: this.state.ngsdoneatrecurrence, ngsdoneatrecurrenceifyes: this.state.ngsdoneatrecurrenceifyes, ngsdoneatrecurrenceifyesidentifiedtargets: this.state.ngsdoneatrecurrenceifyesidentifiedtargets, code: this.state.code })
+   axios.post(`https://shona-nag-cms.herokuapp.com/patienttreatmentdetails`, { fertilitydiscussed: this.state.fertilitydiscussed, fertilityoptionundertaken: this.state.fertilityoptionundertaken, fertilitydiscussedifother: this.state.fertilitydiscussedifother, neoadjuvanttherapy: this.state.neoadjuvanttherapy, neoadjuvanttherapyifyes: this.state.neoadjuvanttherapyifyes, neoadjuvantthereayifyesother: this.state.neoadjuvantthereayifyesother, ovariansuppression: this.state.ovariansuppression, ovariansuppressionifyes: this.state.ovariansuppressionifyes, responsetoneoadjuvantchemotherapy: this.state.responsetoneoadjuvantchemotherapy, ifprogression: this.state.ifprogression, ifprogressionandother: this.state.ifprogressionandother, primarysurgery: this.state.primarysurgery, nodalsurgery: this.state.nodalsurgery, ifnodalsurgeryandother: this.state.ifnodalsurgeryandother, reconstructiondone: this.state.reconstructiondone, timingofreconstruction: this.state.timingofreconstruction, typeofreconstruction: this.state.typeofreconstruction, typeofreconstructionother: this.state.typeofreconstructionother, adjuvantchemotherapy: this.state.adjuvantchemotherapy, adjuvantchemotherapyifyes: this.state.adjuvantchemotherapyifyes, adjuvantchemotherapyother: this.state.adjuvantchemotherapyother, adjuvantbonemodify: this.state.adjuvantbonemodify, fertilityoptionundertakenbone: this.state.fertilityoptionundertakenbone, fertilityoptionundertakenboneother: this.state.fertilityoptionundertakenboneother, fertilityoptionundertakenboneotherifother: this.state.fertilityoptionundertakenboneotherifother, her2targetedtherapy: this.state.her2targetedtherapy, her2targetedtherapyduration: this.state.her2targetedtherapyduration, her2targetedtherapydurationifother: this.state.her2targetedtherapydurationifother, dualantiher2: this.state.dualantiher2, dualantiher2ifyes: this.state.dualantiher2ifyes, adjuvantradiotherapy: this.state.adjuvantradiotherapy, adjuvantradiotherapyifyes: this.state.adjuvantradiotherapyifyes, adjuvantradiotherapyifyesother: this.state.adjuvantradiotherapyifyesother, adjuvantendocrinetherapy: this.state.adjuvantendocrinetherapy, adjuvantendocrinetherapyifyes: this.state.adjuvantendocrinetherapyifyes, recommendeddurationadjuvantendocrinetherapy: this.state.recommendeddurationadjuvantendocrinetherapy, recommendeddurationadjuvantendocrinetherapyifother: this.state.recommendeddurationadjuvantendocrinetherapyifother, reasonforstoppingaet: this.state.reasonforstoppingaet, ifpresentedwithmetastases: this.state.ifpresentedwithmetastases, ifpresentedwithmetastasesifother: this.state.ifpresentedwithmetastasesifother, ngsdoneatdiagnosis: this.state.ngsdoneatdiagnosis, ngsdoneatdiagnosisifyes: this.state.ngsdoneatdiagnosisifyes, ngsdoneatdiagnosisifyesidentifiedtargets: this.state.ngsdoneatdiagnosisifyesidentifiedtargets, ngsdoneatrecurrence: this.state.ngsdoneatrecurrence, ngsdoneatrecurrenceifyes: this.state.ngsdoneatrecurrenceifyes, ngsdoneatrecurrenceifyesidentifiedtargets: this.state.ngsdoneatrecurrenceifyesidentifiedtargets, if_present_with_metastases: this.state.if_present_with_metastases, biomarker_testing: this.state.biomarker_testing, gBRCAm: this.state.gBRCAm, brca_deletion: this.state.brca_deletion, brca_duplication: this.state.brca_duplication, androgen_receptor: this.state.androgen_receptor, androgen_receptor_positive: this.state.androgen_receptor_positive, tumor_mutation_type: this.state.tumor_mutation_type, tumor_mutation_value: this.state.tumor_mutation_value, msi_status: this.state.msi_status, pik3cam_status: this.state.pik3cam_status, pik3cam_mutation_detected: this.state.pik3cam_mutation_detected, ngs_performed: this.state.ngs_performed, ngs_performed_if_yes_findings: this.state.ngs_performed_if_yes_findings, first_line_therapy_yes: this.state.first_line_therapy_yes, second_line_therapy_yes: this.state.second_line_therapy_yes, third_line_therapy_yes: this.state.third_line_therapy_yes, fourth_line_therapy_yes: this.state.fourth_line_therapy_yes, first_line_therapy_other: this.state.first_line_therapy_other, second_line_therapy_other: this.state.second_line_therapy_other, third_line_therapy_other: this.state.third_line_therapy_other, fourth_line_therapy_other: this.state.fourth_line_therapy_other, bone_metastsis: this.state.bone_metastsis, bisphosphonates: this.state.bisphosphonates, rank_i_inhibitor: this.state.rank_i_inhibitor, pallative_radiotherapy: this.state.pallative_radiotherapy, p_r_date: this.state.p_r_date, p_r_site: this.state.p_r_site, p_r_schedule: this.state.p_r_schedule, p_r_dose: this.state.p_r_dose, p_r_other_comments: this.state.p_r_other_comments, leptomeningeal_metastasis_radio_therapy: this.state.leptomeningeal_metastasis_radio_therapy, intratelcal_chemo: this.state.intratelcal_chemo, intratelcal_chemo_if_yes: this.state.intratelcal_chemo_if_yes, intratelcal_chemo_date: this.state.intratelcal_chemo_date, intratelcal_chemo_regimen: this.state.intratelcal_chemo_regimen, code: this.state.code })
     .then(function (response) {
     if(response.data.success === 'Treatment Sucessfully Submitted!'){            
       history.push(`/follow-up/${response.data.value}`)
@@ -146,6 +170,20 @@ class Treatment extends React.Component {
   })
   };
   
+  handleChange(date) {
+    this.setState({
+      startDate: date,
+      p_r_date: moment(date).format('DD-MM-YYYY')
+    })
+  }
+
+  handleChangeID(date) {
+    this.setState({
+      startDateID: date,
+      intratelcal_chemo_date: moment(date).format('DD-MM-YYYY')
+    })
+  }
+
   showFertilityOption(name) {
     if(document.getElementById("fertilitydiscussed").value == "Yes"){
       this.setState({ showFertilityOption: true });   
@@ -357,11 +395,11 @@ class Treatment extends React.Component {
   }
 
   showIfPresentedWithMetastases(name){
-    if(document.getElementById("ifpresentedwithmetastases").value == "Other"){
+    if(document.getElementById("ifpresentedwithmetastases").value == "Yes"){
       this.setState({ showIfPresentedWithMetastases: true });   
-      this.state.ifpresentedwithmetastases = name 
+      this.state.if_present_with_metastases = name 
     }else{
-        this.setState({ showIfPresentedWithMetastases: false, ifpresentedwithmetastasesifother: "" }); 
+        this.setState({ showIfPresentedWithMetastases: false, ifpresentedwithmetastasesifother: "", if_present_with_metastases: "", biomarker_testing: "", gBRCAm: "", brca_deletion: "", brca_duplication: "", androgen_receptor: "", androgen_receptor_positive: "", tumor_mutation_type: "", tumor_mutation_value: "", msi_status: "", pik3cam_status: "", pik3cam_mutation_detected: "", ngs_performed: "", ngs_performed_if_yes_findings: "", first_line_therapy_yes: "", second_line_therapy_yes: "", third_line_therapy_yes: "", fourth_line_therapy_yes: "", bone_metastsis: "", bisphosphonates: "", rank_i_inhibitor: "", pallative_radiotherapy: "", p_r_date: "", p_r_site: "", p_r_schedule: "", p_r_dose: "", p_r_other_comments: "", leptomeningeal_metastasis_radio_therapy: "", intratelcal_chemo: "", intratelcal_chemo_if_yes: "", intratelcal_chemo_date: "", intratelcal_chemo_regimen: "" }); 
         this.state.ifpresentedwithmetastases = name        
     }
   }
@@ -386,8 +424,98 @@ class Treatment extends React.Component {
     }
   }
 
+  showIfAndroReceptor(name){
+    if(document.getElementById("androgenreceptor").value == "Positive"){
+      this.setState({ showIfAndroReceptor: true });   
+      this.state.androgen_receptor = name 
+    }else{
+        this.setState({ showIfAndroReceptor: false, ngsdoneatrecurrenceifyesidentifiedtargets: "", ngsdoneatrecurrenceifyes: "" }); 
+        this.state.percent_positive = ""        
+    }
+  }
+
+  showPIK3CAmStatus(name){
+    if(document.getElementById("pik3camstatus").value == "Mutation Detected"){
+      this.setState({ showPIK3CAmStatus: true });   
+      this.state.pik3cam_status = name 
+    }else{
+        this.setState({ showPIK3CAmStatus: false, pik3cam_mutation_detected: "" }); 
+        this.state.pik3cam_mutation_detected = ""        
+    }
+  }
+
+  showNGSPerformed(name){
+    if(document.getElementById("ngsperformed").value == "Yes"){
+      this.setState({ showNGSPerformed: true });   
+      this.state.ngs_performed = name 
+    }else{
+        this.setState({ showNGSPerformed: false, ngs_performed_if_yes_findings: "" }); 
+        this.state.ngs_performed_if_yes_findings = ""        
+    }
+  }
+
+  showFirstLineTherapy(name){
+    if(document.getElementById("firstlinetherapyyes").value == "Other"){
+      this.setState({ showFirstLineTherapy: true });   
+      this.state.first_line_therapy_yes = name 
+    }else{
+        this.setState({ showFirstLineTherapy: false, first_line_therapy_other: "" }); 
+        this.state.first_line_therapy_other = ""        
+    }
+  }
+
+  showSecondLineTherapy(name){
+    if(document.getElementById("secondlinetherapyyes").value == "Other"){
+      this.setState({ showSecondLineTherapy: true });   
+      this.state.second_line_therapy_yes = name 
+    }else{
+        this.setState({ showSecondLineTherapy: false, second_line_therapy_other: "" }); 
+        this.state.second_line_therapy_other = ""        
+    }
+  }
+
+  showThirdLineTherapy(name){
+    if(document.getElementById("thirdlinetherapyyes").value == "Other"){
+      this.setState({ showThirdLineTherapy: true });   
+      this.state.third_line_therapy_yes = name 
+    }else{
+        this.setState({ showThirdLineTherapy: false, third_line_therapy_other: "" }); 
+        this.state.third_line_therapy_other = ""        
+    }
+  }
+
+  showFourthLineTherapy(name){
+    if(document.getElementById("fourthlinetherapyyes").value == "Other"){
+      this.setState({ showFourthLineTherapy: true });   
+      this.state.fourth_line_therapy_yes = name 
+    }else{
+        this.setState({ showFourthLineTherapy: false, fourth_line_therapy_other: "" }); 
+        this.state.fourth_line_therapy_other = ""        
+    }
+  }
+
+  showPalliativeRadiotherapy(name){
+    if(document.getElementById("palliativeradiotherapy").value == "Yes"){
+      this.setState({ showPalliativeRadiotherapy: true });   
+      this.state.pallative_radiotherapy = name 
+    }else{
+        this.setState({ showPalliativeRadiotherapy: false, fourth_line_therapy_other: "", p_r_date: "", p_r_site: "", p_r_dose: "", p_r_schedule: "", p_r_other_comments: "" }); 
+        this.state.fourth_line_therapy_other = ""        
+    }
+  }
+
+  showIntrathecalChemo(name){
+    if(document.getElementById("intrathecalchemo").value == "Yes"){
+      this.setState({ showIntrathecalChemo: true });   
+      this.state.intratelcal_chemo = name 
+    }else{
+        this.setState({ showIntrathecalChemo: false, fourth_line_therapy_other: "", p_r_date: "", p_r_site: "", p_r_dose: "", p_r_schedule: "", p_r_other_comments: "" }); 
+        this.state.fourth_line_therapy_other = ""        
+    }
+  }
+
   render(){          
-    const { showFertilityOption, showFertilityDiscussed, showNeoAdjuvantTherapy, showNeoAdjuvantTherapyIfYes, showOvarianSuppression, showIfProgression, showNodalSurgery, showReconstruction, showReconstructionType, showAdjuvantChemotherapy, showAdjuvantChemotherapyIfYes, showAdjuvantBoneModify, showFertilityOptionUndertakenBone, showFertilityOptionUndertakenBoneOther, showHER2TargetedTherapy, showHER2TargetedTherapyDuration, showDualAntiHER2, showAdjuvantRadioTherapy, showAdjuvantRadioTherapyIfYes, showAdjuvantEndocrineTherapy, showRecommendedDurationAdjuvantEndocrineTherapy, showIfPresentedWithMetastases, showNGSDoneAtDiagnosis, showNGSDoneAtRecurrence, fertilitydiscussedifother, fertilityoptionundertaken, fertilitydiscussed, neoadjuvanttherapy, neoadjuvanttherapyifyes, neoadjuvantthereayifyesother, ovariansuppression, ovariansuppressionifyes, ifprogression, ifprogressionandother, responsetoneoadjuvantchemotherapy, primarysurgery, nodalsurgery, reconstructiondone, typeofreconstruction, typeofreconstructionother, adjuvantchemotherapy, adjuvantchemotherapyifyes, adjuvantchemotherapyother, adjuvantbonemodify, fertilityoptionundertakenbone, fertilityoptionundertakenboneotherifother, her2targetedtherapy, her2targetedtherapyduration, her2targetedtherapydurationifother, dualantiher2, dualantiher2ifyes, adjuvantradiotherapy, adjuvantradiotherapyifyes, adjuvantradiotherapyifyesother, adjuvantendocrinetherapy, adjuvantendocrinetherapyifyes, recommendeddurationadjuvantendocrinetherapy, recommendeddurationadjuvantendocrinetherapyifother, reasonforstoppingaet, ifpresentedwithmetastases, ifpresentedwithmetastasesifother, ngsdoneatdiagnosis, ngsdoneatdiagnosisifyes, ngsdoneatdiagnosisifyesidentifiedtargets, ngsdoneatrecurrence, ngsdoneatrecurrenceifyes, ngsdoneatrecurrenceifyesidentifiedtargets, code } = this.state; 
+    const { showFertilityOption, showFertilityDiscussed, showNeoAdjuvantTherapy, showNeoAdjuvantTherapyIfYes, showOvarianSuppression, showIfProgression, showNodalSurgery, showReconstruction, showReconstructionType, showAdjuvantChemotherapy, showAdjuvantChemotherapyIfYes, showAdjuvantBoneModify, showFertilityOptionUndertakenBone, showFertilityOptionUndertakenBoneOther, showHER2TargetedTherapy, showHER2TargetedTherapyDuration, showDualAntiHER2, showAdjuvantRadioTherapy, showAdjuvantRadioTherapyIfYes, showAdjuvantEndocrineTherapy, showRecommendedDurationAdjuvantEndocrineTherapy, showIfPresentedWithMetastases, showNGSDoneAtDiagnosis, showNGSDoneAtRecurrence, showIfAndroReceptor, showPIK3CAmStatus, showNGSPerformed, showFirstLineTherapy, showSecondLineTherapy, showThirdLineTherapy, showFourthLineTherapy, showPalliativeRadiotherapy, showIntrathecalChemo, fertilitydiscussedifother, fertilityoptionundertaken, fertilitydiscussed, neoadjuvanttherapy, neoadjuvanttherapyifyes, neoadjuvantthereayifyesother, ovariansuppression, ovariansuppressionifyes, ifprogression, ifprogressionandother, responsetoneoadjuvantchemotherapy, primarysurgery, nodalsurgery, reconstructiondone, typeofreconstruction, typeofreconstructionother, adjuvantchemotherapy, adjuvantchemotherapyifyes, adjuvantchemotherapyother, adjuvantbonemodify, fertilityoptionundertakenbone, fertilityoptionundertakenboneotherifother, her2targetedtherapy, her2targetedtherapyduration, her2targetedtherapydurationifother, dualantiher2, dualantiher2ifyes, adjuvantradiotherapy, adjuvantradiotherapyifyes, adjuvantradiotherapyifyesother, adjuvantendocrinetherapy, adjuvantendocrinetherapyifyes, recommendeddurationadjuvantendocrinetherapy, recommendeddurationadjuvantendocrinetherapyifother, reasonforstoppingaet, ifpresentedwithmetastases, ifpresentedwithmetastasesifother, ngsdoneatdiagnosis, ngsdoneatdiagnosisifyes, ngsdoneatdiagnosisifyesidentifiedtargets, ngsdoneatrecurrence, ngsdoneatrecurrenceifyes, ngsdoneatrecurrenceifyesidentifiedtargets, if_present_with_metastases, biomarker_testing, gbrcam, brca_deletion, brca_duplication, androgen_receptor, androgen_receptor_positive, tumor_mutation_type, tumor_mutation_value, msi_status, pik3cam_status, pik3cam_mutation_detected, ngs_performed, ngs_performed_if_yes_findings, first_line_therapy_yes, second_line_therapy_yes, third_line_therapy_yes, fourth_line_therapy_yes, first_line_therapy_other, second_line_therapy_other, third_line_therapy_other, fourth_line_therapy_other, bone_metastsis, bisphosphonates, rank_i_inhibitor, pallative_radiotherapy, p_r_date, p_r_site, p_r_schedule, p_r_dose, p_r_other_comments, leptomeningeal_metastasis_radio_therapy, intratelcal_chemo, intratelcal_chemo_if_yes, intratelcal_chemo_date, intratelcal_chemo_regimen, code } = this.state; 
     const { history } = this.props;
 
     /*var metas = Object.keys(this.state.metastases_types).filter((x) => this.state.metastases_types[x]);
@@ -468,10 +596,7 @@ return (
                             <option value="Anthracycline Alone">Anthracycline Alone</option>
                             <option value="Anthracycline-Taxane">Anthracycline-Taxane</option> 
                             <option value="Anthracycline-Taxane Platinum">Anthracycline-Taxane Platinum</option>      
-                            <option value="Trastuzumab">Trastuzumab</option>
-                            <option value="Pertuzumab">Pertuzumab</option>     
-                            <option value="Tamoxifen">Tamoxifen</option>     
-                            <option value="Letrozole">Letrozole</option>                                 
+                            <option value="Platinum + ACT">Platinum + ACT</option>                                                                                                                               
                             <option value="Other">Other</option>                         
                         </AvInput>                      
                         <AvFeedback>Please select Neo-adjuvant therapy (If Yes)!</AvFeedback>
@@ -655,11 +780,10 @@ return (
                           <option value="" selected>Select</option>
                           <option value="Anthracycline Alone">Anthracycline Alone</option>
                           <option value="Anthracycline-Taxane">Anthracycline-Taxane</option>  
-                          <option value="Anthracycline-Taxane Platinum">Anthracycline-Taxane Platinum</option>
-                          <option value="Trastuzumab">Trastuzumab</option>  
-                          <option value="Pertuzumab">Pertuzumab</option>
-                          <option value="Capecitabine">Capecitabine</option>    
-                          <option value="TDM-1">TDM-1</option>
+                          <option value="Anthracycline-Taxane Platinum">Anthracycline-Taxane Platinum</option>                         
+                          <option value="Capecitabine low dose 1 year">Capecitabine low dose 1 year</option>
+                          <option value="Capecitabine high dose 6 months">Capecitabine high dose 6 months</option>
+                          <option value="Platinum + ACT">Platinum + ACT</option>                              
                           <option value="Other">Other</option>                           
                       </AvInput>                      
                       <AvFeedback>Please select If Yes!</AvFeedback>
@@ -728,68 +852,6 @@ return (
                 <div className="col-md-12"></div>
                 <div className="col-md-4">
                   <AvGroup>            
-                    <Label for='her2targetedtherapy'>HER2 targeted therapy</Label>
-                    <AvInput type='select' name='her2targetedtherapy' id='her2targetedtherapy' required value={this.state.her2targetedtherapy} onChange={(e) => this.showHER2TargetedTherapy(e.target.value)}>
-                        <option value="" selected>Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option> 
-                        <option value="Not Indicated">Not Indicated</option>                         
-                      </AvInput>                      
-                    <AvFeedback>Please select HER2 targeted therapy!</AvFeedback>
-                  </AvGroup>
-                </div>
-                {showHER2TargetedTherapy && (
-                  <div className="col-md-4">
-                    <AvGroup>            
-                        <Label for='her2targetedtherapyduration'>If yes, duration of anti-HER2 therapy</Label>
-                        <AvInput type='select' name='her2targetedtherapyduration' id='her2targetedtherapyduration' required value={this.state.her2targetedtherapyduration} onChange={(e) => this.showHER2TargetedTherapyDuration(e.target.value)}>
-                            <option value="" selected>Select</option>
-                            <option value="3 Months">3 Months</option>
-                            <option value="6 Months">6 Months</option> 
-                            <option value="12 Months">12 Months</option>                            
-                            <option value="Other">Other</option>                         
-                        </AvInput>                      
-                        <AvFeedback>Please Enter if yes, the duration of anti-HER2 therapy!</AvFeedback>
-                    </AvGroup>
-                  </div>
-                )}  
-                {showHER2TargetedTherapyDuration && (
-                <div className="col-md-4">
-                    <AvGroup>
-                    <Label for='her2targetedtherapydurationifother'>If Other</Label>
-                    <AvField placeholder="" name='her2targetedtherapydurationifother' id='her2targetedtherapydurationifother' value={this.state.her2targetedtherapydurationifother} onChange={(e) => this.setState({ her2targetedtherapydurationifother: e.target.value})} required />
-                    <AvFeedback>Please enter the If Other!</AvFeedback>
-                  </AvGroup>
-                </div>
-                )}
-                <div class="col-md-12"><hr /></div>
-                <div className="col-md-6">
-                  <AvGroup>            
-                    <Label for='dualantiher2'>Dual anti-HER2 therapy given (Trastuzumab / Pertuzumab)</Label>
-                    <AvInput type='select' name='dualantiher2' id='dualantiher2' required value={this.state.dualantiher2} onChange={(e) => this.showDualAntiHER2(e.target.value)}>
-                        <option value="" selected>Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>                                                
-                      </AvInput>                      
-                    <AvFeedback>Please select Fertility discussed!</AvFeedback>
-                  </AvGroup>
-                </div>
-                {showDualAntiHER2 && (
-                  <div className="col-md-6">
-                    <AvGroup>            
-                        <Label for='dualantiher2ifyes'>Dual anti-HER2 therapy given (If Yes)</Label>
-                        <AvInput type='select' name='dualantiher2ifyes' id='dualantiher2ifyes' required value={this.state.dualantiher2ifyes} onChange={(e) => this.setState({ dualantiher2ifyes: e.target.value})}>
-                            <option value="" selected>Select</option>
-                            <option value="Neoadjuvant">Neoadjuvant</option>
-                            <option value="Adjuvant">Adjuvant</option>                                               
-                        </AvInput>                      
-                        <AvFeedback>Please select Dual anti-HER2 therapy given (If Yes)!</AvFeedback>
-                    </AvGroup>
-                  </div>
-                )} 
-                <div className="col-md-12"></div>
-                <div className="col-md-4">
-                  <AvGroup>            
                     <Label for='adjuvantradiotherapy'>Adjuvant radio therapy</Label>
                     <AvInput type='select' name='adjuvantradiotherapy' id='adjuvantradiotherapy' required value={this.state.adjuvantradiotherapy} onChange={(e) => this.showAdjuvantRadioTherapy(e.target.value)}>
                         <option value="" selected>Select</option>
@@ -827,89 +889,400 @@ return (
                 </div>
                 )}
 
-                <div class="col-md-12"><hr /></div>
-                <div className="col-md-6">
-                  <AvGroup>            
-                    <Label for='adjuvantendocrinetherapy'>Adjuvant endocrine therapy</Label>
-                    <AvInput type='select' name='adjuvantendocrinetherapy' id='adjuvantendocrinetherapy' required value={this.state.adjuvantendocrinetherapy} onChange={(e) => this.showAdjuvantEndocrineTherapy(e.target.value)}>
-                        <option value="" selected>Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option> 
-                        <option value="Not Required">Not Required</option>                         
-                      </AvInput>                      
-                    <AvFeedback>Please select Fertility discussed!</AvFeedback>
-                  </AvGroup>
-                </div>
-                {showAdjuvantEndocrineTherapy && (
-                  <div className="col-md-6">
-                      <AvGroup>
-                      <Label for='adjuvantendocrinetherapyifyes'>If Other</Label>
-                      <AvField placeholder="" name='adjuvantendocrinetherapyifyes' id='adjuvantendocrinetherapyifyes' value={this.state.adjuvantendocrinetherapyifyes} onChange={(e) => this.setState({ adjuvantendocrinetherapyifyes: e.target.value})} required />
-                      <AvFeedback>Please enter the If Other!</AvFeedback>
-                    </AvGroup>
-                  </div>
-                )}
-
-                <div class="col-md-12"><hr /></div>
-                <div className="col-md-6">
-                  <AvGroup>            
-                    <Label for='recommendeddurationadjuvantendocrinetherapy'>Recommended duration of adjuvant endocrine</Label>
-                    <AvInput type='select' name='recommendeddurationadjuvantendocrinetherapy' id='recommendeddurationadjuvantendocrinetherapy' required value={this.state.recommendeddurationadjuvantendocrinetherapy} onChange={(e) => this.showRecommendedDurationAdjuvantEndocrineTherapy(e.target.value)}>
-                        <option value="" selected>Select</option>
-                        <option value="5 Years">5 Years</option>
-                        <option value="7 Years">7 Years</option> 
-                        <option value="10 Years">10 Years</option>                         
-                        <option value="Other">Other</option>
-                      </AvInput>                      
-                    <AvFeedback>Please select Recommended duration of adjuvant endocrine!</AvFeedback>
-                  </AvGroup>
-                </div>
-                {showRecommendedDurationAdjuvantEndocrineTherapy && (
-                  <div className="col-md-6">
-                    <AvGroup>
-                      <Label for='recommendeddurationadjuvantendocrinetherapyifother'>If Other</Label>
-                      <AvField placeholder="" name='recommendeddurationadjuvantendocrinetherapyifother' id='recommendeddurationadjuvantendocrinetherapyifother' value={this.state.recommendeddurationadjuvantendocrinetherapyifother} onChange={(e) => this.setState({ recommendeddurationadjuvantendocrinetherapyifother: e.target.value})} required />
-                      <AvFeedback>Please enter the If Other!</AvFeedback>
-                    </AvGroup>
-                  </div>
-                )}
-                
-                <div class="col-md-12"><hr /></div>
-                <div className="col-md-4">
-                  <AvGroup>            
-                    <Label for='reasonforstoppingaet'>Reason for stopping adjuvant endocrine therapy</Label>
-                    <AvInput type='select' name='reasonforstoppingaet' id='reasonforstoppingaet' required value={this.state.reasonforstoppingaet} onChange={(e) => this.setState({ reasonforstoppingaet: e.target.value })}>
-                        <option value="" selected>Select</option>
-                        <option value="Complete Therapy">Complete Therapy</option>
-                        <option value="Intolerability">Intolerability</option>                         
-                        <option value="Recurrence">Recurrence</option>                         
-                        <option value="Not Known">Not Known</option>                                                                
-                      </AvInput>                      
-                    <AvFeedback>Please select Reason for stopping adjuvant endocrine therapy!</AvFeedback>
-                  </AvGroup>
-                </div>
+                <div className="col-md-12"><hr /></div>
                 <div className="col-md-4">
                     <AvGroup>            
-                        <Label for='ifpresentedwithmetastases'>If presented with metastases, first line therapy</Label>
+                        <Label for='ifpresentedwithmetastases'>If presented with metastases</Label>
                         <AvInput type='select' name='ifpresentedwithmetastases' id='ifpresentedwithmetastases' required value={this.state.ifpresentedwithmetastases} onChange={(e) => this.showIfPresentedWithMetastases(e.target.value)}>
                             <option value="" selected>Select</option>
-                            <option value="Change of Regimen">Change of Regimen</option>
-                            <option value="Surgery">Surgery</option> 
-                            <option value="Other">Other</option>                         
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>                           
                         </AvInput>                      
-                        <AvFeedback>Please select If presented with metastases, first line therapy!</AvFeedback>
+                        <AvFeedback>Please select If presented with metastases!</AvFeedback>
                     </AvGroup>
                   </div>
                 {showIfPresentedWithMetastases && (
+                <>
                 <div className="col-md-4">
+                  <AvGroup>            
+                    <Label for='biomarkertesting'>Biomarker Testing</Label>
+                    <AvInput type='select' name='biomarkertesting' id='biomarkertesting' required value={this.state.biomarker_testing} onChange={(e) => this.setState({ biomarker_testing: e.target.value})}>
+                        <option value="" selected>Select</option>
+                        <option value="PDL1  by SP 142">PDL1  by SP 142</option>
+                        <option value="PDL1 by 22C3">PDL1 by 22C3</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select Biomarker Testing!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-4">
+                  <AvGroup>            
+                    <Label for='gBRCAm'>gBRCAm</Label>
+                    <AvInput type='select' name='gBRCAm' id='gBRCAm' required value={this.state.gBRCAm} onChange={(e) => this.setState({ gBRCAm: e.target.value})}>
+                        <option value="" selected>Select</option>
+                        <option value="Pathogenic">Pathogenic</option>
+                        <option value="Likely Pathogenic">Likely Pathogenic</option>
+                        <option value="VUS">VUS</option>
+                        <option value="Benign">Benign</option>
+                        <option value="No Mutation Detected">No Mutation Detected</option>
+                      </AvInput>                      
+                    <AvFeedback>Please select gBRCAm!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-3">
+                  <AvGroup>            
+                      <Label for='brcadeletion'>BRCA Deletion</Label>
+                      <AvInput type='select' name='brcadeletion' id='brcadeletion' required value={this.state.brca_deletion} onChange={(e) => this.setState({ brca_deletion: e.target.value})}>
+                          <option value="" selected>Select</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>                           
+                      </AvInput>                      
+                      <AvFeedback>Please select BRCA Deletion!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-3">
+                  <AvGroup>            
+                      <Label for='brcaduplication'>BRCA Duplication</Label>
+                      <AvInput type='select' name='brcaduplication' id='brcaduplication' required value={this.state.brca_duplication} onChange={(e) => this.setState({ brca_duplication: e.target.value})}>
+                          <option value="" selected>Select</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>                           
+                      </AvInput>                      
+                      <AvFeedback>Please select BRCA Duplication!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-3">
+                  <AvGroup>            
+                      <Label for='androgenreceptor'>Andro Receptor</Label>
+                      <AvInput type='select' name='androgenreceptor' id='androgenreceptor' required value={this.state.androgen_receptor} onChange={(e) => this.showIfAndroReceptor(e.target.value)}>
+                          <option value="" selected>Select</option>
+                          <option value="Positive">Positive</option>
+                          <option value="Negative">Negative</option>                           
+                      </AvInput>                      
+                      <AvFeedback>Please select Andro Receptor!</AvFeedback>
+                  </AvGroup>
+                </div>
+                {showIfAndroReceptor && (<div className="col-md-3">
                     <AvGroup>
-                      <Label for='ifpresentedwithmetastasesifother'>If Other</Label>
-                      <AvField placeholder="" name='ifpresentedwithmetastasesifother' id='ifpresentedwithmetastasesifother' value={this.state.ifpresentedwithmetastasesifother} onChange={(e) => this.setState({ ifpresentedwithmetastasesifother: e.target.value})} required />
-                      <AvFeedback>Please enter the If Other!</AvFeedback>
+                      <Label for='percentpositive'>Percent Postive (%)</Label>
+                      <AvField placeholder="" type="number" name='percentpositive' id='percentpositive' value={this.state.androgen_receptor_positive} onChange={(e) => this.setState({ androgen_receptor_positive: e.target.value})} required />
+                      <AvFeedback>Please enter the percentage!</AvFeedback>
                     </AvGroup>
                 </div>
                 )}
-
+                <div className="col-md-12"></div>
+                <div className="col-md-2">
+                  <AvGroup>            
+                      <Label for='tumormutationburden'>Tumor Mutation Burden</Label>
+                      <AvInput type='select' name='tumormutationburden' id='tumormutationburden' required value={this.state.tumor_mutation_type} onChange={(e) => this.setState({ tumor_mutation_type: e.target.value})} >
+                          <option value="" selected>Select</option>
+                          <option value="Less Than">Less Than</option>
+                          <option value="Greater Than">Greater Than</option>
+                          <option value="Less Than Equal">Less Than Equal</option>
+                          <option value="Greater Than Equal">Greater Than Equal</option>                      
+                      </AvInput>                      
+                      <AvFeedback>Please select Tumor Mutation Burden!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-2">
+                    <AvGroup>
+                      <Label for='tumormutationvalue'>mutations/ Mb</Label>
+                      <AvField placeholder="" type="number" name='tumormutationvalue' id='tumormutationvalue' value={this.state.tumor_mutation_value} onChange={(e) => this.setState({ tumor_mutation_value: e.target.value})} required />
+                      <AvFeedback>Please enter the percentage!</AvFeedback>
+                    </AvGroup>
+                </div>
+                <div className="col-md-2">
+                  <AvGroup>            
+                      <Label for='msistatus'>MSI Status</Label>
+                      <AvInput type='select' name='msistatus' id='msistatus' required value={this.state.msi_status} onChange={(e) => this.setState({ msi_status: e.target.value})} >
+                          <option value="" selected>Select</option>
+                          <option value="MSI-H">MSI-H</option>
+                          <option value="MSS">MSS</option>                          
+                      </AvInput>                      
+                      <AvFeedback>Please select MSI Status!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-2">
+                  <AvGroup>            
+                      <Label for='pik3camstatus'>PIK3CAm status</Label>
+                      <AvInput type='select' name='pik3camstatus' id='pik3camstatus' required value={this.state.pik3cam_status} onChange={(e) => this.showPIK3CAmStatus(e.target.value)} >
+                          <option value="" selected>Select</option>
+                          <option value="Mutation Detected">Mutation Detected</option>
+                          <option value="Not Detected">Not Detected</option>                          
+                      </AvInput>                      
+                      <AvFeedback>Please select PIK3CAm status!</AvFeedback>
+                  </AvGroup>
+                </div>
+                {showPIK3CAmStatus && (
+                  <div className="col-md-2">
+                      <AvGroup>
+                      <Label for='mutationdetectedyes'>if yes then details to be filled</Label>
+                      <AvField placeholder="" name='mutationdetectedyes' id='mutationdetectedyes' value={this.state.pik3cam_mutation_detected} onChange={(e) => this.setState({ pik3cam_mutation_detected: e.target.value})} required />
+                      <AvFeedback>Please enter if yes the details to be filled!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                )}
+                <div className="col-md-2">
+                  <AvGroup>            
+                      <Label for='ngsperformed'>NGS Performed</Label>
+                      <AvInput type='select' name='ngsperformed' id='ngsperformed' required value={this.state.ngs_performed} onChange={(e) => this.showNGSPerformed(e.target.value)} >
+                          <option value="" selected>Select</option>
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>                          
+                      </AvInput>                      
+                      <AvFeedback>Please select NGS Performed!</AvFeedback>
+                  </AvGroup>
+                </div>
+                {showNGSPerformed && (
+                  <>
+                  <div className="col-md-12"></div>
+                   <div className="col-md-12">
+                    <AvGroup>            
+                        <Label for='ngsperformedifyes'>NGS Performed if yes</Label>
+                        <AvInput type='textarea' name='ngsperformedifyes' id='ngsperformedifyes' required value={this.state.ngs_performed_if_yes_findings} onChange={(e) => this.setState({ ngs_performed_if_yes_findings: e.target.value })} />           
+                        <AvFeedback>Please enter NGS Performed if yes!</AvFeedback>
+                    </AvGroup>
+                    </div>
+                  </>
+                )}
+                <div className="col-md-12"><hr /></div>
+                <div className="col-md-12"><h4 style={{ color : "black" }}>Treatment for metastatic disease</h4></div>
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='firstlinetherapyyes'>First Line Therapy</Label>
+                    <AvInput type='select' name='firstlinetherapyyes' id='firstlinetherapyyes' required value={this.state.first_line_therapy_yes} onChange={(e) => this.showFirstLineTherapy(e.target.value)} >
+                        <option value="" selected>Select</option>
+                        <option value="Nab Paclitaxel + Atezolizumab">Nab Paclitaxel + Atezolizumab</option>
+                        <option value="Chemo + Pembrolizumab">Chemo + Pembrolizumab</option>   
+                        <option value="Single Agent Weekly Taxane">Single Agent Weekly Taxane</option>
+                        <option value="Platinum Combination - Taxane Or Gemcitabine">Platinum Combination - Taxane Or Gemcitabine</option>   
+                        <option value="Eribulin">Eribulin</option>
+                        <option value="Olaparib">Olaparib</option>   
+                        <option value="Oral Metronomic">Oral Metronomic</option>
+                        <option value="Other">Other</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select First Line Therapy!</AvFeedback>
+                  </AvGroup>
+                </div>
+                {showFirstLineTherapy && (
+                  <div className="col-md-3">
+                      <AvGroup>
+                      <Label for='firsttherapyother'>If other, please specify</Label>
+                      <AvField placeholder="" name='firsttherapyother' id='firsttherapyother' value={this.state.first_line_therapy_other} onChange={(e) => this.setState({ first_line_therapy_other: e.target.value})} required />
+                      <AvFeedback>Please enter If other, please specify!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                )}
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='secondlinetherapyyes'>Second Line Therapy</Label>
+                    <AvInput type='select' name='secondlinetherapyyes' id='secondlinetherapyyes' required value={this.state.second_line_therapy_yes} onChange={(e) => this.showSecondLineTherapy(e.target.value)} >
+                        <option value="" selected>Select</option>
+                        <option value="Eribulin">Eribulin</option>
+                        <option value="Single Agent Weekly Taxane">Single Agent Weekly Taxane</option>   
+                        <option value="Platinum Combination - Taxane Or Gemcitabine">Platinum Combination - Taxane Or Gemcitabine</option>
+                        <option value="Olaparib">Olaparib</option>   
+                        <option value="Oral Metronomic">Oral Metronomic</option>
+                        <option value="Cmf">Cmf</option>   
+                        <option value="Vinorelbine">Vinorelbine</option>
+                        <option value="Sacituzumab Govitecan">Sacituzumab Govitecan</option>   
+                        <option value="Bevacizumab And Taxane">Bevacizumab And Taxane</option>
+                        <option value="Other">Other</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select Second Line Therapy!</AvFeedback>
+                  </AvGroup>
+                </div>
+                {showSecondLineTherapy && (
+                  <div className="col-md-3">
+                      <AvGroup>
+                      <Label for='secondtherapyother'>If other, please specify</Label>
+                      <AvField placeholder="" name='secondtherapyother' id='secondtherapyother' value={this.state.second_line_therapy_other} onChange={(e) => this.setState({ second_line_therapy_other: e.target.value})} required />
+                      <AvFeedback>Please enter If other, please specify!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                )}
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='thirdlinetherapyyes'>Third Line Therapy</Label>
+                    <AvInput type='select' name='thirdlinetherapyyes' id='thirdlinetherapyyes' required value={this.state.third_line_therapy_yes} onChange={(e) => this.showThirdLineTherapy(e.target.value)} >
+                        <option value="" selected>Select</option>
+                        <option value="Eribulin">Eribulin</option>
+                        <option value="Single Agent Weekly Taxane">Single Agent Weekly Taxane</option>   
+                        <option value="Platinum Combination - Taxane Or Gemcitabine">Platinum Combination - Taxane Or Gemcitabine</option>
+                        <option value="Olaparib">Olaparib</option>   
+                        <option value="Oral Metronomic">Oral Metronomic</option>
+                        <option value="Cmf">Cmf</option>   
+                        <option value="Vinorelbine">Vinorelbine</option>
+                        <option value="Sacituzumab Govitecan">Sacituzumab Govitecan</option>   
+                        <option value="Bevacizumab And Taxane">Bevacizumab And Taxane</option>
+                        <option value="Other">Other</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select Third Line Therapy!</AvFeedback>
+                  </AvGroup>
+                </div>
+                {showThirdLineTherapy && (
+                  <div className="col-md-3">
+                      <AvGroup>
+                      <Label for='thirdtherapyother'>If other, please specify</Label>
+                      <AvField placeholder="" name='thirdtherapyother' id='thirdtherapyother' value={this.state.third_line_therapy_other} onChange={(e) => this.setState({ third_line_therapy_other: e.target.value})} required />
+                      <AvFeedback>Please enter If other, please specify!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                )}
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='fourthlinetherapyyes'>Fourth Line Therapy</Label>
+                    <AvInput type='select' name='fourthlinetherapyyes' id='fourthlinetherapyyes' required value={this.state.fourth_line_therapy_yes} onChange={(e) => this.showFourthLineTherapy(e.target.value)} >
+                        <option value="" selected>Select</option>
+                        <option value="Eribulin">Eribulin</option>
+                        <option value="Single Agent Weekly Taxane">Single Agent Weekly Taxane</option>   
+                        <option value="Platinum Combination - Taxane Or Gemcitabine">Platinum Combination - Taxane Or Gemcitabine</option>
+                        <option value="Olaparib">Olaparib</option>   
+                        <option value="Oral Metronomic">Oral Metronomic</option>
+                        <option value="Cmf">Cmf</option>   
+                        <option value="Vinorelbine">Vinorelbine</option>
+                        <option value="Sacituzumab Govitecan">Sacituzumab Govitecan</option>   
+                        <option value="Bevacizumab And Taxane">Bevacizumab And Taxane</option>
+                        <option value="Other">Other</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select Fourth Line Therapy!</AvFeedback>
+                  </AvGroup>
+                </div>
+                {showFourthLineTherapy && (
+                  <div className="col-md-3">
+                      <AvGroup>
+                      <Label for='fourththerapyother'>If other, please specify</Label>
+                      <AvField placeholder="" name='fourththerapyother' id='fourththerapyother' value={this.state.fourth_line_therapy_other} onChange={(e) => this.setState({ fourth_line_therapy_other: e.target.value})} required />
+                      <AvFeedback>Please enter If other, please specify!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                )}
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='bonemetastasis'>Bone Metastasis</Label>
+                    <AvInput type='select' name='bonemetastasis' id='bonemetastasis' required value={this.state.bone_metastsis} onChange={(e) => this.setState({ bone_metastsis: e.target.value})}>
+                        <option value="" selected>Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select Bone Metastasis!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='bisphosphonates'>Bisphosphonates</Label>
+                    <AvInput type='select' name='bisphosphonates' id='bisphosphonates' required value={this.state.bisphosphonates} onChange={(e) => this.setState({ bisphosphonates: e.target.value})}>
+                        <option value="" selected>Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select Bisphosphonates!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='ranklinhibitor'>Rank l Inhibitor</Label>
+                    <AvInput type='select' name='ranklinhibitor' id='ranklinhibitor' required value={this.state.rank_i_inhibitor} onChange={(e) => this.setState({ rank_i_inhibitor: e.target.value})}>
+                        <option value="" selected>Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select Rank l Inhibitor!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='palliativeradiotherapy'>Palliative Radiotherapy</Label>
+                    <AvInput type='select' name='palliativeradiotherapy' id='palliativeradiotherapy' required value={this.state.pallative_radiotherapy}onChange={(e) => this.showPalliativeRadiotherapy(e.target.value)} >
+                        <option value="" selected>Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select Palliative Radiotherapy!</AvFeedback>
+                  </AvGroup>
+                </div>
+                {showPalliativeRadiotherapy && (
+                  <>
+                  <div className="col-md-2">
+                    <AvGroup>
+                      <Label for='palliativedate'>Palliative Radiotherapy Date</Label><br />
+                      <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control date-picker-block w-100" dateFormat="dd-MM-yyyy" name="dobs" id="dobs" selected={this.state.startDate} onSelect={this.handleSelect} onChange={this.handleChange} />
+                      <AvInput value={this.state.p_r_date} name="palliativedate" id="palliativedate" className="custom-date-input" onChange={(e) => this.setState({ p_r_date: e.target.value})} />
+                      <AvFeedback>Please enter Palliative Radiotherapy Date!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  <div className="col-md-2">
+                      <AvGroup>
+                      <Label for='palliativesite'>Palliative Radiotherapy Site</Label>
+                      <AvField placeholder="" name='palliativesite' id='palliativesite' value={this.state.p_r_site} onChange={(e) => this.setState({ p_r_site: e.target.value})} required />
+                      <AvFeedback>Please enter Palliative Radiotherapy Site!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  <div className="col-md-2">
+                      <AvGroup>
+                      <Label for='palliativeschedule'>Palliative Radiotherapy Schedule</Label>
+                      <AvField placeholder="" name='palliativeschedule' id='palliativeschedule' value={this.state.p_r_schedule} onChange={(e) => this.setState({ p_r_schedule: e.target.value})} required />
+                      <AvFeedback>Please enter Palliative Radiotherapy Schedule!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  <div className="col-md-2">
+                      <AvGroup>
+                      <Label for='palliativedose'>Palliative Radiotherapy Dose</Label>
+                      <AvField placeholder="" name='palliativedose' id='palliativedose' value={this.state.p_r_dose} onChange={(e) => this.setState({ p_r_dose: e.target.value})} required />
+                      <AvFeedback>Please enter Palliative Radiotherapy Dose!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  <div className="col-md-4">
+                      <AvGroup>
+                      <Label for='palliativeothercomments'>Other Comments</Label>
+                      <AvField placeholder="" name='palliativeothercomments' id='palliativeothercomments' value={this.state.p_r_other_comments} onChange={(e) => this.setState({ p_r_other_comments: e.target.value})} required />
+                      <AvFeedback>Please enter Other Comments!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  </>
+                )}
+                <div className="col-md-12"><hr /></div>
+                <div className="col-md-12"><h4 style={{ color : "black" }}>leptomeningeal metastasis</h4></div>
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='leptomeningealmetastasisradiotherapy'>Radiotherapy</Label>
+                    <AvInput type='select' name='leptomeningealmetastasisradiotherapy' id='leptomeningealmetastasisradiotherapy' required value={this.state.leptomeningeal_metastasis_radio_therapy} onChange={(e) => this.setState({ leptomeningeal_metastasis_radio_therapy: e.target.value })} >
+                        <option value="" selected>Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select Radiotherapy!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='intrathecalchemo'>Intrathecal chemo</Label>
+                    <AvInput type='select' name='intrathecalchemo' id='intrathecalchemo' required value={this.state.intratelcal_chemo} onChange={(e) => this.showIntrathecalChemo( e.target.value )} >
+                        <option value="" selected>Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>                         
+                      </AvInput>                      
+                    <AvFeedback>Please select Intrathecal chemo!</AvFeedback>
+                  </AvGroup>
+                </div>
+                {showIntrathecalChemo && (
+                  <>
+                  <div className="col-md-3">
+                    <AvGroup>
+                      <Label for='intrathecaldate'>Intrathecal chemo Date</Label><br />
+                      <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control date-picker-block w-100" dateFormat="dd-MM-yyyy" name="intradate" id="intradate" selected={this.state.startDateID} onSelect={this.handleSelect} onChange={this.handleChangeID} />
+                      <AvInput value={this.state.intratelcal_chemo_date} name="intrathecaldate" id="intrathecaldate" className="custom-date-input" onChange={(e) => this.setState({ intratelcal_chemo_date: e.target.value})} />
+                      <AvFeedback>Please enter Intrathecal chemo Date!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  <div className="col-md-3">
+                      <AvGroup>
+                      <Label for='palliativeregimen'>Palliative Radiotherapy Regimen</Label>
+                      <AvField placeholder="" name='palliativeregimen' id='palliativeregimen' value={this.state.intratelcal_chemo_regimen} onChange={(e) => this.setState({ intratelcal_chemo_regimen: e.target.value})} required />
+                      <AvFeedback>Please enter Palliative Radiotherapy Regimen!</AvFeedback>
+                    </AvGroup>
+                  </div>
+                  </>
+                )}
                 <div className="col-md-12"></div>
                 <div className="col-md-4">
                   <AvGroup>            
@@ -980,7 +1353,8 @@ return (
                   </div>
                   </>
                 )}
-
+                  </>
+                )}
                 <div className="col-md-12">
                 <Button color='primary' type='submit' disabled= {!fertilitydiscussed.length || !neoadjuvanttherapy.length || !ovariansuppression.length || !responsetoneoadjuvantchemotherapy || !ifprogression || !primarysurgery || !nodalsurgery || !reconstructiondone || !adjuvantchemotherapy || !adjuvantbonemodify || !her2targetedtherapy || !dualantiher2 || !adjuvantradiotherapy || !adjuvantendocrinetherapy || !recommendeddurationadjuvantendocrinetherapy || !reasonforstoppingaet || !ifpresentedwithmetastases || !ngsdoneatdiagnosis || !ngsdoneatrecurrence} onClick={ () => this.sendTreatmentDetails }>
                   Submit

@@ -57,6 +57,15 @@ class FollowUp extends React.Component {
   console.log(this.state.area_of_recurrence)
 }
 
+onToggleMeta(index, e){
+  let Items = this.state.patientif_metastases.slice();
+    Items[index].checked = !Items[index].checked
+  this.setState({
+    if_metastases: Items
+})
+console.log(this.state.if_metastases)
+}
+
 componentDidMount() {
     axios.get(`https://shona-nag-cms.herokuapp.com/getfulldetails/${this.state.code}`)
     .then(response =>
@@ -71,8 +80,9 @@ componentDidMount() {
           isLoading: false,
           recurrence: patients[0].recurrence,
           dateofrec: patients[0].date_of_recurrence,
-          ifmetastases: patients[0].if_metastases,
+          //ifmetastases: patients[0].if_metastases,
           patientarea_of_recurrence: JSON.parse(patients[0].area_of_recurrence),
+          patientif_metastases: JSON.parse(patients[0].if_metastases),
           //aor: JSON.parse(patients[0].area_of_recurrence),
           //startDateDOR: new Date(this.state.dateofrec)
           /*othergermlinetesting: patients[0].genetic_testing_done,
@@ -82,8 +92,8 @@ componentDidMount() {
           whichrelative: patients[0].which_relative*/
         });
         //document.getElementById('metastases_types')[1].style.display='none';
-        console.log(this.state.aor)
-        if(this.state.recurrence == 'Yes'){
+        console.log(this.state.patients[0].recurrence)
+        if(this.state.patients[0].recurrence == 'Yes'){
           this.setState({ showRecurrence: true })
         }
         if(this.state.ifmetastases == "Other"){
@@ -107,11 +117,25 @@ componentDidMount() {
         )
     }
 
+    getMetaCheckedData() {
+      return this.state.patientif_metastases.map((item, i) => {
+        var check = item.checked;
+        //console.log(check)
+        if(check == true){
+          //console.log(check);
+          return (<div className="col-md-2"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.onToggleMeta.bind(this, i)} checked /></div>) 
+        }else{
+          return (<div className="col-md-2"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.onToggleMeta.bind(this, i)} /></div>) 
+        }
+      }    
+      )
+  }
+
   sendFollowUpDetails = e => {   
     //alert(this.state.areaofrecurrence)
     //alert(this.state.code)
     const { history } = this.props;
-   axios.post(`https://shona-nag-cms.herokuapp.com/updatepatientdetails`, { recurrence: this.state.recurrence, date_of_recurrence: this.state.date_of_recurrence, area_of_recurrence: JSON.stringify(this.state.area_of_recurrence), if_metastases: this.state.if_metastases, metastases_if_other: this.state.metastases_if_other, detection_of_recurrence: this.state.detection_of_recurrence, lost_to_follow_up: this.state.lost_to_follow_up, date_of_death: this.state.date_of_death, date_of_last_follow_up: this.state.date_of_last_follow_up, code: this.state.code })
+   axios.post(`https://shona-nag-cms.herokuapp.com/updatepatientdetails`, { recurrence: this.state.recurrence, date_of_recurrence: this.state.date_of_recurrence, area_of_recurrence: JSON.stringify(this.state.area_of_recurrence), if_metastases: JSON.stringify(this.state.if_metastases), metastases_if_other: this.state.metastases_if_other, detection_of_recurrence: this.state.detection_of_recurrence, lost_to_follow_up: this.state.lost_to_follow_up, date_of_death: this.state.date_of_death, date_of_last_follow_up: this.state.date_of_last_follow_up, code: this.state.code })
     .then(function (response) {
         if(response.data.success === 'Sucessfully Updated!'){                     
             history.push(`/health-economics/edit/${response.data.value}`)
@@ -255,22 +279,14 @@ return (
                         <AvFeedback>Please select Detection of recurrence!</AvFeedback>
                     </AvGroup>
                     </div>
-                    <div className="col-md-4">
-                    <AvGroup>            
-                        <Label for='recurrenceifmetastases'>If Metastases</Label>
-                        <AvInput type='select' name='recurrenceifmetastases' id='recurrenceifmetastases' required value={patient.if_metastases} onChange={(e) => this.showRecurrenceMetaStases(e.target.value)}>
-                            <option value="" selected>Select</option>
-                            <option value="Liver">Liver</option>
-                            <option value="Lung">Lung</option>
-                            <option value="Bone">Bone</option>
-                            <option value="Brain">Brain</option>
-                            <option value="Ovaries">Ovaries</option>
-                            <option value="Adrenal">Adrenal</option>
-                            <option value="Other">Other</option>
-                        </AvInput>                      
-                        <AvFeedback>Please select If Metastases!</AvFeedback>
-                    </AvGroup>
-                  </div>
+                    <div className="col-md-8">
+                      <Label for='recurrenceifmetastases'>If Metastases</Label>
+                      <AvCheckboxGroup name='recurrenceifmetastases' >
+                        <div className="row">
+                            {this.getMetaCheckedData()}
+                        </div>
+                      </AvCheckboxGroup>                  
+                    </div>                     
                   </>
                 )}                                       
                 {showRecurrenceMetaStases && (

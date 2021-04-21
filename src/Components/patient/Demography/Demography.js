@@ -555,6 +555,7 @@ import axios from 'axios';
                             <div className="col-md-2"><AvRadio customInput label='Hepatitis B' value='Hepatitis B' onClick={ () => this.hideMorbiditiesComponent("hideMorbidities") } /></div>
                             <div className="col-md-2"><AvRadio customInput label='Hepatitis C' value='Hepatitis C' onClick={ () => this.hideMorbiditiesComponent("hideMorbidities") } /></div>
                             <div className="col-md-2"><AvRadio customInput label='TB' value='TB' onClick={ () => this.hideMorbiditiesComponent("hideMorbidities") } /></div>
+                            <div className="col-md-2"><AvRadio customInput label='PCOD' value='PCOD' onClick={ () => this.hideMorbiditiesComponent("hideMorbidities") } /></div>
                             <div className="col-md-2"><AvRadio customInput label='Other' value='Other' onClick={ () => this.showMorbiditiesComponent("showMorbidities") } /></div>                          
                           </div>
                         </AvRadioGroup>

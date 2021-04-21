@@ -189,10 +189,16 @@ return (
                   <AvGroup>            
                     <Label for='pathologytype'>Type</Label>
                     <AvInput type='select' name='pathologytype' id='pathologytype' required value={this.state.pathologytype} onChange={(e) => this.showType(e.target.value)}>
-                        <option value="" selected>Select</option>
-                        <option value="Ductal">Ductal</option>
                         <option value="Lobular">Lobular</option> 
                         <option value="Not Classified">Not Classified</option> 
+                        <option value="Invasive Ductal">Invasive Ductal</option> 
+                        <option value="Invasive Lobular, Pleomorphic">Invasive Lobular, Pleomorphic</option>
+                        <option value="Metaplastic">Metaplastic</option>
+                        <option value="Neuroendocrine">Neuroendocrine</option>
+                        <option value="Medullary">Medullary</option>
+                        <option value="Myoepithelial">Myoepithelial</option>
+                        <option value="Apocrine">Apocrine</option>
+                        <option value="Adenoid Cystic">Adenoid Cystic</option>
                         <option value="Other">Other</option>                        
                       </AvInput>
                       
@@ -280,66 +286,9 @@ return (
                     <AvFeedback>Please enter the Pathological size of cancer!</AvFeedback>
                   </AvGroup>
                 </div>
-                <div className="col-md-3">
-                  <AvGroup>            
-                    <Label for='ER'>ER</Label>
-                    <AvInput type='select' name='ER' id='ER' required value={this.state.ER} onChange={(e) => this.setState({ ER: e.target.value})}>
-                        <option value="" selected>Select</option>
-                        <option value="X">X</option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>                            
-                        <option value="3">3</option>                                            
-                        <option value="4">4</option>
-                      </AvInput>
-                    <AvFeedback>Please select ER!</AvFeedback>
-                  </AvGroup>
-                </div>
-                <div className="col-md-3">
-                  <AvGroup>            
-                    <Label for='PR'>PR</Label>
-                    <AvInput type='select' name='PR' id='PR' required value={this.state.PR} onChange={(e) => this.setState({ PR: e.target.value})}>
-                        <option value="" selected>Select</option>
-                        <option value="X">X</option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>                            
-                        <option value="3">3</option>                                            
-                        <option value="4">4</option>
-                      </AvInput>
-                    <AvFeedback>Please select PR!</AvFeedback>
-                  </AvGroup>
-                </div>
-                <div className="col-md-3">
-                  <AvGroup>            
-                    <Label for='HER2'>HER2</Label>
-                    <AvInput type='select' name='HER2' id='HER2' required value={this.state.HER2} onChange={(e) => this.showHER2(e.target.value)}>
-                        <option value="" selected>Select</option>
-                        <option value="X">X</option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>                            
-                        <option value="3+">3+</option>                                                                    
-                      </AvInput>
-                    <AvFeedback>Please select HER2!</AvFeedback>
-                  </AvGroup>
-                </div>
-                {showHER2 && (
-                  <div className="col-md-3">
-                  <AvGroup>
-                    <Label for='showher'>If 2 + FISH</Label>
-                    <AvRadioGroup name='showher' required value={this.state.showher} onChange={(e) => this.setState({ showher: e.target.value})} >
-                        <div className="row">
-                            <div className="col-md-6"><AvRadio customInput label='Amplified' value='Amplified' /></div>
-                            <div className="col-md-6"><AvRadio customInput label='Non-Amplified' value='Non-Amplified' /></div>
-                        </div>
-                    </AvRadioGroup>
-                    <AvFeedback>Please select 2 + FISH!</AvFeedback>
-                  </AvGroup>
-                  </div>
-                )}  
+                
                 <div className="col-md-12">
-                <Button color='primary' type='submit' disabled={ !pathologytype.length || !grade.length || !pT.length || !pN.length || !ypT.length || !ypN.length || !pathologicalsizeofcancer.length || !ER.length || !PR.length || !HER2.length } onClick={ () => this.sendInitialPresentationDetails }>
+                <Button color='primary' type='submit' disabled={ !pathologytype.length || !grade.length || !pT.length || !pN.length || !ypT.length || !ypN.length || !pathologicalsizeofcancer.length } onClick={ () => this.sendInitialPresentationDetails }>
                   Submit
                 </Button>              
                 </div>

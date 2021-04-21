@@ -452,7 +452,7 @@ return (
                 {showMetastases && (    
                 <>
                 <div className="col-md-4">
-                <Label for='total_number_of_metastatus'>Total number of metastases</Label>
+                <Label for='total_number_of_metastatus'>Total number of metastatic (Lesions)</Label>
                 <AvRadioGroup name='total_number_of_metastatus' required value={patient.total_number_of_metastatus} onChange={(e) => this.setState({ total_number_of_metastatus: e.target.value})} >
                   <div className="row">
                     <div className="col-md-6"><AvRadio customInput label='Less than 5' value='Less than 5' /></div>

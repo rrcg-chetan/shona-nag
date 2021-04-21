@@ -47,7 +47,16 @@ class FollowUp extends React.Component {
         { text: 'Regional', checked: false },
         { text: 'Contra lateral breast', checked: false },
         { text: 'Distant Metastases', checked: false },        
-      ],      
+      ],    
+      metastases_types: [
+        { text: 'Liver', checked: false },
+        { text: 'Lung', checked: false },
+        { text: 'Bone', checked: false },
+        { text: 'Brain', checked: false },
+        { text: 'Ovaries', checked: false },
+        { text: 'Adrenal', checked: false },
+        { text: 'Other', checked: false },
+      ],  
       detectionofrecurrence: "",
       recurrenceifmetastases: "",
       recurrenceifmetastasesifother: "",
@@ -70,7 +79,7 @@ class FollowUp extends React.Component {
     //alert(this.state.areaofrecurrence)
     //alert(this.state.code)
     const { history } = this.props;
-   axios.post(`https://shona-nag-cms.herokuapp.com/patientfollowupdetails`, { recurrence: this.state.recurrence, fertilityoptionundertaken: this.state.fertilityoptionundertaken, dateofrecurrence: this.state.dateofrecurrence, areaofrecurrence: this.state.areaofrecurrence, detectionofrecurrence: this.state.detectionofrecurrence, recurrenceifmetastases: this.state.recurrenceifmetastases, recurrenceifmetastasesifother: this.state.recurrenceifmetastasesifother, lostfollowup: this.state.lostfollowup, dateofdeath: this.state.dateofdeath, dateoflastfollowup: this.state.dateoflastfollowup, code: this.state.code })
+   axios.post(`https://shona-nag-cms.herokuapp.com/patientfollowupdetails`, { recurrence: this.state.recurrence, fertilityoptionundertaken: this.state.fertilityoptionundertaken, dateofrecurrence: this.state.dateofrecurrence, areaofrecurrence: this.state.areaofrecurrence, detectionofrecurrence: this.state.detectionofrecurrence, recurrenceifmetastases: this.state.recurrenceifmetastases, recurrenceifmetastasesifother: this.state.recurrenceifmetastasesifother, lostfollowup: this.state.lostfollowup, dateofdeath: this.state.dateofdeath, dateoflastfollowup: this.state.dateoflastfollowup, metastases_types: this.state.metastases_types, if_metastases: this.state.metastases_types, code: this.state.code })
     .then(function (response) {
     if(response.data.success === 'Followup Sucessfully Submitted!'){            
       history.push(`/health-economics/${response.data.value}`)
@@ -87,6 +96,15 @@ class FollowUp extends React.Component {
     	areaofrecurrence: newItems
     })
     console.log(this.state.areaofrecurrence)
+  }
+
+  onToggleMeta(index, e){
+  	let Items = this.state.metastases_types.slice();
+		Items[index].checked = !Items[index].checked
+  	this.setState({
+    	metastases_types: Items
+    })
+    console.log(this.state.metastases_types)
   }
 
   handleInputAreaOfRecurrenceChange = (e) =>{
@@ -141,7 +159,7 @@ class FollowUp extends React.Component {
   }
 
   render(){          
-    const { showRecurrence, showRecurrenceMetaStases, recurrence, dateofrecurrence, areaofrecurrence, areaofrecurrence_text, detectionofrecurrence, recurrenceifmetastases, recurrenceifmetastasesifother, lostfollowup, dateofdeath, dateoflastfollowup, code } = this.state; 
+    const { showRecurrence, showRecurrenceMetaStases, recurrence, dateofrecurrence, areaofrecurrence, areaofrecurrence_text, detectionofrecurrence, recurrenceifmetastases, recurrenceifmetastasesifother, lostfollowup, dateofdeath, dateoflastfollowup, metastases_types, code } = this.state; 
     const { history } = this.props;
 
     /*var metas = Object.keys(this.state.areaofrecurrence).filter((x) => this.state.areaofrecurrence[x]);
@@ -209,20 +227,14 @@ return (
                     </AvGroup>
                     </div>
                     <div className="col-md-4">
-                    <AvGroup>            
-                        <Label for='recurrenceifmetastases'>If Metastases</Label>
-                        <AvInput type='select' name='recurrenceifmetastases' id='recurrenceifmetastases' required value={this.state.recurrenceifmetastases} onChange={(e) => this.showRecurrenceMetaStases(e.target.value)}>
-                            <option value="" selected>Select</option>
-                            <option value="Liver">Liver</option>
-                            <option value="Lung">Lung</option>
-                            <option value="Bone">Bone</option>
-                            <option value="Brain">Brain</option>
-                            <option value="Ovaries">Ovaries</option>
-                            <option value="Adrenal">Adrenal</option>
-                            <option value="Other">Other</option>
-                        </AvInput>                      
-                        <AvFeedback>Please select If Metastases!</AvFeedback>
-                    </AvGroup>
+                      <Label for='type_of_metastases'>Types of Metastases</Label>
+                    <AvCheckboxGroup name='type_of_metastases' >
+                      <div className="row">
+                      {this.state.metastases_types.map((item, i) =>
+                        <div className="col-md-2"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.onToggleMeta.bind(this, i)} /></div>                      
+                      )}                          
+                      </div>
+                    </AvCheckboxGroup>
                   </div>
                   </>
                 )}                                       
