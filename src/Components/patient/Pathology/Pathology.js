@@ -60,6 +60,7 @@ class Pathology extends React.Component {
     this.state = {            
       showType: false,              
       showHER2: false,
+      showGrade: false,
       code: code,  
       pathologytype: "",
       pathology_type: "",
@@ -115,6 +116,17 @@ class Pathology extends React.Component {
     }
   }
 
+  showGrade(name) {
+    //console.log(name)
+    if(name == "Yes"){
+      this.setState({ showGrade: true });   
+      this.state.grade = name 
+    }else if(name == "No"){
+        this.setState({ showGrade: false, grade_number: "", dcs: "" }); 
+        this.state.grade = name        
+    }
+  }
+
   /*showType(name) {
     var type = document.getElementById("pathologytype").value
     //alert(type)
@@ -162,7 +174,7 @@ class Pathology extends React.Component {
   }
 
   render(){          
-    const { showType, pathologytype, pathology_type, other_type, grade, code, pT, pN, ypT, ypN, pathologicalsizeofcancer, ER, PR, HER2, showHER2, showher } = this.state; 
+    const { showType, showGrade, pathologytype, pathology_type, other_type, grade, code, pT, pN, ypT, ypN, pathologicalsizeofcancer, ER, PR, HER2, showHER2, showher } = this.state; 
     const { history } = this.props;
 
     /*var metas = Object.keys(this.state.metastases_types).filter((x) => this.state.metastases_types[x]);
@@ -185,7 +197,7 @@ return (
               <AvForm  onSubmit= {() => this.sendPathologyDetails()}>
               <div className="row">
                 
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <AvGroup>            
                     <Label for='pathologytype'>Type</Label>
                     <AvInput type='select' name='pathologytype' id='pathologytype' required value={this.state.pathologytype} onChange={(e) => this.showType(e.target.value)}>
@@ -206,7 +218,7 @@ return (
                   </AvGroup>
                 </div>
                 {showType && (
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                   <AvGroup>
                     <Label for='other_type'>If Other Type Please mention</Label>
                     <AvField name='other_type' id='other_type' value={this.state.other_type} onChange={(e) => this.setState({ other_type: e.target.value})} required />
@@ -214,17 +226,43 @@ return (
                   </AvGroup>
                   </div>
                 )}  
-                <div className="col-md-4">
+                <div className="col-md-3">
                 <Label for='grade'>Grade</Label>
-                <AvRadioGroup name='grade' required value={this.state.grade} onChange={(e) => this.setState({ grade: e.target.value})} >
+                <AvRadioGroup name='grade' value={this.state.grade} required onChange={(e) => this.setState({ grade: e.target.value })} >
                   <div className="row">
-                    <div className="col-md-2"><AvRadio customInput label='Yes' value='Yes' /></div>
-                    <div className="col-md-2"><AvRadio customInput label='No' value='No' /></div>
-                    <div className="col-md-3"><AvRadio customInput label='Not Known' value='Not Known' /></div>
+                    <div className="col-md-3"><AvRadio customInput label='Yes' value='Yes' onChange={ () => this.showGrade("Yes") } /></div>
+                    <div className="col-md-3"><AvRadio customInput label='No' value='No' onChange={ () => this.showGrade("No") } /></div>
                   </div>
                   <AvFeedback>Please select the Grade!</AvFeedback>
                 </AvRadioGroup>                
-                </div>  
+                </div> 
+                {showGrade && (
+                <>
+                  <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='gradenumber'>Grade</Label>
+                    <AvInput type='select' name='gradenumber' id='gradenumber' required value={this.state.grade_number} onChange={(e) => this.setState({ grade_number: e.target.value})}>
+                        <option value="" selected>Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>                            
+                        <option value="3">3</option>                        
+                      </AvInput>
+                    <AvFeedback>Please select pT!</AvFeedback>
+                  </AvGroup>
+                </div>
+                <div className="col-md-3">
+                  <AvGroup>            
+                    <Label for='dcs'>DCS</Label>
+                    <AvInput type='select' name='dcs' id='dcs' required value={this.state.dcs} onChange={(e) => this.setState({ dcs: e.target.value})}>
+                        <option value="" selected>Select</option>
+                        <option value="Present">Present</option>
+                        <option value="Not Present">Not Present</option>                        
+                      </AvInput>
+                    <AvFeedback>Please select DCS!</AvFeedback>
+                  </AvGroup>
+                </div>
+                </>
+                )} 
                 <div className="col-md-12">Pathological stage of cancer<hr /></div>
                 <div className="col-md-2">
                   <AvGroup>            

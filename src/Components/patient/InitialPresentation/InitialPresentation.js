@@ -61,10 +61,29 @@ class InitialPresentation extends React.Component {
         { text: 'Alternative Therapy', checked: false },
         { text: 'Declined All Therapies', checked: false },
       ],
+      cTbasedon: [
+        { text: 'Clinical', checked: false },
+        { text: 'Mammorgam', checked: false },
+        { text: 'MRI', checked: false },
+        { text: 'Ultrasound', checked: false },
+      ],
+      cNbasedon: [
+        { text: 'Clinical', checked: false },
+        { text: 'Mammorgam', checked: false },
+        { text: 'MRI', checked: false },
+        { text: 'Ultrasound', checked: false },
+      ],
+      cMbasedon: [
+        { text: 'Clinical', checked: false },
+        { text: 'CT Scan', checked: false },
+        { text: 'Bone', checked: false },
+        { text: 'Pet-CT Scan', checked: false },
+        { text: 'Pet-MRI', checked: false },
+      ],
       code: code,  
       metastases_text: "",
       treatment_text: "",
-      presentation: "", at_diagnosis: "", laterality: "", cT: "", cTbasedon: "", cN: "", cNbasedon: "", cM: "", cMbasedon: "", metastases: "", total_number_of_metastases: "", other_metastases_types: "", germline_testing_done: "", genetics: "", other_genetics: "", pregnancy_associated_breast_cancer: ""
+      presentation: "", at_diagnosis: "", laterality: "", cT: "", cN: "", cM: "", metastases: "", total_number_of_metastases: "", other_metastases_types: "", germline_testing_done: "", genetics: "", other_genetics: "", pregnancy_associated_breast_cancer: ""
     };
     this.showMetastasesComp = this.showMetastasesComp.bind(this);
     this.hideMetastasesComp = this.hideMetastasesComp.bind(this);
@@ -99,6 +118,33 @@ class InitialPresentation extends React.Component {
     console.log(this.state.first_treatment_given)
   }
 
+  onTogglecT(index, e){
+  	let cTItems = this.state.cTbasedon.slice();
+		cTItems[index].checked = !cTItems[index].checked
+  	this.setState({
+    	cTbasedon: cTItems
+    })
+    console.log(this.state.cTbasedon)
+  }
+
+  onTogglecN(index, e){
+  	let cNItems = this.state.cNbasedon.slice();
+		cNItems[index].checked = !cNItems[index].checked
+  	this.setState({
+    	cNbasedon: cNItems
+    })
+    console.log(this.state.cNbasedon)
+  }
+
+  onTogglecM(index, e){
+  	let cMItems = this.state.cMbasedon.slice();
+		cMItems[index].checked = !cMItems[index].checked
+  	this.setState({
+    	cMbasedon: cMItems
+    })
+    console.log(this.state.cMbasedon)
+  }
+
   /*handleInputMetastasesChange = (e) =>{
    var {name, checked} = e.target;
 
@@ -119,7 +165,7 @@ class InitialPresentation extends React.Component {
      });    
    };*/
 
-  sendInitialPresentationDetails = e => {   
+   handleValidSubmit = (event, values) => {
     //alert(this.state.metastases_types)
     //alert(this.state.code)
     const { history } = this.props;
@@ -221,7 +267,8 @@ return (
               <h1 className="animate__animated animate__fadeIn">Patient's Initial Presentation</h1>
             </CardHeader>
             <CardBody>
-              <AvForm  onSubmit= {() => this.sendInitialPresentationDetails()}>
+              <AvForm onValidSubmit={this.handleValidSubmit}
+        onInvalidSubmit={this.handleInvalidSubmit}>
               <div className="row">
               <div className="col-md-4">
                 <AvGroup>            
@@ -267,23 +314,19 @@ return (
                         <option value="1">1</option>
                         <option value="2">2</option>                            
                         <option value="3">3</option>
-                        <option value="4">4</option>                            
-                        <option value="5">5</option>                            
+                        <option value="4">4</option>                                                                             
                       </AvInput>
                     <AvFeedback>Please select cT!</AvFeedback>
                   </AvGroup>
                 </div>
                 <div className="col-md-3">
                   <AvGroup>            
-                    <Label for='cTbasedon'>Based On cT</Label>
-                    <AvInput type='select' name='cTbasedon' id='cTbasedon'required value={this.state.cTbasedon} onChange={(e) => this.setState({ cTbasedon: e.target.value})}>
-                        <option value="" selected>Select</option>
-                        <option value="Clinical">Clinical</option>
-                        <option value="Mammorgam">Mammorgam</option>
-                        <option value="MRI">MRI</option>                            
-                        <option value="Ultrasound">Ultrasound</option>
-                      </AvInput>
-                    <AvFeedback>Please select Based on cT!</AvFeedback>
+                    <Label for='cTbasedon'>Based On Criteria</Label>
+                    <AvCheckboxGroup name='cTbasedon' required>                      
+                      {this.state.cTbasedon.map((itemTreat, i) =>
+                        <div className="col-md-12"><AvCheckbox customInput label={itemTreat.text} value={itemTreat.text} onChange={this.onTogglecT.bind(this, i)} /></div>                      
+                      )}                                               
+                    </AvCheckboxGroup>                  
                   </AvGroup>
                 </div>
 
@@ -303,15 +346,12 @@ return (
                 </div>
                 <div className="col-md-3">
                   <AvGroup>            
-                    <Label for='cNbasedon'>Based On cN</Label>
-                    <AvInput type='select' name='cNbasedon' id='cNbasedon'required value={this.state.cNbasedon} onChange={(e) => this.setState({ cNbasedon: e.target.value})}>
-                    <option value="" selected>Select</option>
-                        <option value="Clinical">Clinical</option>
-                        <option value="Mammorgam">Mammorgam</option>
-                        <option value="MRI">MRI</option>                            
-                        <option value="Ultrasound">Ultrasound</option>                           
-                      </AvInput>
-                    <AvFeedback>Please select Based on cN!</AvFeedback>
+                    <Label for='cNbasedon'>Based On Criteria</Label>
+                    <AvCheckboxGroup name='cNbasedon' required>                      
+                      {this.state.cNbasedon.map((itemTreat, i) =>
+                        <div className="col-md-12"><AvCheckbox customInput label={itemTreat.text} value={itemTreat.text} onChange={this.onTogglecN.bind(this, i)} /></div>                      
+                      )}                                               
+                    </AvCheckboxGroup>  
                   </AvGroup>
                 </div>
 
@@ -329,16 +369,12 @@ return (
                 </div>
                 <div className="col-md-3">
                   <AvGroup>            
-                    <Label for='cMbasedon'>Based On cM</Label>
-                    <AvInput type='select' name='cMbasedon' id='cMbasedon'required value={this.state.cMbasedon} onChange={(e) => this.setState({ cMbasedon: e.target.value})}>
-                        <option value="" selected>Select</option>
-                        <option value="Clinical">Clinical</option>
-                        <option value="CT Scan">CT Scan</option>
-                        <option value="Bone Scan">Bone Scan</option>                            
-                        <option value="Pet-CT Scan">Pet-CT Scan</option>
-                        <option value="Pet-MRI">Pet-MRI</option>                        
-                      </AvInput>
-                    <AvFeedback>Please select Based on cT!</AvFeedback>
+                    <Label for='cMbasedon'>Based On Criteria</Label>
+                    <AvCheckboxGroup name='cMbasedon' required>                      
+                      {this.state.cMbasedon.map((itemTreat, i) =>
+                        <div className="col-md-12"><AvCheckbox customInput label={itemTreat.text} value={itemTreat.text} onChange={this.onTogglecM.bind(this, i)} /></div>                      
+                      )}                                               
+                    </AvCheckboxGroup>
                   </AvGroup>
                 </div>
                 <div className="col-md-2">
@@ -360,12 +396,12 @@ return (
                     <div className="col-md-6"><AvRadio customInput label='More than 5' value='More than 5' /></div>                          
                   </div>                  
                 </AvRadioGroup>
-                <AvField name='metastases_text' id='metastases_text' value={this.state.metastases_text} onChange={(e) => this.setState({ metastases_text: e.target.value})} />
+                
                 </div> 
                   <div className="col-md-12"></div>
                   <div className="col-md-8">
                   <Label for='type_of_metastases'>Types of Metastases</Label>
-                  <AvCheckboxGroup name='type_of_metastases' >
+                  <AvCheckboxGroup name='type_of_metastases' required >
                     <div className="row">
                     {this.state.metastases_types.map((item, i) =>
                       <div className="col-md-2"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.onToggle.bind(this, i)} /></div>                      
@@ -389,7 +425,7 @@ return (
                   <hr />
                   <div className="col-md-12">
                   <Label for='first_treatment_given'><h4>First treatment given</h4></Label>
-                  <AvCheckboxGroup name='first_treatment_given'>
+                  <AvCheckboxGroup name='first_treatment_given' required>
                     <div className="row">
                     {this.state.first_treatment_given.map((itemTreat, i) =>
                       <div className="col-md-2"><AvCheckbox customInput label={itemTreat.text} value={itemTreat.text} onChange={this.onToggleTreatment.bind(this, i)} /></div>                      
@@ -418,7 +454,8 @@ return (
                         <option value="BRCA 2">BRCA 2</option>
                         <option value="PALB2"> PALB2</option>                            
                         <option value="ATM">ATM</option>
-                        <option value="CHEK 2">CHEK 2</option>                        
+                        <option value="CHEK 2">CHEK 2</option>   
+                        <option value="p53">p53</option>                        
                         <option value="Other">Other</option>                        
                       </AvInput>
                     <AvFeedback>Please select Genetics!</AvFeedback>
@@ -447,7 +484,7 @@ return (
                 </div>
                 <div className="col-md-12">
                 <a href={`/demography/edit/${this.state.code}`} className="mr-2 btn btn-primary" color='primary'><span className="fa fa-angle-left"></span> Back to Demography</a>
-                <Button color='primary' type='submit' disabled={ !presentation.length || !at_diagnosis.length || !laterality.length || !cT.length || !cTbasedon.length || !cN.length || !cNbasedon.length || !cM.length || !cMbasedon.length || !metastases.length || !first_treatment_given.length || !germline_testing_done.length || !pregnancy_associated_breast_cancer.length } onClick={ () => this.sendInitialPresentationDetails }>
+                <Button color='primary' type='submit' onClick={ () => this.sendInitialPresentationDetails }>
                   Submit
                 </Button>              
                 </div>    

@@ -578,5 +578,4 @@ return (
 );      
 }
 }
-
 export default withRouter(InitialPresentationEdit);

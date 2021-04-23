@@ -261,11 +261,12 @@ return (
                   </div>
                   <div className="col-md-8">
                   <Label for='areofrecurrence'>Area of Recurrence</Label>
+                  <AvInput type='select' name='recurrence' id='recurrence' required value={patient.recurrence} onChange={(e) => this.showRecurrence(e.target.value)}>
                   <AvCheckboxGroup name='areofrecurrence' >
                     <div className="row">
                         {this.getAreaCheckedData()}
                     </div>
-                  </AvCheckboxGroup>                  
+                  </AvCheckboxGroup></AvInput>                  
                   </div> 
                   <div className="col-md-4">
                     <AvGroup>            

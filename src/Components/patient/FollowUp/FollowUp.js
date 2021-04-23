@@ -39,6 +39,7 @@ class FollowUp extends React.Component {
       startDateDOD: "",   
       startDateLFU: "",   
       showRecurrenceMetaStases: false,
+      showRebiopsy: false,
               
       recurrence: "",
       dateofrecurrence: "",
@@ -56,7 +57,12 @@ class FollowUp extends React.Component {
         { text: 'Ovaries', checked: false },
         { text: 'Adrenal', checked: false },
         { text: 'Other', checked: false },
-      ],  
+      ], 
+      rebiopsy_types: [
+      	{ text: 'ER', checked: false },
+        { text: 'PR', checked: false },
+        { text: 'HER2', checked: false },        
+      ], 
       detectionofrecurrence: "",
       recurrenceifmetastases: "",
       recurrenceifmetastasesifother: "",
@@ -65,6 +71,7 @@ class FollowUp extends React.Component {
       dateoflastfollowup: "",  
     };
     this.showRecurrence = this.showRecurrence.bind(this);
+    this.showRebiopsy = this.showRebiopsy.bind(this);
     this.handleChangeDOR = this.handleChangeDOR.bind(this);
     this.handleChangeDOD = this.handleChangeDOD.bind(this);
     this.handleChangeLFU = this.handleChangeLFU.bind(this);
@@ -107,6 +114,15 @@ class FollowUp extends React.Component {
     console.log(this.state.metastases_types)
   }
 
+  onToggleReBiopsy(index, e){
+  	let ReItems = this.state.rebiopsy_types.slice();
+		ReItems[index].checked = !ReItems[index].checked
+  	this.setState({
+    	rebiopsy_types: ReItems
+    })
+    console.log(this.state.rebiopsy_types)
+  }
+
   handleInputAreaOfRecurrenceChange = (e) =>{
     var {name, checked} = e.target;
  
@@ -143,7 +159,21 @@ class FollowUp extends React.Component {
       this.setState({ showRecurrence: true });   
       this.state.recurrence = name 
     }else{
-        this.setState({ showRecurrence: false}); 
+        this.setState({ showRecurrence: false, areaofrecurrence: [
+          { text: 'Local', checked: false },
+          { text: 'Regional', checked: false },
+          { text: 'Contra lateral breast', checked: false },
+          { text: 'Distant Metastases', checked: false },        
+        ],    
+        metastases_types: [
+          { text: 'Liver', checked: false },
+          { text: 'Lung', checked: false },
+          { text: 'Bone', checked: false },
+          { text: 'Brain', checked: false },
+          { text: 'Ovaries', checked: false },
+          { text: 'Adrenal', checked: false },
+          { text: 'Other', checked: false },
+        ], }); 
         this.state.recurrence = name        
     }
   }
@@ -158,8 +188,23 @@ class FollowUp extends React.Component {
     }
   }
 
+  showRebiopsy(name) {
+    if(document.getElementById("rebiopsy").value == "Yes"){
+      this.setState({ showRebiopsy: true });   
+      this.state.rebiopsy = name 
+    }else{
+        this.setState({ showRebiopsy: false, rebiopsy_types: [
+          { text: 'ER', checked: false },
+          { text: 'PR', checked: false },
+          { text: 'HER2', checked: false },          
+        ],
+      }); 
+        this.state.rebiopsy = name        
+    }
+  }
+
   render(){          
-    const { showRecurrence, showRecurrenceMetaStases, recurrence, dateofrecurrence, areaofrecurrence, areaofrecurrence_text, detectionofrecurrence, recurrenceifmetastases, recurrenceifmetastasesifother, lostfollowup, dateofdeath, dateoflastfollowup, metastases_types, code } = this.state; 
+    const { showRecurrence, showRecurrenceMetaStases, showRebiopsy, recurrence, dateofrecurrence, areaofrecurrence, areaofrecurrence_text, detectionofrecurrence, recurrenceifmetastases, recurrenceifmetastasesifother, lostfollowup, dateofdeath, dateoflastfollowup, metastases_types, code } = this.state; 
     const { history } = this.props;
 
     /*var metas = Object.keys(this.state.areaofrecurrence).filter((x) => this.state.areaofrecurrence[x]);
@@ -206,7 +251,7 @@ return (
                   </div>
                   <div className="col-md-8">
                   <Label for='areofrecurrence'>Area of Recurrence</Label>
-                  <AvCheckboxGroup name='areofrecurrence' >
+                  <AvCheckboxGroup name='areofrecurrence' required >
                     <div className="row">
                     {this.state.areaofrecurrence.map((itemTreat, i) =>
                       <div className="col-md-2"><AvCheckbox customInput label={itemTreat.text} value={itemTreat.text} onChange={this.onToggle.bind(this, i)} /></div>                      
@@ -228,14 +273,26 @@ return (
                     </div>
                     <div className="col-md-4">
                       <Label for='type_of_metastases'>Types of Metastases</Label>
-                    <AvCheckboxGroup name='type_of_metastases' >
-                      <div className="row">
-                      {this.state.metastases_types.map((item, i) =>
-                        <div className="col-md-2"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.onToggleMeta.bind(this, i)} /></div>                      
-                      )}                          
-                      </div>
-                    </AvCheckboxGroup>
-                  </div>
+                      <AvCheckboxGroup name='type_of_metastases' required >
+                        <div className="row">
+                        {this.state.metastases_types.map((item, i) =>
+                          <div className="col-md-2"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.onToggleMeta.bind(this, i)} /></div>                      
+                        )}                          
+                        </div>
+                      </AvCheckboxGroup>
+                    </div>
+                  <div className="col-md-12"></div>   
+                  <div className="col-md-4">
+                    <AvGroup>            
+                        <Label for='rebiopsy'>Rebiopsy</Label>
+                        <AvInput type='select' name='rebiopsy' id='rebiopsy' required value={this.state.rebiopsy} onChange={(e) => this.showRebiopsy(e.target.value)}>
+                            <option value="" selected>Select</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>                             
+                        </AvInput>                      
+                        <AvFeedback>Please select Rebiopsy!</AvFeedback>
+                    </AvGroup>
+                  </div> 
                   </>
                 )}                                       
                 {showRecurrenceMetaStases && (
@@ -246,7 +303,17 @@ return (
                     <AvFeedback>Please enter the If Other!</AvFeedback>
                   </AvGroup>
                 </div>
-                )}     
+                )}  
+                {showRebiopsy && (
+                  <div className="col-md-4">
+                  <Label for='type_of_rebiopsy'>Types of Rebiopsy</Label>
+                    <AvCheckboxGroup name='type_of_rebiopsy' required >                      
+                      {this.state.rebiopsy_types.map((item, i) =>
+                        <div className="col-md-3"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.onToggleReBiopsy.bind(this, i)} /></div>                      
+                      )}                                                
+                    </AvCheckboxGroup>
+                  </div>
+                )}              
                 <div className="col-md-12"><hr /></div>
                 <div className="col-md-4">
                 <Label for='lostfollowup'>Lost to follow-up</Label>
@@ -273,7 +340,7 @@ return (
                     </AvGroup>
                 </div>
                 <div className="col-md-12">
-                <Button color='primary' type='submit' disabled= { !recurrence || !lostfollowup || !dateofdeath || !dateoflastfollowup } onClick={ () => this.sendTreatmentDetails }>
+                <Button color='primary' type='submit' onClick={ () => this.sendTreatmentDetails }>
                   Submit
                 </Button>              
                 </div>

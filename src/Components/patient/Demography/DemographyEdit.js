@@ -565,5 +565,4 @@ import axios from 'axios';
       );      
     }
   }
-
-    export default withRouter(DemographyEdit);
+export default withRouter(DemographyEdit);
