@@ -402,10 +402,10 @@ class EditTreatment extends React.Component {
   showAdjuvantChemotherapyIfYesFollowedBy(name){
     if(document.getElementById("adjuvantchemotherapyifyesfollowedby").value == "Others"){
       this.setState({ showAdjuvantChemotherapyIfYesFollowedBy: true });   
-      this.state.adjuvantchemotherapyifyesfollowedby = name 
+      this.state.adjuvant_chemotherapy_if_yes_followed_by = name 
     }else{
         this.setState({ showAdjuvantChemotherapyIfYesFollowedBy: false, adjuvantchemotherapyother: "" }); 
-        this.state.adjuvantchemotherapyifyesfollowedby = name        
+        this.state.adjuvant_chemotherapy_if_yes_followed_by = name        
     }
   }
 
@@ -968,7 +968,7 @@ return (
                           <option value="Capac low dose 1 year">Capac low dose 1 year</option>
                           <option value="Others">Others</option>                           
                       </AvInput>                      
-                      <AvFeedback>Please select If Yes!</AvFeedback>
+                      <AvFeedback>Please select Followed By!</AvFeedback>
                   </AvGroup>
                 </div>
                 )}
