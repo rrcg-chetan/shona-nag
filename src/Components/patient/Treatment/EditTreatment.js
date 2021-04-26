@@ -818,8 +818,8 @@ return (
                 {showPrimarySurgery && (
                 <div className="col-md-3">
                   <AvGroup>
-                    <Label for='oncoplasty_surgery_type'>Type of Oncoplasty</Label>
-                    <AvField placeholder="" name='oncoplasty_surgery_type' id='oncoplasty_surgery_type' value={patient.oncoplasty_surgery_type} onChange={(e) => this.setState({ oncoplasty_surgery_type: e.target.value})} required />
+                    <Label for='oncoplastysurgerytype'>Type of Oncoplasty</Label>
+                    <AvField placeholder="" name='oncoplastysurgerytype' id='oncoplastysurgerytype' value={patient.oncoplasty_surgery_type} onChange={(e) => this.setState({ oncoplasty_surgery_type: e.target.value})} required />
                     <AvFeedback>Please enter the Type of Oncoplasty!</AvFeedback>
                   </AvGroup>
                 </div>
