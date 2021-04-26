@@ -254,7 +254,9 @@ class EditTreatment extends React.Component {
     }else{
       
     }
-  })
+  }).catch(function (error) {
+    console.log(error);
+  });
   };
 
   handleChange(date) {
