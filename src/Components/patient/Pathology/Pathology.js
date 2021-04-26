@@ -88,7 +88,7 @@ class Pathology extends React.Component {
     //alert(this.state.metastases_types)
     //alert(this.state.code)
     const { history } = this.props;
-   axios.post(`https://shona-nag-cms.herokuapp.com/patientpathologydetails`, { pathologytype: this.state.pathologytype, other_type: this.state.other_type, grade: this.state.grade, code: this.state.code, pT: this.state.pT, pN: this.state.pN, ypT: this.state.ypT, ypN: this.state.ypN, pathologicalsizeofcancer: this.state.pathologicalsizeofcancer, ER: this.state.ER, PR: this.state.PR, HER2: this.state.HER2, showher: this.state.showher, dcs: this.state.dcs  })
+   axios.post(`https://shona-nag-cms.herokuapp.com/patientpathologydetails`, { pathologytype: this.state.pathologytype, other_type: this.state.other_type, grade: this.state.grade, grade_number: this.state.grade_number, code: this.state.code, pT: this.state.pT, pN: this.state.pN, ypT: this.state.ypT, ypN: this.state.ypN, pathologicalsizeofcancer: this.state.pathologicalsizeofcancer, ER: this.state.ER, PR: this.state.PR, HER2: this.state.HER2, showher: this.state.showher, dcs: this.state.dcs  })
     .then(function (response) {
     if(response.data.success === 'Pathology Sucessfully Submitted!'){            
       history.push(`/treatment/${response.data.value}`)
@@ -174,7 +174,7 @@ class Pathology extends React.Component {
   }
 
   render(){          
-    const { showType, showGrade, pathologytype, pathology_type, other_type, grade, code, pT, pN, ypT, ypN, pathologicalsizeofcancer, ER, PR, HER2, showHER2, showher } = this.state; 
+    const { showType, showGrade, pathologytype, pathology_type, other_type, grade, grade_number, dcs, code, pT, pN, ypT, ypN, pathologicalsizeofcancer, ER, PR, HER2, showHER2, showher } = this.state; 
     const { history } = this.props;
 
     /*var metas = Object.keys(this.state.metastases_types).filter((x) => this.state.metastases_types[x]);
