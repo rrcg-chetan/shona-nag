@@ -58,7 +58,7 @@ class FollowUp extends React.Component {
         { text: 'Adrenal', checked: false },
         { text: 'Other', checked: false },
       ], 
-      rebiopsy_types: [
+      types_of_rebiopsy: [
       	{ text: 'ER', checked: false },
         { text: 'PR', checked: false },
         { text: 'HER2', checked: false },        
@@ -69,6 +69,7 @@ class FollowUp extends React.Component {
       lostfollowup: "",    
       dateofdeath: "",
       dateoflastfollowup: "",  
+      loading: false,
     };
     this.showRecurrence = this.showRecurrence.bind(this);
     this.showRebiopsy = this.showRebiopsy.bind(this);
@@ -82,16 +83,16 @@ class FollowUp extends React.Component {
     //console.log(code)
   }
 
-  sendFollowUpDetails = e => {   
+  handleValidSubmit = (event, values) => {
     //alert(this.state.areaofrecurrence)
     //alert(this.state.code)
     const { history } = this.props;
-   axios.post(`https://shona-nag-cms.herokuapp.com/patientfollowupdetails`, { recurrence: this.state.recurrence, fertilityoptionundertaken: this.state.fertilityoptionundertaken, dateofrecurrence: this.state.dateofrecurrence, areaofrecurrence: this.state.areaofrecurrence, detectionofrecurrence: this.state.detectionofrecurrence, recurrenceifmetastases: this.state.recurrenceifmetastases, recurrenceifmetastasesifother: this.state.recurrenceifmetastasesifother, lostfollowup: this.state.lostfollowup, dateofdeath: this.state.dateofdeath, dateoflastfollowup: this.state.dateoflastfollowup, metastases_types: this.state.metastases_types, if_metastases: this.state.metastases_types, code: this.state.code })
+    this.setState({ loading: true });
+   axios.post(`https://shona-nag-cms.herokuapp.com/patientfollowupdetails`, { recurrence: this.state.recurrence, fertilityoptionundertaken: this.state.fertilityoptionundertaken, dateofrecurrence: this.state.dateofrecurrence, areaofrecurrence: this.state.areaofrecurrence, detectionofrecurrence: this.state.detectionofrecurrence, recurrenceifmetastases: this.state.recurrenceifmetastases, recurrenceifmetastasesifother: this.state.recurrenceifmetastasesifother, lostfollowup: this.state.lostfollowup, dateofdeath: this.state.dateofdeath, dateoflastfollowup: this.state.dateoflastfollowup, metastases_types: this.state.metastases_types, if_metastases: this.state.metastases_types, rebiopsy: this.state.rebiopsy, types_of_rebiopsy: this.state.types_of_rebiopsy, code: this.state.code })
     .then(function (response) {
-    if(response.data.success === 'Followup Sucessfully Submitted!'){            
+    if(response.data.success === 'Followup Sucessfully Submitted!'){  
       history.push(`/health-economics/${response.data.value}`)
-    }else{
-      
+    }else{      
     }
   })
   };
@@ -115,12 +116,12 @@ class FollowUp extends React.Component {
   }
 
   onToggleReBiopsy(index, e){
-  	let ReItems = this.state.rebiopsy_types.slice();
+  	let ReItems = this.state.types_of_rebiopsy.slice();
 		ReItems[index].checked = !ReItems[index].checked
   	this.setState({
-    	rebiopsy_types: ReItems
+    	types_of_rebiopsy: ReItems
     })
-    console.log(this.state.rebiopsy_types)
+    console.log(this.state.types_of_rebiopsy)
   }
 
   handleInputAreaOfRecurrenceChange = (e) =>{
@@ -193,7 +194,7 @@ class FollowUp extends React.Component {
       this.setState({ showRebiopsy: true });   
       this.state.rebiopsy = name 
     }else{
-        this.setState({ showRebiopsy: false, rebiopsy_types: [
+        this.setState({ showRebiopsy: false, types_of_rebiopsy: [
           { text: 'ER', checked: false },
           { text: 'PR', checked: false },
           { text: 'HER2', checked: false },          
@@ -204,7 +205,7 @@ class FollowUp extends React.Component {
   }
 
   render(){          
-    const { showRecurrence, showRecurrenceMetaStases, showRebiopsy, recurrence, dateofrecurrence, areaofrecurrence, areaofrecurrence_text, detectionofrecurrence, recurrenceifmetastases, recurrenceifmetastasesifother, lostfollowup, dateofdeath, dateoflastfollowup, metastases_types, code } = this.state; 
+    const { showRecurrence, showRecurrenceMetaStases, showRebiopsy, recurrence, dateofrecurrence, areaofrecurrence, areaofrecurrence_text, detectionofrecurrence, recurrenceifmetastases, recurrenceifmetastasesifother, lostfollowup, dateofdeath, dateoflastfollowup, metastases_types, rebiopsy, types_of_rebiopsy, loading, code } = this.state; 
     const { history } = this.props;
 
     /*var metas = Object.keys(this.state.areaofrecurrence).filter((x) => this.state.areaofrecurrence[x]);
@@ -225,7 +226,8 @@ return (
               <h1 className="animate__animated animate__fadeIn">Follow Up</h1>
             </CardHeader>
             <CardBody>
-              <AvForm  onSubmit= {() => this.sendFollowUpDetails()}>
+            <AvForm onValidSubmit={this.handleValidSubmit}
+        onInvalidSubmit={this.handleInvalidSubmit}>
               <div className="row">
                 
                 <div className="col-md-2">
@@ -245,7 +247,7 @@ return (
                   <div className="col-md-2">
                     <AvGroup>
                         <Label for='dateofrecurrence'>Date of Recurrence</Label><br />
-                        <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control w-100" dateFormat="dd-MM-yyyy" name="dateofrecurrence" id="dateofrecurrence" selected={this.state.startDateDOR} onSelect={this.handleSelect} onChange={this.handleChangeDOR} />                        
+                        <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control w-100" dateFormat="dd-MM-yyyy" name="dateofrecurrence" id="dateofrecurrence" selected={this.state.startDateDOR} onSelect={this.handleSelect} onChange={this.handleChangeDOR} required />                        
                         <AvFeedback>Please enter Date of Recurrence!</AvFeedback>
                       </AvGroup>
                   </div>
@@ -308,7 +310,7 @@ return (
                   <div className="col-md-4">
                   <Label for='type_of_rebiopsy'>Types of Rebiopsy</Label>
                     <AvCheckboxGroup name='type_of_rebiopsy' required >                      
-                      {this.state.rebiopsy_types.map((item, i) =>
+                      {this.state.types_of_rebiopsy.map((item, i) =>
                         <div className="col-md-3"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.onToggleReBiopsy.bind(this, i)} /></div>                      
                       )}                                                
                     </AvCheckboxGroup>
@@ -340,9 +342,25 @@ return (
                     </AvGroup>
                 </div>
                 <div className="col-md-12">
-                <Button color='primary' type='submit' onClick={ () => this.sendTreatmentDetails }>
-                  Submit
-                </Button>              
+                <Button color='primary' type='submit' disabled={loading}>
+                      {loading && (<svg width="30px" height="30px" viewBox="0 0 40 40" enable-background="new 0 0 40 40">
+                  <path opacity="0.2" fill="#fff" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+                  <path fill="#fff" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                    C22.32,8.481,24.301,9.057,26.013,10.047z">
+                    <animateTransform attributeType="xml"
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 20 20"
+                      to="360 20 20"
+                      dur="0.5s"
+                      repeatCount="indefinite"/>
+                    </path>
+                  </svg>)}
+                {loading && <span> Please wait...</span>}
+                {!loading && <span>Submit</span>}
+                      </Button> 
                 </div>
               </div>
               </AvForm>

@@ -103,6 +103,33 @@ class InitialPresentationEdit extends React.Component {
     console.log(this.state.first_treatment_given)
   }
 
+  oncT(index, e){
+  	let ocT = this.state.patientct_based_one.slice();
+		ocT[index].checked = !ocT[index].checked
+  	this.setState({
+    	ct_based_one: ocT
+    })
+    console.log(this.state.ct_based_one)
+  }
+
+  oncN(index, e){
+  	let ocN = this.state.patientcn_bases_on.slice();
+		ocN[index].checked = !ocN[index].checked
+  	this.setState({
+    	cn_bases_on: ocN
+    })
+    console.log(this.state.cn_bases_on)
+  }
+
+  oncM(index, e){
+  	let ocM = this.state.patientcm_based_on.slice();
+		ocM[index].checked = !ocM[index].checked
+  	this.setState({
+    	cm_based_on: ocM
+    })
+    console.log(this.state.cm_based_on)
+  }
+
   componentDidMount() {
     axios.get(`https://shona-nag-cms.herokuapp.com/getfulldetails/${this.state.code}`)
     .then(response =>
@@ -121,12 +148,15 @@ class InitialPresentationEdit extends React.Component {
           familyhavecancer: patients[0].family_have_cancer,
           typesofmetastases: patients[0].metastases_types,
           patientmetastases_types: JSON.parse(patients[0].metastases_types),
-          patientfirst_treatment_given: JSON.parse(patients[0].first_treatment_given)
+          patientfirst_treatment_given: JSON.parse(patients[0].first_treatment_given),
+          patientct_based_one: JSON.parse(patients[0].ct_based_one),
+          patientcn_bases_on: JSON.parse(patients[0].cn_bases_on),
+          patientcm_based_on: JSON.parse(patients[0].cm_based_on),
           /*pregnancy: patients[0].pregnancy_associated_b_c
           whichrelative: patients[0].which_relative*/
         });
         //document.getElementById('metastases_types')[1].style.display='none';
-        console.log(this.state.patientfirst_treatment_given)
+        console.log(this.state.patientct_based_one)
         if(this.state.metastasesv == 'Yes'){
           this.setState({ showMetastases: true })
         }
@@ -143,7 +173,10 @@ class InitialPresentationEdit extends React.Component {
           this.setState({ showOtherCancer: true })
         }*/
     })
-    .catch(error => this.setState({ error, isLoading: false })); 
+    .catch((error) => { 
+      this.setState({ error, isLoading: false })
+      console.log(error)
+    }); 
     
 }; 
 
@@ -175,6 +208,48 @@ getTreatmentCheckedData() {
   )
 }
 
+getcT() {
+  return this.state.patientct_based_one.map((item, i) => {
+    var check = item.checked;
+    //console.log(check)
+    if(check == true){
+      //console.log(check);
+      return (<div className="col-md-12"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.oncT.bind(this, i)} checked /></div>) 
+    }else{
+      return (<div className="col-md-12"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.oncT.bind(this, i)} /></div>) 
+    }
+  }    
+  )
+}
+
+getcN() {
+  return this.state.patientcn_bases_on.map((item, i) => {
+    var check = item.checked;
+    //console.log(check)
+    if(check == true){
+      //console.log(check);
+      return (<div className="col-md-12"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.oncN.bind(this, i)} checked /></div>) 
+    }else{
+      return (<div className="col-md-12"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.oncN.bind(this, i)} /></div>) 
+    }
+  }    
+  )
+}
+
+getcM() {
+  return this.state.patientcm_based_on.map((item, i) => {
+    var check = item.checked;
+    //console.log(check)
+    if(check == true){
+      //console.log(check);
+      return (<div className="col-md-12"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.oncM.bind(this, i)} checked /></div>) 
+    }else{
+      return (<div className="col-md-12"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.oncM.bind(this, i)} /></div>) 
+    }
+  }    
+  )
+}
+
 handleInputMetastasesChange = (e) =>{
     var {name, checked} = e.target;
  
@@ -197,11 +272,11 @@ handleInputMetastasesChange = (e) =>{
      });    
    };
 
-  sendInitialPresentationDetails = e => {   
+   handleValidSubmit = (event, values) => {
     //alert(this.state.metastases_types)
     //alert(this.state.code)
     const { history } = this.props;
-   axios.post(`https://shona-nag-cms.herokuapp.com/updatepatientdetails`, { presentation: this.state.presentation, at_diagnosis: this.state.at_diagnosis, laterality: this.state.laterality, ct: this.state.ct, ct_based_one: this.state.ct_based_one, cn: this.state.cn, cn_bases_on: this.state.cn_bases_on, cm: this.state.cm, cm_based_on: this.state.cm_based_on, metastases: this.state.metastases, total_number_of_metastatus: this.state.total_number_of_metastatus, metastases_types: JSON.stringify(this.state.metastases_types), other_metastases_types: this.state.other_metastases_types, first_treatment_given: JSON.stringify(this.state.first_treatment_given), germline_testing: this.state.germline_testing, genetic_testing_done: this.state.genetic_testing_done, genetic_testing_done_and_other: this.state.genetic_testing_done_and_other, pregnancy_associated_b_c: this.state.pregnancy_associated_b_c, treatment_text: this.state.treatment_text, metastasestext: this.state.metastasestext, code: this.state.code })
+   axios.post(`https://shona-nag-cms.herokuapp.com/updatepatientdetails`, { presentation: this.state.presentation, at_diagnosis: this.state.at_diagnosis, laterality: this.state.laterality, ct: this.state.ct, ct_based_one: JSON.stringify(this.state.ct_based_one), cn: this.state.cn, cn_bases_on: JSON.stringify(this.state.cn_bases_on), cm: this.state.cm, cm_based_on: JSON.stringify(this.state.cm_based_on), metastases: this.state.metastases, total_number_of_metastatus: this.state.total_number_of_metastatus, metastases_types: JSON.stringify(this.state.metastases_types), other_metastases_types: this.state.other_metastases_types, first_treatment_given: JSON.stringify(this.state.first_treatment_given), germline_testing: this.state.germline_testing, genetic_testing_done: this.state.genetic_testing_done, genetic_testing_done_and_other: this.state.genetic_testing_done_and_other, pregnancy_associated_b_c: this.state.pregnancy_associated_b_c, treatment_text: this.state.treatment_text, metastasestext: this.state.metastasestext, code: this.state.code })
     .then(function (response) {
     //console.log(JSON.stringify(response.data));
     if(response.data.success === 'Sucessfully Updated!'){            
@@ -320,7 +395,8 @@ return (
                     */                    
 
                     return (
-              <AvForm  onSubmit= {() => this.sendInitialPresentationDetails()}>
+                      <AvForm onValidSubmit={this.handleValidSubmit}
+                      onInvalidSubmit={this.handleInvalidSubmit}>
               <div className="row">
               <div className="col-md-4">
                 <AvGroup>            
@@ -366,24 +442,16 @@ return (
                         <option value="1">1</option>
                         <option value="2">2</option>                            
                         <option value="3">3</option>
-                        <option value="4">4</option>                            
-                        <option value="5">5</option>                            
+                        <option value="4">4</option>                                               
                       </AvInput>
                     <AvFeedback>Please select cT!</AvFeedback>
                   </AvGroup>
                 </div>
-                <div className="col-md-3">
-                  <AvGroup>            
-                    <Label for='ct_based_one'>Based On cT</Label>
-                    <AvInput type='select' name='ct_based_one' id='ct_based_one'required value={patient.ct_based_one} onChange={(e) => this.setState({ ct_based_one: e.target.value})}>
-                        <option value="" selected>Select</option>
-                        <option value="Clinical">Clinical</option>
-                        <option value="Mammorgam">Mammorgam</option>
-                        <option value="MRI">MRI</option>                            
-                        <option value="Ultrasound">Ultrasound</option>
-                      </AvInput>
-                    <AvFeedback>Please select Based on cT!</AvFeedback>
-                  </AvGroup>
+                <div className="col-md-3">                  
+                    <Label for='ct_based_one'>Based On Criteria</Label>                    
+                    <AvCheckboxGroup name='ct_based_one' id="ct_based_one" >
+                      {this.getcT()}
+                    </AvCheckboxGroup>                            
                 </div>
 
                 <div className="col-md-1">
@@ -400,18 +468,11 @@ return (
                     <AvFeedback>Please select cN!</AvFeedback>
                   </AvGroup>
                 </div>
-                <div className="col-md-3">
-                  <AvGroup>            
-                    <Label for='cn_bases_on'>Based On cN</Label>
-                    <AvInput type='select' name='cn_bases_on' id='cn_bases_on'required value={patient.cn_bases_on} onChange={(e) => this.setState({ cn_bases_on: e.target.value})}>
-                    <option value="" selected>Select</option>
-                        <option value="Clinical">Clinical</option>
-                        <option value="Mammorgam">Mammorgam</option>
-                        <option value="MRI">MRI</option>                            
-                        <option value="Ultrasound">Ultrasound</option>                           
-                      </AvInput>
-                    <AvFeedback>Please select Based on cN!</AvFeedback>
-                  </AvGroup>
+                <div className="col-md-3">                  
+                  <Label for='cn_bases_on'>Based On Criteria</Label>                    
+                  <AvCheckboxGroup name='cn_bases_on' id="cn_bases_on" >
+                    {this.getcN()}
+                  </AvCheckboxGroup>
                 </div>
 
                 <div className="col-md-1">
@@ -426,19 +487,11 @@ return (
                     <AvFeedback>Please select cM!</AvFeedback>
                   </AvGroup>
                 </div>
-                <div className="col-md-3">
-                  <AvGroup>            
-                    <Label for='cm_based_on'>Based On cM</Label>
-                    <AvInput type='select' name='cm_based_on' id='cm_based_on'required value={patient.cm_based_on} onChange={(e) => this.setState({ cm_based_on: e.target.value})}>
-                        <option value="" selected>Select</option>
-                        <option value="Clinical">Clinical</option>
-                        <option value="CT Scan">CT Scan</option>
-                        <option value="Bone Scan">Bone Scan</option>                            
-                        <option value="Pet-CT Scan">Pet-CT Scan</option>
-                        <option value="Pet-MRI">Pet-MRI</option>                        
-                      </AvInput>
-                    <AvFeedback>Please select Based on cT!</AvFeedback>
-                  </AvGroup>
+                <div className="col-md-3">                  
+                  <Label for='cm_based_on'>Based On Criteria</Label>                    
+                  <AvCheckboxGroup name='cm_based_on' id="cm_based_on" >
+                    {this.getcM()}
+                  </AvCheckboxGroup>
                 </div>
                 <div className="col-md-2">
                 <Label for='metastases'>Metastases</Label>
@@ -541,7 +594,7 @@ return (
                 </AvRadioGroup>
                 </div>
                 <div className="col-md-12">
-                <Button color='primary' type='submit' disabled={ !presentation.length || !at_diagnosis.length || !laterality.length || !ct.length || !ct_based_one.length || !cn.length || !cn_bases_on.length || !cm.length || !cm_based_on.length || !metastases.length || !first_treatment_given.length || !germline_testing.length } onClick={ () => this.sendInitialPresentationDetails }>
+                <Button color='primary' type='submit'>
                   Submit
                 </Button>              
                 </div>    

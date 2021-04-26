@@ -85,6 +85,7 @@ class Treatment extends React.Component {
       ifprogression: "",
       ifprogressionandother: "",
       primarysurgery: "",
+      oncoplasty_surgery_type: "",
       nodalsurgery: "", 
       ifnodalsurgeryandother: "",
       reconstructiondone: "",
@@ -118,7 +119,7 @@ class Treatment extends React.Component {
       ngsdoneatrecurrence: "",
       ngsdoneatrecurrenceifyes: "",
       ngsdoneatrecurrenceifyesidentifiedtargets: "",
-      if_present_with_metastases: "", biomarker_testing: "", gBRCAm: "", brca_deletion: "", brca_duplication: "", androgen_receptor: "", androgen_receptor_positive: "", tumor_mutation_type: "", tumor_mutation_value: "", msi_status: "", pik3cam_status: "", pik3cam_mutation_detected: "", ngs_performed: "", ngs_performed_if_yes_findings: "", first_line_therapy_yes: "", second_line_therapy_yes: "", third_line_therapy_yes: "", fourth_line_therapy_yes: "", first_line_therapy_other: "", second_line_therapy_other: "", third_line_therapy_other: "", fourth_line_therapy_other: "", bone_metastsis: "", bisphosphonates: "", rank_i_inhibitor: "", pallative_radiotherapy: "", p_r_date: "", p_r_site: "", p_r_schedule: "", p_r_dose: "", p_r_other_comments: "", leptomeningeal_metastasis_radio_therapy: "", intratelcal_chemo: "", intratelcal_chemo_if_yes: "", intratelcal_chemo_date: "", intratelcal_chemo_regimen: "",
+      if_present_with_metastases: "", biomarker_testing: "", gBRCAm: "", brca_deletion: "", brca_duplication: "", androgen_receptor: "", androgen_receptor_positive: "", tumor_mutation_type: "", tumor_mutation_value: "", msi_status: "", pik3cam_status: "", pik3cam_mutation_detected: "", ngs_performed: "", ngs_performed_if_yes_findings: "", first_line_therapy_yes: "", second_line_therapy_yes: "", third_line_therapy_yes: "", fourth_line_therapy_yes: "", first_line_therapy_other: "", second_line_therapy_other: "", third_line_therapy_other: "", fourth_line_therapy_other: "", bone_metastasis: "", bisphosphonates: "", rank_i_inhibitor: "", pallative_radiotherapy: "", p_r_date: "", p_r_site: "", p_r_schedule: "", p_r_dose: "", p_r_other_comments: "", leptomeningeal_metastasis_radio_therapy: "", intratelcal_chemo: "", intratelcal_chemo_if_yes: "", intratelcal_chemo_date: "", intratelcal_chemo_regimen: "", loading: false,
     };
     this.showFertilityOption = this.showFertilityOption.bind(this);
     this.showFertilityDiscussed = this.showFertilityDiscussed.bind(this);
@@ -165,18 +166,27 @@ class Treatment extends React.Component {
     //console.log(code)
   }
 
-  sendTreatmentDetails = e => {   
+  handleValidSubmit = (event, values) => {
     //alert(this.state.metastases_types)
     //alert(this.state.code)
     const { history } = this.props;
-   axios.post(`https://shona-nag-cms.herokuapp.com/patienttreatmentdetails`, { fertilitydiscussed: this.state.fertilitydiscussed, fertilityoptionundertaken: this.state.fertilityoptionundertaken, fertilitydiscussedifother: this.state.fertilitydiscussedifother, neoadjuvanttherapy: this.state.neoadjuvanttherapy, neoadjuvanttherapyifyes: this.state.neoadjuvanttherapyifyes, neoadjuvantthereayifyesother: this.state.neoadjuvantthereayifyesother, ovariansuppression: this.state.ovariansuppression, ovariansuppressionifyes: this.state.ovariansuppressionifyes, responsetoneoadjuvantchemotherapy: this.state.responsetoneoadjuvantchemotherapy, ifprogression: this.state.ifprogression, ifprogressionandother: this.state.ifprogressionandother, primarysurgery: this.state.primarysurgery, nodalsurgery: this.state.nodalsurgery, ifnodalsurgeryandother: this.state.ifnodalsurgeryandother, reconstructiondone: this.state.reconstructiondone, timingofreconstruction: this.state.timingofreconstruction, typeofreconstruction: this.state.typeofreconstruction, typeofreconstructionother: this.state.typeofreconstructionother, adjuvantchemotherapy: this.state.adjuvantchemotherapy, adjuvantchemotherapyifyes: this.state.adjuvantchemotherapyifyes, adjuvantchemotherapyother: this.state.adjuvantchemotherapyother, adjuvantbonemodify: this.state.adjuvantbonemodify, fertilityoptionundertakenbone: this.state.fertilityoptionundertakenbone, fertilityoptionundertakenboneother: this.state.fertilityoptionundertakenboneother, fertilityoptionundertakenboneotherifother: this.state.fertilityoptionundertakenboneotherifother, her2targetedtherapy: this.state.her2targetedtherapy, her2targetedtherapyduration: this.state.her2targetedtherapyduration, her2targetedtherapydurationifother: this.state.her2targetedtherapydurationifother, dualantiher2: this.state.dualantiher2, dualantiher2ifyes: this.state.dualantiher2ifyes, adjuvantradiotherapy: this.state.adjuvantradiotherapy, adjuvantradiotherapyifyes: this.state.adjuvantradiotherapyifyes, adjuvantradiotherapyifyesother: this.state.adjuvantradiotherapyifyesother, adjuvantendocrinetherapy: this.state.adjuvantendocrinetherapy, adjuvantendocrinetherapyifyes: this.state.adjuvantendocrinetherapyifyes, recommendeddurationadjuvantendocrinetherapy: this.state.recommendeddurationadjuvantendocrinetherapy, recommendeddurationadjuvantendocrinetherapyifother: this.state.recommendeddurationadjuvantendocrinetherapyifother, reasonforstoppingaet: this.state.reasonforstoppingaet, ifpresentedwithmetastases: this.state.ifpresentedwithmetastases, ifpresentedwithmetastasesifother: this.state.ifpresentedwithmetastasesifother, ngsdoneatdiagnosis: this.state.ngsdoneatdiagnosis, ngsdoneatdiagnosisifyes: this.state.ngsdoneatdiagnosisifyes, ngsdoneatdiagnosisifyesidentifiedtargets: this.state.ngsdoneatdiagnosisifyesidentifiedtargets, ngsdoneatrecurrence: this.state.ngsdoneatrecurrence, ngsdoneatrecurrenceifyes: this.state.ngsdoneatrecurrenceifyes, ngsdoneatrecurrenceifyesidentifiedtargets: this.state.ngsdoneatrecurrenceifyesidentifiedtargets, if_present_with_metastases: this.state.if_present_with_metastases, biomarker_testing: this.state.biomarker_testing, gBRCAm: this.state.gBRCAm, brca_deletion: this.state.brca_deletion, brca_duplication: this.state.brca_duplication, androgen_receptor: this.state.androgen_receptor, androgen_receptor_positive: this.state.androgen_receptor_positive, tumor_mutation_type: this.state.tumor_mutation_type, tumor_mutation_value: this.state.tumor_mutation_value, msi_status: this.state.msi_status, pik3cam_status: this.state.pik3cam_status, pik3cam_mutation_detected: this.state.pik3cam_mutation_detected, ngs_performed: this.state.ngs_performed, ngs_performed_if_yes_findings: this.state.ngs_performed_if_yes_findings, first_line_therapy_yes: this.state.first_line_therapy_yes, second_line_therapy_yes: this.state.second_line_therapy_yes, third_line_therapy_yes: this.state.third_line_therapy_yes, fourth_line_therapy_yes: this.state.fourth_line_therapy_yes, first_line_therapy_other: this.state.first_line_therapy_other, second_line_therapy_other: this.state.second_line_therapy_other, third_line_therapy_other: this.state.third_line_therapy_other, fourth_line_therapy_other: this.state.fourth_line_therapy_other, bone_metastsis: this.state.bone_metastsis, bisphosphonates: this.state.bisphosphonates, rank_i_inhibitor: this.state.rank_i_inhibitor, pallative_radiotherapy: this.state.pallative_radiotherapy, p_r_date: this.state.p_r_date, p_r_site: this.state.p_r_site, p_r_schedule: this.state.p_r_schedule, p_r_dose: this.state.p_r_dose, p_r_other_comments: this.state.p_r_other_comments, leptomeningeal_metastasis_radio_therapy: this.state.leptomeningeal_metastasis_radio_therapy, intratelcal_chemo: this.state.intratelcal_chemo, intratelcal_chemo_if_yes: this.state.intratelcal_chemo_if_yes, intratelcal_chemo_date: this.state.intratelcal_chemo_date, intratelcal_chemo_regimen: this.state.intratelcal_chemo_regimen, code: this.state.code })
-    .then(function (response) {
-    if(response.data.success === 'Treatment Sucessfully Submitted!'){            
-      history.push(`/follow-up/${response.data.value}`)
+    this.setState({ loading: true });
+   axios.post(`https://shona-nag-cms.herokuapp.com/patienttreatmentdetails`, { fertilitydiscussed: this.state.fertilitydiscussed, fertilityoptionundertaken: this.state.fertilityoptionundertaken, fertilitydiscussedifother: this.state.fertilitydiscussedifother, neoadjuvanttherapy: this.state.neoadjuvanttherapy, neoadjuvanttherapyifyes: this.state.neoadjuvanttherapyifyes, neoadjuvantthereayifyesother: this.state.neoadjuvantthereayifyesother, ovariansuppression: this.state.ovariansuppression, ovariansuppressionifyes: this.state.ovariansuppressionifyes, responsetoneoadjuvantchemotherapy: this.state.responsetoneoadjuvantchemotherapy, ifprogression: this.state.ifprogression, ifprogressionandother: this.state.ifprogressionandother, primarysurgery: this.state.primarysurgery, oncoplasty_surgery_type: this.state.oncoplasty_surgery_type, nodalsurgery: this.state.nodalsurgery, ifnodalsurgeryandother: this.state.ifnodalsurgeryandother, reconstructiondone: this.state.reconstructiondone, timingofreconstruction: this.state.timingofreconstruction, typeofreconstruction: this.state.typeofreconstruction, typeofreconstructionother: this.state.typeofreconstructionother, adjuvantchemotherapy: this.state.adjuvantchemotherapy, adjuvantchemotherapyifyes: this.state.adjuvantchemotherapyifyes, adjuvantchemotherapyifyesfollowedby: this.state.adjuvantchemotherapyifyesfollowedby, adjuvantchemotherapyother: this.state.adjuvantchemotherapyother, adjuvantbonemodify: this.state.adjuvantbonemodify, fertilityoptionundertakenbone: this.state.fertilityoptionundertakenbone, fertilityoptionundertakenboneother: this.state.fertilityoptionundertakenboneother, fertilityoptionundertakenboneotherifother: this.state.fertilityoptionundertakenboneotherifother, her2targetedtherapy: this.state.her2targetedtherapy, her2targetedtherapyduration: this.state.her2targetedtherapyduration, her2targetedtherapydurationifother: this.state.her2targetedtherapydurationifother, dualantiher2: this.state.dualantiher2, dualantiher2ifyes: this.state.dualantiher2ifyes, adjuvantradiotherapy: this.state.adjuvantradiotherapy, adjuvantradiotherapyifyes: this.state.adjuvantradiotherapyifyes, adjuvantradiotherapyifyesother: this.state.adjuvantradiotherapyifyesother, adjuvantendocrinetherapy: this.state.adjuvantendocrinetherapy, adjuvantendocrinetherapyifyes: this.state.adjuvantendocrinetherapyifyes, recommendeddurationadjuvantendocrinetherapy: this.state.recommendeddurationadjuvantendocrinetherapy, recommendeddurationadjuvantendocrinetherapyifother: this.state.recommendeddurationadjuvantendocrinetherapyifother, reasonforstoppingaet: this.state.reasonforstoppingaet, ifpresentedwithmetastases: this.state.ifpresentedwithmetastases, ifpresentedwithmetastasesifother: this.state.ifpresentedwithmetastasesifother, ngsdoneatdiagnosis: this.state.ngsdoneatdiagnosis, ngsdoneatdiagnosisifyes: this.state.ngsdoneatdiagnosisifyes, ngsdoneatdiagnosisifyesidentifiedtargets: this.state.ngsdoneatdiagnosisifyesidentifiedtargets, ngsdoneatrecurrence: this.state.ngsdoneatrecurrence, ngsdoneatrecurrenceifyes: this.state.ngsdoneatrecurrenceifyes, ngsdoneatrecurrenceifyesidentifiedtargets: this.state.ngsdoneatrecurrenceifyesidentifiedtargets, if_present_with_metastases: this.state.if_present_with_metastases, biomarker_testing: this.state.biomarker_testing, gBRCAm: this.state.gBRCAm, brca_deletion: this.state.brca_deletion, brca_duplication: this.state.brca_duplication, androgen_receptor: this.state.androgen_receptor, androgen_receptor_positive: this.state.androgen_receptor_positive, tumor_mutation_type: this.state.tumor_mutation_type, tumor_mutation_value: this.state.tumor_mutation_value, msi_status: this.state.msi_status, pik3cam_status: this.state.pik3cam_status, pik3cam_mutation_detected: this.state.pik3cam_mutation_detected, ngs_performed: this.state.ngs_performed, ngs_performed_if_yes_findings: this.state.ngs_performed_if_yes_findings, first_line_therapy_yes: this.state.first_line_therapy_yes, second_line_therapy_yes: this.state.second_line_therapy_yes, third_line_therapy_yes: this.state.third_line_therapy_yes, fourth_line_therapy_yes: this.state.fourth_line_therapy_yes, first_line_therapy_other: this.state.first_line_therapy_other, second_line_therapy_other: this.state.second_line_therapy_other, third_line_therapy_other: this.state.third_line_therapy_other, fourth_line_therapy_other: this.state.fourth_line_therapy_other, bone_metastasis: this.state.bone_metastasis, bisphosphonates: this.state.bisphosphonates, rank_i_inhibitor: this.state.rank_i_inhibitor, pallative_radiotherapy: this.state.pallative_radiotherapy, p_r_date: this.state.p_r_date, p_r_site: this.state.p_r_site, p_r_schedule: this.state.p_r_schedule, p_r_dose: this.state.p_r_dose, p_r_other_comments: this.state.p_r_other_comments, leptomeningeal_metastasis_radio_therapy: this.state.leptomeningeal_metastasis_radio_therapy, intratelcal_chemo: this.state.intratelcal_chemo, intratelcal_chemo_if_yes: this.state.intratelcal_chemo_if_yes, intratelcal_chemo_date: this.state.intratelcal_chemo_date, intratelcal_chemo_regimen: this.state.intratelcal_chemo_regimen, code: this.state.code })
+   
+   .then((response) => {
+    //console.log(JSON.stringify(response));
+    if(response.data.success === 'Treatment Sucessfully Submitted!'){      
+      this.setState({ loading: false });
+      history.push(`/follow-up/${response.data.value}`)               
     }else{
-      
+      this.setState({
+        demographicsStatus: response.data.failed,
+        loading:false
+      });
     }
-  })
+  }).catch(function (error) {
+    console.log(error);
+  });    
   };
   
   handleChange(date) {
@@ -435,8 +445,8 @@ class Treatment extends React.Component {
       this.setState({ showIfPresentedWithMetastases: true });   
       this.state.if_present_with_metastases = name 
     }else{
-        this.setState({ showIfPresentedWithMetastases: false, ifpresentedwithmetastasesifother: "", if_present_with_metastases: "", biomarker_testing: "", gBRCAm: "", brca_deletion: "", brca_duplication: "", androgen_receptor: "", androgen_receptor_positive: "", tumor_mutation_type: "", tumor_mutation_value: "", msi_status: "", pik3cam_status: "", pik3cam_mutation_detected: "", ngs_performed: "", ngs_performed_if_yes_findings: "", first_line_therapy_yes: "", second_line_therapy_yes: "", third_line_therapy_yes: "", fourth_line_therapy_yes: "", bone_metastsis: "", bisphosphonates: "", rank_i_inhibitor: "", pallative_radiotherapy: "", p_r_date: "", p_r_site: "", p_r_schedule: "", p_r_dose: "", p_r_other_comments: "", leptomeningeal_metastasis_radio_therapy: "", intratelcal_chemo: "", intratelcal_chemo_if_yes: "", intratelcal_chemo_date: "", intratelcal_chemo_regimen: "" }); 
-        this.state.ifpresentedwithmetastases = name        
+        this.setState({ showIfPresentedWithMetastases: false, ifpresentedwithmetastasesifother: "", if_present_with_metastases: "", biomarker_testing: "", gBRCAm: "", brca_deletion: "", brca_duplication: "", androgen_receptor: "", androgen_receptor_positive: "", tumor_mutation_type: "", tumor_mutation_value: "", msi_status: "", pik3cam_status: "", pik3cam_mutation_detected: "", ngs_performed: "", ngs_performed_if_yes_findings: "", first_line_therapy_yes: "", second_line_therapy_yes: "", third_line_therapy_yes: "", fourth_line_therapy_yes: "", first_line_therapy_other: "", second_line_therapy_other: "", third_line_therapy_other: "", fourth_line_therapy_other: "", bone_metastasis: "", bisphosphonates: "", rank_i_inhibitor: "", pallative_radiotherapy: "", p_r_date: "", p_r_site: "", p_r_schedule: "", p_r_dose: "", p_r_other_comments: "", leptomeningeal_metastasis_radio_therapy: "", intratelcal_chemo: "", intratelcal_chemo_if_yes: "", intratelcal_chemo_date: "", intratelcal_chemo_regimen: "", ngsdoneatdiagnosis: "", ngsdoneatdiagnosisifyes: "", ngsdoneatdiagnosisifyesidentifiedtargets: "", ngsdoneatrecurrence: "", ngsdoneatrecurrenceifyes: "", ngsdoneatrecurrenceifyesidentifiedtargets: "" }); 
+        this.state.if_present_with_metastases = name        
     }
   }
 
@@ -555,13 +565,13 @@ class Treatment extends React.Component {
       this.setState({ showPrimarySurgery: true });   
       this.state.primarysurgery = name 
     }else{
-        this.setState({ showPrimarySurgery: false, primarysurgerytype: "" }); 
+        this.setState({ showPrimarySurgery: false, oncoplasty_surgery_type: "" }); 
         this.state.primarysurgery = name        
     }
   }
 
   render(){          
-    const { showFertilityOption, showFertilityDiscussed, showNeoAdjuvantTherapy, showNeoAdjuvantTherapyIfYes, showOvarianSuppression, showIfProgression, showNodalSurgery, showReconstruction, showReconstructionType, showAdjuvantChemotherapy, showAdjuvantChemotherapyIfYes, showAdjuvantBoneModify, showFertilityOptionUndertakenBone, showFertilityOptionUndertakenBoneOther, showHER2TargetedTherapy, showHER2TargetedTherapyDuration, showDualAntiHER2, showAdjuvantRadioTherapy, showAdjuvantRadioTherapyIfYes, showAdjuvantEndocrineTherapy, showRecommendedDurationAdjuvantEndocrineTherapy, showIfPresentedWithMetastases, showNGSDoneAtDiagnosis, showNGSDoneAtRecurrence, showIfAndroReceptor, showPIK3CAmStatus, showNGSPerformed, showFirstLineTherapy, showSecondLineTherapy, showThirdLineTherapy, showFourthLineTherapy, showPalliativeRadiotherapy, showIntrathecalChemo, showPrimarySurgery, showAdjuvantChemotherapyIfYesFollowedBy, showRadioTherapy, fertilitydiscussedifother, fertilityoptionundertaken, fertilitydiscussed, neoadjuvanttherapy, neoadjuvanttherapyifyes, neoadjuvantthereayifyesother, ovariansuppression, ovariansuppressionifyes, ifprogression, ifprogressionandother, responsetoneoadjuvantchemotherapy, primarysurgery, nodalsurgery, reconstructiondone, typeofreconstruction, typeofreconstructionother, adjuvantchemotherapy, adjuvantchemotherapyifyes, adjuvantchemotherapyother, adjuvantbonemodify, fertilityoptionundertakenbone, fertilityoptionundertakenboneotherifother, her2targetedtherapy, her2targetedtherapyduration, her2targetedtherapydurationifother, dualantiher2, dualantiher2ifyes, adjuvantradiotherapy, adjuvantradiotherapyifyes, adjuvantradiotherapyifyesother, adjuvantendocrinetherapy, adjuvantendocrinetherapyifyes, recommendeddurationadjuvantendocrinetherapy, recommendeddurationadjuvantendocrinetherapyifother, reasonforstoppingaet, ifpresentedwithmetastases, ifpresentedwithmetastasesifother, ngsdoneatdiagnosis, ngsdoneatdiagnosisifyes, ngsdoneatdiagnosisifyesidentifiedtargets, ngsdoneatrecurrence, ngsdoneatrecurrenceifyes, ngsdoneatrecurrenceifyesidentifiedtargets, if_present_with_metastases, biomarker_testing, gbrcam, brca_deletion, brca_duplication, androgen_receptor, androgen_receptor_positive, tumor_mutation_type, tumor_mutation_value, msi_status, pik3cam_status, pik3cam_mutation_detected, ngs_performed, ngs_performed_if_yes_findings, first_line_therapy_yes, second_line_therapy_yes, third_line_therapy_yes, fourth_line_therapy_yes, first_line_therapy_other, second_line_therapy_other, third_line_therapy_other, fourth_line_therapy_other, bone_metastsis, bisphosphonates, rank_i_inhibitor, pallative_radiotherapy, p_r_date, p_r_site, p_r_schedule, p_r_dose, p_r_other_comments, leptomeningeal_metastasis_radio_therapy, intratelcal_chemo, intratelcal_chemo_if_yes, intratelcal_chemo_date, intratelcal_chemo_regimen, code } = this.state; 
+    const { showFertilityOption, showFertilityDiscussed, showNeoAdjuvantTherapy, showNeoAdjuvantTherapyIfYes, showOvarianSuppression, showIfProgression, showNodalSurgery, showReconstruction, showReconstructionType, showAdjuvantChemotherapy, showAdjuvantChemotherapyIfYes, showAdjuvantBoneModify, showFertilityOptionUndertakenBone, showFertilityOptionUndertakenBoneOther, showHER2TargetedTherapy, showHER2TargetedTherapyDuration, showDualAntiHER2, showAdjuvantRadioTherapy, showAdjuvantRadioTherapyIfYes, showAdjuvantEndocrineTherapy, showRecommendedDurationAdjuvantEndocrineTherapy, showIfPresentedWithMetastases, showNGSDoneAtDiagnosis, showNGSDoneAtRecurrence, showIfAndroReceptor, showPIK3CAmStatus, showNGSPerformed, showFirstLineTherapy, showSecondLineTherapy, showThirdLineTherapy, showFourthLineTherapy, showPalliativeRadiotherapy, showIntrathecalChemo, showPrimarySurgery, showAdjuvantChemotherapyIfYesFollowedBy, showRadioTherapy, fertilitydiscussedifother, fertilityoptionundertaken, fertilitydiscussed, neoadjuvanttherapy, neoadjuvanttherapyifyes, neoadjuvantthereayifyesother, ovariansuppression, ovariansuppressionifyes, ifprogression, ifprogressionandother, responsetoneoadjuvantchemotherapy, primarysurgery, oncoplasty_surgery_type, nodalsurgery, reconstructiondone, typeofreconstruction, typeofreconstructionother, adjuvantchemotherapy, adjuvantchemotherapyifyes, adjuvantchemotherapyifyesfollowedby, adjuvantchemotherapyother, adjuvantbonemodify, fertilityoptionundertakenbone, fertilityoptionundertakenboneotherifother, her2targetedtherapy, her2targetedtherapyduration, her2targetedtherapydurationifother, dualantiher2, dualantiher2ifyes, adjuvantradiotherapy, adjuvantradiotherapyifyes, adjuvantradiotherapyifyesother, adjuvantendocrinetherapy, adjuvantendocrinetherapyifyes, recommendeddurationadjuvantendocrinetherapy, recommendeddurationadjuvantendocrinetherapyifother, reasonforstoppingaet, ifpresentedwithmetastases, ifpresentedwithmetastasesifother, ngsdoneatdiagnosis, ngsdoneatdiagnosisifyes, ngsdoneatdiagnosisifyesidentifiedtargets, ngsdoneatrecurrence, ngsdoneatrecurrenceifyes, ngsdoneatrecurrenceifyesidentifiedtargets, if_present_with_metastases, biomarker_testing, gbrcam, brca_deletion, brca_duplication, androgen_receptor, androgen_receptor_positive, tumor_mutation_type, tumor_mutation_value, msi_status, pik3cam_status, pik3cam_mutation_detected, ngs_performed, ngs_performed_if_yes_findings, first_line_therapy_yes, second_line_therapy_yes, third_line_therapy_yes, fourth_line_therapy_yes, first_line_therapy_other, second_line_therapy_other, third_line_therapy_other, fourth_line_therapy_other, bone_metastasis, bisphosphonates, rank_i_inhibitor, pallative_radiotherapy, p_r_date, p_r_site, p_r_schedule, p_r_dose, p_r_other_comments, leptomeningeal_metastasis_radio_therapy, intratelcal_chemo, intratelcal_chemo_if_yes, intratelcal_chemo_date, intratelcal_chemo_regimen, code, loading } = this.state; 
     const { history } = this.props;
 
     /*var metas = Object.keys(this.state.metastases_types).filter((x) => this.state.metastases_types[x]);
@@ -581,7 +591,8 @@ return (
               <h1 className="animate__animated animate__fadeIn">Treatment</h1>
             </CardHeader>
             <CardBody>
-              <AvForm  onSubmit= {() => this.sendTreatmentDetails()}>
+              <AvForm onValidSubmit={this.handleValidSubmit}
+        onInvalidSubmit={this.handleInvalidSubmit}>
               <div className="row">
                 
                 <div className="col-md-4">
@@ -736,8 +747,8 @@ return (
                 {showPrimarySurgery && (
                 <div className="col-md-3">
                   <AvGroup>
-                    <Label for='primarysurgerytype'>Type of Oncoplasty</Label>
-                    <AvField placeholder="" name='primarysurgerytype' id='primarysurgerytype' value={this.state.primarysurgerytype} onChange={(e) => this.setState({ primarysurgerytype: e.target.value})} required />
+                    <Label for='oncoplasty_surgery_type'>Type of Oncoplasty</Label>
+                    <AvField placeholder="" name='oncoplasty_surgery_type' id='oncoplasty_surgery_type' value={this.state.oncoplasty_surgery_type} onChange={(e) => this.setState({ oncoplasty_surgery_type: e.target.value})} required />
                     <AvFeedback>Please enter the Type of Oncoplasty!</AvFeedback>
                   </AvGroup>
                 </div>
@@ -1260,7 +1271,7 @@ return (
                 <div className="col-md-3">
                   <AvGroup>            
                     <Label for='bonemetastasis'>Bone Metastasis</Label>
-                    <AvInput type='select' name='bonemetastasis' id='bonemetastasis' required value={this.state.bone_metastsis} onChange={(e) => this.setState({ bone_metastsis: e.target.value})}>
+                    <AvInput type='select' name='bonemetastasis' id='bonemetastasis' required value={this.state.bone_metastasis} onChange={(e) => this.setState({ bone_metastasis: e.target.value})}>
                         <option value="" selected>Select</option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>                         
@@ -1473,8 +1484,24 @@ return (
                   </>
                 )}
                 <div className="col-md-12">
-                <Button color='primary' type='submit' disabled= {!fertilitydiscussed.length || !neoadjuvanttherapy.length || !ovariansuppression.length || !responsetoneoadjuvantchemotherapy || !ifprogression || !primarysurgery || !nodalsurgery || !reconstructiondone || !adjuvantchemotherapy || !adjuvantbonemodify || !her2targetedtherapy || !dualantiher2 || !adjuvantradiotherapy || !adjuvantendocrinetherapy || !recommendeddurationadjuvantendocrinetherapy || !reasonforstoppingaet || !ifpresentedwithmetastases || !ngsdoneatdiagnosis || !ngsdoneatrecurrence} onClick={ () => this.sendTreatmentDetails }>
-                  Submit
+                <Button color='primary' type='submit'disabled={loading}>
+                      {loading && (<svg width="30px" height="30px" viewBox="0 0 40 40" enable-background="new 0 0 40 40">
+                  <path opacity="0.2" fill="#fff" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+                    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
+                    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
+                  <path fill="#fff" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+                    C22.32,8.481,24.301,9.057,26.013,10.047z">
+                    <animateTransform attributeType="xml"
+                      attributeName="transform"
+                      type="rotate"
+                      from="0 20 20"
+                      to="360 20 20"
+                      dur="0.5s"
+                      repeatCount="indefinite"/>
+                    </path>
+                  </svg>)}
+                {loading && <span> Please wait...</span>}
+                {!loading && <span>Submit</span>}
                 </Button>              
                 </div>
               </div>

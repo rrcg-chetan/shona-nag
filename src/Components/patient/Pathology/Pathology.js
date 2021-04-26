@@ -84,11 +84,11 @@ class Pathology extends React.Component {
     //console.log(code)
   }
 
-  sendPathologyDetails = e => {   
+  handleValidSubmit = (event, values) => {  
     //alert(this.state.metastases_types)
     //alert(this.state.code)
     const { history } = this.props;
-   axios.post(`https://shona-nag-cms.herokuapp.com/patientpathologydetails`, { pathologytype: this.state.pathologytype, other_type: this.state.other_type, grade: this.state.grade, code: this.state.code, pT: this.state.pT, pN: this.state.pN, ypT: this.state.ypT, ypN: this.state.ypN, pathologicalsizeofcancer: this.state.pathologicalsizeofcancer, ER: this.state.ER, PR: this.state.PR, HER2: this.state.HER2, showher: this.state.showher })
+   axios.post(`https://shona-nag-cms.herokuapp.com/patientpathologydetails`, { pathologytype: this.state.pathologytype, other_type: this.state.other_type, grade: this.state.grade, code: this.state.code, pT: this.state.pT, pN: this.state.pN, ypT: this.state.ypT, ypN: this.state.ypN, pathologicalsizeofcancer: this.state.pathologicalsizeofcancer, ER: this.state.ER, PR: this.state.PR, HER2: this.state.HER2, showher: this.state.showher, dcs: this.state.dcs  })
     .then(function (response) {
     if(response.data.success === 'Pathology Sucessfully Submitted!'){            
       history.push(`/treatment/${response.data.value}`)
@@ -194,13 +194,15 @@ return (
               <h1 className="animate__animated animate__fadeIn">Pathology</h1>
             </CardHeader>
             <CardBody>
-              <AvForm  onSubmit= {() => this.sendPathologyDetails()}>
+              <AvForm onValidSubmit={this.handleValidSubmit}
+        onInvalidSubmit={this.handleInvalidSubmit}>
               <div className="row">
                 
                 <div className="col-md-3">
                   <AvGroup>            
                     <Label for='pathologytype'>Type</Label>
                     <AvInput type='select' name='pathologytype' id='pathologytype' required value={this.state.pathologytype} onChange={(e) => this.showType(e.target.value)}>
+                        <option value="">Select</option> 
                         <option value="Lobular">Lobular</option> 
                         <option value="Not Classified">Not Classified</option> 
                         <option value="Invasive Ductal">Invasive Ductal</option> 
@@ -241,13 +243,13 @@ return (
                   <div className="col-md-3">
                   <AvGroup>            
                     <Label for='gradenumber'>Grade</Label>
-                    <AvInput type='select' name='gradenumber' id='gradenumber' required value={this.state.grade_number} onChange={(e) => this.setState({ grade_number: e.target.value})}>
+                    <AvInput type='select' name='gradenumber' id='gradenumber' required value={this.state.grade_number} onChange={(e) => this.setState({ grade_number: e.target.value})} >
                         <option value="" selected>Select</option>
                         <option value="1">1</option>
                         <option value="2">2</option>                            
                         <option value="3">3</option>                        
                       </AvInput>
-                    <AvFeedback>Please select pT!</AvFeedback>
+                    <AvFeedback>Please select Grade!</AvFeedback>
                   </AvGroup>
                 </div>
                 <div className="col-md-3">
@@ -326,7 +328,7 @@ return (
                 </div>
                 
                 <div className="col-md-12">
-                <Button color='primary' type='submit' disabled={ !pathologytype.length || !grade.length || !pT.length || !pN.length || !ypT.length || !ypN.length || !pathologicalsizeofcancer.length } onClick={ () => this.sendInitialPresentationDetails }>
+                <Button color='primary' type='submit'>
                   Submit
                 </Button>              
                 </div>

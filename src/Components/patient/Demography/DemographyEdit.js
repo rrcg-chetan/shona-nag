@@ -50,6 +50,7 @@ import axios from 'axios';
           this.changeHeight = this.changeHeight.bind(this);
           this.changeWeight = this.changeWeight.bind(this);
           this.calculateBMI = this.calculateBMI.bind(this);
+          this.calculateBSA = this.calculateBSA.bind(this);
           //this.onSubmit = this.onSubmit.bind(this)
           this.handleChange = this.handleChange.bind(this);
           this.sendPatientDemographyDetails = this.sendPatientDemographyDetails.bind(this);
@@ -65,7 +66,7 @@ import axios from 'axios';
             axios.get(`https://shona-nag-cms.herokuapp.com/getfulldetails/${this.state.code}`)
             .then(response =>
                 response.data.results.map(patient => ({
-                    patient_name: `${patient.patient_name}`, city: `${patient.city}`, country: `${patient.country}`, hospital_id: `${patient.hospital_id}`, patients_initial: `${patient.patients_initial}`, patients_dob: `${patient.patients_dob}`, age_of_diagnosis: `${patient.age_of_diagnosis}`, date_of_diagnosis_of_bc: `${patient.date_of_diagnosis_of_bc}`, paraffin_blocks: `${patient.paraffin_blocks}`, profession: `${patient.profession}`, profession_if_other: `${patient.profession_if_other}`, ethnicity: `${patient.ethnicity}`, other_ethnicity: `${patient.ethnicity_if_other}`, patients_height: `${patient.patients_height}`, patients_weight: `${patient.patients_weight}`, patients_bmi: `${patient.patients_bmi}`, family_have_cancer: `${patient.family_have_cancer}`, which_relative: `${patient.which_relative}`, type_other_family_name: `${patient.type_other_family_name}`, type_of_cancer: `${patient.type_of_cancer}`, age_at_diagnosis: `${patient.age_at_diagnosis}`, presenting_symptoms: `${patient.presenting_symptoms}`, family_income_type: `${patient.family_income_type}`, family_income_amount: `${patient.family_income_amount}`, co_morbidities: `${patient.co_morbidities}`, co_morbidities_if_other: `${patient.co_morbidities_if_other}`                  
+                    patient_name: `${patient.patient_name}`, city: `${patient.city}`, country: `${patient.country}`, hospital_id: `${patient.hospital_id}`, patients_initial: `${patient.patients_initial}`, patients_dob: `${patient.patients_dob}`, age_of_diagnosis: `${patient.age_of_diagnosis}`, date_of_diagnosis_of_bc: `${patient.date_of_diagnosis_of_bc}`, paraffin_blocks: `${patient.paraffin_blocks}`, profession: `${patient.profession}`, profession_if_other: `${patient.profession_if_other}`, indian: `${patient.indian}`, ethnicity: `${patient.ethnicity}`, other_ethnicity: `${patient.ethnicity_if_other}`, patients_height: `${patient.patients_height}`, patients_weight: `${patient.patients_weight}`, patients_bmi: `${patient.patients_bmi}`, bsa: `${patient.bsa}`, family_have_cancer: `${patient.family_have_cancer}`, which_relative: `${patient.which_relative}`, type_other_family_name: `${patient.type_other_family_name}`, type_of_cancer: `${patient.type_of_cancer}`, age_at_diagnosis: `${patient.age_at_diagnosis}`, presenting_symptoms: `${patient.presenting_symptoms}`, family_income_type: `${patient.family_income_type}`, family_income_amount: `${patient.family_income_amount}`, co_morbidities: `${patient.co_morbidities}`, co_morbidities_if_other: `${patient.co_morbidities_if_other}`, tobacco_addiction: `${patient.tobacco_addiction}`, tobacco_addiction_type: `${patient.tobacco_addiction_type}`, tobacco_no_of_years: `${patient.tobacco_no_of_years}`, alcohol_addiction: `${patient.alcohol_addiction}`, no_of_peg_per_day: `${patient.no_of_peg_per_day}`, alcohol_no_of_years: `${patient.alcohol_no_of_years}`, diet: `${patient.diet}`, menstrual_history: `${patient.menstrual_history}`, menstrual_history_if_irregular: `${patient.menstrual_history_if_irregular}`, reproductivew_history_gravida: `${patient.reproductivew_history_gravida}`, reproductivew_history_para: `${patient.reproductivew_history_para}`, reproductivew_history_abortion: `${patient.reproductivew_history_abortion}`, reproductivew_history_age_of_menarcy: `${patient.reproductivew_history_age_of_menarcy}`, reproductivew_history_age_of_menopause: `${patient.reproductivew_history_age_of_menopause}`, reproductivew_history_hrt_use: `${patient.reproductivew_history_hrt_use}`, reproductivew_history_hrt_use_if_yes: `${patient.reproductivew_history_hrt_use_if_yes}`, reproductivew_history_no_of_years_used: `${patient.reproductivew_history_no_of_years_used}`
                 })),
                 //console.log(this.patient)
             )
@@ -77,9 +78,16 @@ import axios from 'axios';
                   otherethnicity: patients[0].ethnicity,
                   othercomorbidities: patients[0].co_morbidities,
                   familyhavecancer: patients[0].family_have_cancer,
-                  whichrelative: patients[0].which_relative
+                  whichrelative: patients[0].which_relative,
+                  india: patients[0].indian,
+                  ethnicityifother: patients[0].ethnicity_if_other,
+                  pmenstrual_history:patients[0].menstrual_history,
+                  patientmenstrual_history_if_irregular: JSON.parse(patients[0].menstrual_history_if_irregular),
+                  tobacco: patients[0].tobacco_addiction,
+                  alcohol: patients[0].alcohol_addiction,
+                  hrt: patients[0].reproductivew_history_hrt_use,
                 });
-                console.log(patients)
+                console.log(this.state.patientmenstrual_history_if_irregular)
                 if(this.state.otherprofession == 'Other'){
                   this.setState({ showProfession: true })
                 }
@@ -94,6 +102,24 @@ import axios from 'axios';
                 }
                 if(this.state.whichrelative == 'Other'){
                   this.setState({ showOtherCancer: true })
+                }
+                if(this.state.india == 'Indian'){
+                  this.setState({ Indian: true })
+                }
+                if(this.state.ethnicityifother == 'Other'){
+                  this.setState({ showEthnicity: true })
+                }
+                if(this.state.pmenstrual_history == 'Irregular'){
+                  this.setState({ showMenstrualHistory: true })
+                }
+                if(this.state.tobacco == 'Yes'){
+                  this.setState({ showTobaccoAddiction: true })
+                }
+                if(this.state.alcohol == 'Yes'){
+                  this.setState({ showAlcoholAddiction: true })
+                }
+                if(this.state.alcohol == 'Yes'){
+                  this.setState({ showHRTuse: true })
                 }
             })
             .catch(error => this.setState({ error, isLoading: false })); 
@@ -111,7 +137,7 @@ import axios from 'axios';
           const name_of_institution = user.institution
           const userid = user.userid
           const hospital_id = user.hospitalid  
-          axios.post(`https://shona-nag-cms.herokuapp.com/updatepatientdetails`, { patient_name: this.state.patient_name, city: this.state.city, country: this.state.country, hospital_id: hospital_id, patients_initial: this.state.patients_initial, patients_dob: this.state.patients_dob, age_of_diagnosis: this.state.age_of_diagnosis, date_of_diagnosis_of_bc: this.state.date_of_diagnosis_of_bc, paraffin_blocks: this.state.paraffin_blocks, profession: this.state.profession, profession_if_other: this.state.profession_if_other, ethnicity: this.state.ethnicity, other_ethnicity: this.state.other_ethnicity, patients_height: this.state.height, patients_weight: this.state.weight, patients_bmi: this.state.bmivalue, family_have_cancer: this.state.family_have_cancer, which_relative: this.state.which_relative, type_other_family_name: this.state.type_other_family_name, type_of_cancer: this.state.type_of_cancer, age_at_diagnosis: this.state.age_at_diagnosis, presenting_symptoms: this.state.presenting_symptoms, family_income_type: this.state.family_income_type, family_income_amount: this.state.family_income_amount, co_morbidities: this.state.co_morbidities, co_morbidities_if_other: this.state.co_morbidities_if_other, code: this.state.code, name_of_institution: name_of_institution, submited_by: userid  })
+          axios.post(`https://shona-nag-cms.herokuapp.com/updatepatientdetails`, { patient_name: this.state.patient_name, city: this.state.city, country: this.state.country, hospital_id: hospital_id, patients_initial: this.state.patients_initial, patients_dob: this.state.patients_dob, age_of_diagnosis: this.state.age_of_diagnosis, date_of_diagnosis_of_bc: this.state.date_of_diagnosis_of_bc, paraffin_blocks: this.state.paraffin_blocks, profession: this.state.profession, profession_if_other: this.state.profession_if_other, indian: this.state.indian, ethnicity: this.state.ethnicity, ethnicity_if_other: this.state.other_ethnicity, patients_height: this.state.height, patients_weight: this.state.weight, patients_bmi: this.state.bmivalue, bmi: this.state.bsavalue, family_have_cancer: this.state.family_have_cancer, which_relative: this.state.which_relative, type_other_family_name: this.state.type_other_family_name, type_of_cancer: this.state.type_of_cancer, age_at_diagnosis: this.state.age_at_diagnosis, presenting_symptoms: this.state.presenting_symptoms, family_income_type: this.state.family_income_type, family_income_amount: this.state.family_income_amount, co_morbidities: this.state.co_morbidities, co_morbidities_if_other: this.state.co_morbidities_if_other, code: this.state.code, name_of_institution: name_of_institution, submited_by: userid, tobacco_addiction: this.state.tobacco_addiction, tobacco_addiction_type: this.state.tobacco_addiction_type, tobacco_no_of_years: this.state.tobacco_no_of_years, alcohol_addiction: this.state.alcohol_addiction, no_of_peg_per_day: this.state.no_of_peg_per_day, alcohol_no_of_years: this.state.alcohol_no_of_years, diet: this.state.diet, menstrual_history: this.state.menstrual_history, menstrual_history_if_irregular: JSON.stringify(this.state.menstrual_history_if_irregular), reproductivew_history_gravida: this.state.reproductivew_history_gravida, reproductivew_history_para: this.state.reproductivew_history_para, reproductivew_history_abortion: this.state.reproductivew_history_abortion, reproductivew_history_age_of_menarcy: this.state.reproductivew_history_age_of_menarcy, reproductivew_history_age_of_menopause: this.state.reproductivew_history_age_of_menopause, reproductivew_history_hrt_use: this.state.reproductivew_history_hrt_use, reproductivew_history_hrt_use_if_yes: this.state.reproductivew_history_hrt_use_if_yes, reproductivew_history_no_of_years_used: this.state.reproductivew_history_no_of_years_used  })
           .then(function (response) {
           //console.log(JSON.stringify(response.data));
           if(response.data.success === 'Sucessfully Updated!'){            
@@ -124,8 +150,29 @@ import axios from 'axios';
           }
         })
         };
+
+        onToggle(index, e){
+          let newItems = this.state.patientmenstrual_history_if_irregular.slice();
+          newItems[index].checked = !newItems[index].checked
+          this.setState({
+            menstrual_history_if_irregular: newItems
+          })
+          console.log(this.state.menstrual_history_if_irregular)
+        }
         
-        
+        getCheckedData() {
+          return this.state.patientmenstrual_history_if_irregular.map((item, i) => {
+            var check = item.checked;
+            //console.log(check)
+            if(check == true){
+              //console.log(check);
+              return (<div className="col-md-2"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.onToggle.bind(this, i)} checked /></div>) 
+            }else{
+              return (<div className="col-md-2"><AvCheckbox customInput label={item.text} value={item.text} onChange={this.onToggle.bind(this, i)} /></div>) 
+            }
+          }    
+          )
+        }
         //if(document.getElementById("profession").value == "Other")
         /*redirectToInitial(){
           const { history } = this.props;
@@ -169,6 +216,15 @@ import axios from 'axios';
           }
         } 
         
+        showIndComponent(name) {
+          console.log(name)
+          switch (name) {
+            case "Indian":
+              this.setState({ Indian: true, required: true });
+              break;            
+          }
+        }
+
         showEthComponent(name) {
           switch (name) {
             case "showEthnicity":
@@ -229,12 +285,60 @@ import axios from 'axios';
           }
         }
 
+        showTobaccoAddiction(name) {
+          if(document.getElementById("tobaccoaddiction").value == "Yes"){
+            this.setState({ showTobaccoAddiction: true });   
+            this.state.tobacco_addiction = name 
+          }else{
+              this.setState({ showTobaccoAddiction: false, tobacco_addiction_type: "", tobacco_no_of_years: "" }); 
+              this.state.tobacco_addiction = name        
+          }
+        }
+
+        showAlcoholAddiction(name) {
+          if(document.getElementById("alcoholaddiction").value == "Yes"){
+            this.setState({ showAlcoholAddiction: true });   
+            this.state.alcohol_addiction = name 
+          }else{
+              this.setState({ showAlcoholAddiction: false, no_of_peg_per_day: "", alcohol_no_of_years: "" }); 
+              this.state.alcohol_addiction = name        
+          }
+        }
+
+        showMenstrualHistory(name) {
+          if(document.getElementById("menstrualhistory").value == "Irregular"){
+            this.setState({ showMenstrualHistory: true });   
+            this.state.menstrual_history = name 
+          }else{
+              this.setState({ showMenstrualHistory: false, patientmenstrual_history_if_irregular: [
+                { text: 'Scanty', checked: false },
+                { text: 'Moderate', checked: false },
+                { text: 'Severe', checked: false },
+                { text: 'Painless', checked: false },      
+                { text: 'Painful', checked: false },                     
+              ], }); 
+              this.state.menstrual_history = name        
+          }
+          console.log(this.state.patientmenstrual_history_if_irregular)
+        }
+
+        showHRTuse(name) {
+          if(document.getElementById("hrtuse").value == "Yes"){
+            this.setState({ showHRTuse: true });   
+            this.state.reproductivew_history_hrt_use = name 
+          }else{
+              this.setState({ showHRTuse: false, reproductivew_history_hrt_use_if_yes: "" }); 
+              this.state.reproductivew_history_hrt_use = name        
+          }
+        }
+
         changeHeight(e) {
           document.getElementById('bmi').value= '';
           var newHeight = +(e.target.value)
           this.setState({
               height: newHeight,
               bmivalue: parseFloat((this.state.weight / Math.pow(newHeight, 2))*10000).toFixed(2),
+              bsavalue: parseFloat(Math.sqrt((this.state.weight * Math.pow(newHeight, 2)) / 3600)).toFixed(2),
           });          
         }
         
@@ -244,7 +348,8 @@ import axios from 'axios';
           this.setState({ bmivalue: '' })
           this.setState({
               weight: newWeight,
-              bmivalue: parseFloat((newWeight / Math.pow(this.state.height, 2))*10000).toFixed(2)
+              bmivalue: parseFloat((newWeight / Math.pow(this.state.height, 2))*10000).toFixed(2),
+              bsavalue: parseFloat(Math.sqrt((newWeight * Math.pow(this.state.height, 2)) / 3600)).toFixed(2),
           });          
         }
 
@@ -257,6 +362,17 @@ import axios from 'axios';
           });          
           //console.log(this.state.bmivalue);
         }
+
+        calculateBSA(e){
+          var newWeight = +(this.state.weight)
+          var newHeight = +(this.state.height)
+          this.setState({            
+            bsavalue: parseFloat(Math.sqrt((newWeight * newHeight) / 3600)).toFixed(2),
+            value: this.state.bsavalue
+          });          
+          //console.log(this.state.bmivalue);
+        }
+
         getUser = () => {
           const userStr = localStorage.getItem("users");
           if(userStr) return JSON.parse(userStr);
@@ -264,7 +380,7 @@ import axios from 'axios';
       }  
 
         render(){          
-          const { showProfession, showEthnicity, showCancer, showOtherCancer, showMorbidities, isLoading, patients } = this.state;          
+          const { showProfession, showEthnicity, showCancer, showOtherCancer, showMorbidities, showTobaccoAddiction, showAlcoholAddiction, showMenstrualHistory, showHRTuse, Indian, isLoading, patients } = this.state;          
           const { history } = this.props;
           const user = this.getUser();    
           if(user == "null" || user == null || user == '' || user == undefined){
@@ -288,7 +404,7 @@ import axios from 'axios';
                   <CardBody>
                   {!isLoading ? (
                     patients.map(patient => {
-                    const { patient_name, city, country, hospital_id, patients_initial, patients_dob, age_of_diagnosis, date_of_diagnosis_of_bc, paraffin_blocks, profession, profession_if_other, ethnicity, other_ethnicity, patients_height, patients_weight, patients_bmi, family_have_cancer, which_relative, type_of_cancer, age_at_diagnosis, presenting_symptoms, family_income_type, family_income_amount, co_morbidities, co_morbidities_if_other, isLoading} = patient;
+                    const { patient_name, city, country, hospital_id, patients_initial, patients_dob, age_of_diagnosis, date_of_diagnosis_of_bc, paraffin_blocks, profession, profession_if_other, ethnicity, other_ethnicity, patients_height, patients_weight, patients_bmi, bsa, family_have_cancer, which_relative, type_of_cancer, age_at_diagnosis, presenting_symptoms, family_income_type, family_income_amount, co_morbidities, co_morbidities_if_other, tobacco_addiction, tobacco_addiction_type, tobacco_no_of_years, alcohol_addiction, no_of_peg_per_day, alcohol_no_of_years, diet, menstrual_history, menstrual_history_if_irregular, reproductivew_history_gravida, reproductivew_history_para, reproductivew_history_abortion, reproductivew_history_age_of_menarcy, reproductivew_history_age_of_menopause, reproductivew_history_hrt_use, reproductivew_history_hrt_use_if_yes, reproductivew_history_no_of_years_used, isLoading} = patient;
                     return (
                     <AvForm  onSubmit= {() => this.sendPatientDemographyDetails()}>
                     <div className="row">
@@ -382,30 +498,43 @@ import axios from 'axios';
                             </div>
                           )}
                       <div className="col-md-12">
-                      <Label for='ethnicity'>Ethnicity</Label>
-                      <AvRadioGroup name='ethnicity' required value={patient.ethnicity} onChange={(e) => this.setState({ ethnicity: e.target.value})} >
-                        <div className="row">
-                          <div className="col-md-2"><AvRadio customInput label='British Indian' value='British Indian' onClick={ () => this.hideEthComponent("hideEthnicity") } /></div>
-                          <div className="col-md-2"><AvRadio customInput label='British Bangladesh' value='British Bangladesh' onClick={ () => this.hideEthComponent("hideEthnicity") } /></div>
-                          <div className="col-md-2"><AvRadio customInput label='British Pakistan' value='British Pakistan' onClick={ () => this.hideEthComponent("hideEthnicity") } /></div>
-                          <div className="col-md-2"><AvRadio customInput label='British-Middle-East' value='British-Middle-East' onClick={ () => this.hideEthComponent("hideEthnicity") } /></div>
-                          <div className="col-md-1"><AvRadio customInput label='Indian' value='Indian' onClick={ () => this.hideEthComponent("hideEthnicity") } /></div>
-                          <div className="col-md-2"><AvRadio customInput label='Afro-Caribbean' value='Afro-Caribbean' onClick={ () => this.hideEthComponent("hideEthnicity") } /></div>
-                          <div className="col-md-2"><AvRadio customInput label='Caucasian' value='Caucasian' onClick={ () => this.hideEthComponent("hideEthnicity") } /></div>
-                          <div className="col-md-2"><AvRadio customInput label='Other' value='Other' onClick={ () => this.showEthComponent("showEthnicity") } /></div>                          
-                        </div>
-                      </AvRadioGroup>
-                      </div>    
-                      {showEthnicity && (
-                            <div className="col-md-12">
-                            <AvGroup>
-                              <Label for='otherethnicity'>If Other Please mention Ethnicity</Label>
-                              <AvField name='otherethnicity' id='otherethnicity' value={patient.other_ethnicity} onChange={(e) => this.setState({ other_ethnicity: e.target.value})}  />
-                              <AvFeedback>Please enter the If Other Please mention Ethnicity!</AvFeedback>
-                            </AvGroup>
+                      <div className="row">
+                        <div className="col-md-12"><Label for='ethnicity'>Ethnicity</Label></div>
+                        <div className="col-md-1">
+                          <AvRadioGroup name='indian' value={patient.indian} required onChange={(e) => this.setState({ indian: e.target.value})} >
+                            <div className="row">
+                              <div className="col-md-12"><AvRadio customInput label='Indian' value='Indian' onClick={ () => this.showIndComponent("Indian") } /></div>                                                                             
                             </div>
-                          )}
-                      
+                          </AvRadioGroup>
+                        </div>
+                        <div className="col-md-8">
+                          <AvRadioGroup name='ethnicity' value={patient.ethnicity} required onChange={(e) => this.setState({ ethnicity: e.target.value})} >
+                            {Indian && (
+                              <>
+                                <div className="col-md-12">
+                                <div className="row">
+                                <div className="col-md-2"><AvRadio customInput label='Hindu' value='Hindu' onChange={ () => this.hideEthComponent("hideEthnicity") } /></div>
+                                <div className="col-md-2"><AvRadio customInput label='Muslim' value='Muslim' onChange={ () => this.hideEthComponent("hideEthnicity") } /></div>
+                                <div className="col-md-2"><AvRadio customInput label='Christian' value='Christian' onChange={ () => this.hideEthComponent("hideEthnicity") } /></div>
+                                <div className="col-md-2"><AvRadio customInput label='Parsi' value='Parsi' onChange={ () => this.hideEthComponent("hideEthnicity") } /></div>
+                                <div className="col-md-2"><AvRadio customInput label='Other' value='Other' onChange={ () => this.showEthComponent("showEthnicity") } /></div>
+                                </div>
+                                </div>
+                              </>
+                            )} 
+                          </AvRadioGroup>
+                        </div>
+                      </div>
+                      </div>                          
+                      {showEthnicity && (
+                        <div className="col-md-12">
+                        <AvGroup>
+                          <Label for='otherethnicity'>If Other Please mention Ethnicity</Label>
+                          <AvField name='otherethnicity' id='otherethnicity' value={patient.other_ethnicity} onChange={(e) => this.setState({ other_ethnicity: e.target.value})}  />
+                          <AvFeedback>Please enter the If Other Please mention Ethnicity!</AvFeedback>
+                        </AvGroup>
+                        </div>
+                      )}
                       <div className="col-md-3">
                       <AvGroup>            
                         <Label for='height'>Height</Label>
@@ -426,7 +555,12 @@ import axios from 'axios';
                         <AvInput name='bmi' id='bmi' value={patient.bmivalue} required value={patient.patients_bmi} onChange={(e) => this.setState({ bmivalue: e.target.value})}  onBlur={this.calculateBMI} />                        
                       </AvGroup>
                       </div>
-                      <div className="col-md-3"></div>
+                      <div className="col-md-3">
+                      <AvGroup>            
+                        <Label for='bsa'>BSA</Label>
+                        <AvInput name='bsa' id='bsa' value={patient.bsa} required onChange={(e) => this.setState({ bsa: e.target.value})}  onBlur={this.calculateBSA} />                        
+                      </AvGroup>
+                      </div>
                       <div className="col-md-2">
                       <Label for='hocancer'>Family h/o cancer</Label>
                       <AvRadioGroup name='hocancer' required value={patient.family_have_cancer} onChange={(e) => this.setState({ family_have_cancer: e.target.value})} >
@@ -526,6 +660,174 @@ import axios from 'axios';
                             </AvGroup>
                             </div>
                           )}
+                      <div className="col-md-12"><hr /></div>
+                      <div className="col-md-12"><h4 style={{ color: "#000" }}>Addiction</h4></div>
+                      
+                      <div className="col-md-4">
+                        <AvGroup>            
+                          <Label for='tobaccoaddiction'>Tobacco</Label>
+                          <AvInput type='select' name='tobaccoaddiction' id='tobaccoaddiction' required value={patient.tobacco_addiction} onChange={(e) => this.showTobaccoAddiction(e.target.value)}>
+                              <option value="" selected>Select</option>
+                              <option value="Yes">Yes</option>
+                              <option value="No">No</option>                       
+                            </AvInput>                      
+                          <AvFeedback>Please select Tobacco Addiction!</AvFeedback>
+                        </AvGroup>
+                      </div>
+                      {showTobaccoAddiction && (
+                        <>
+                        <div className="col-md-4">
+                          <AvGroup>            
+                              <Label for='tobaccoaddictiontype'>Type</Label>
+                              <AvInput type='select' name='tobaccoaddictiontype' id='tobaccoaddictiontype' required value={patient.tobacco_addiction_type} onChange={(e) => this.setState({ tobacco_addiction_type: e.target.value })}>
+                                  <option value="" selected>Select</option>
+                                  <option value="Smoking">Smoking</option>
+                                  <option value="Chewing">Chewing</option>                                   
+                              </AvInput>                      
+                              <AvFeedback>Please select Type of Tobacco Addiction!</AvFeedback>
+                          </AvGroup>
+                        </div>
+                        <div className="col-md-4">
+                          <AvGroup>
+                            <Label for='tobacconoofyears'>Number of Years of Addiction</Label>
+                            <AvField name='tobacconoofyears' id='tobacconoofyears' value={patient.tobacco_no_of_years} onChange={(e) => this.setState({ tobacco_no_of_years: e.target.value})}  />
+                            <AvFeedback>Please enter the Number of Years of Addiction!</AvFeedback>
+                          </AvGroup>
+                        </div>
+                        </>
+                      )}                       
+
+                      <div className="col-md-12"></div>
+                      <div className="col-md-4">
+                        <AvGroup>            
+                          <Label for='alcoholaddiction'>Alcohol</Label>
+                          <AvInput type='select' name='alcoholaddiction' id='alcoholaddiction' required value={patient.alcohol_addiction} onChange={(e) => this.showAlcoholAddiction(e.target.value)}>
+                              <option value="" selected>Select</option>
+                              <option value="Yes">Yes</option>
+                              <option value="No">No</option>                       
+                            </AvInput>                      
+                          <AvFeedback>Please select Alcohol Addiction!</AvFeedback>
+                        </AvGroup>
+                      </div>
+                      {showAlcoholAddiction && (
+                        <>
+                        <div className="col-md-4">
+                          <AvGroup>
+                            <Label for='pegperday'>Number of Peg per Day (ml)</Label>
+                            <AvField name='pegperday' id='pegperday' value={patient.no_of_peg_per_day} onChange={(e) => this.setState({ no_of_peg_per_day: e.target.value})} required />
+                            <AvFeedback>Please enter the Number of Peg per Day (ml)!</AvFeedback>
+                          </AvGroup>
+                        </div>
+                        <div className="col-md-4">
+                          <AvGroup>
+                            <Label for='alcoholnoofyears'>Number of Years of Alcohol Addiction</Label>
+                            <AvField name='alcoholnoofyears' id='alcoholnoofyears' value={patient.alcohol_no_of_years} onChange={(e) => this.setState({ alcohol_no_of_years: e.target.value})} required />
+                            <AvFeedback>Please enter the Number of Years of Alcohol Addiction!</AvFeedback>
+                          </AvGroup>
+                        </div>
+                        </>
+                      )} 
+                      <div className="col-md-12"></div>
+                      <div className="col-md-4">
+                        <AvGroup>            
+                          <Label for='diet'>Diet</Label>
+                          <AvInput type='select' name='diet' id='diet' required value={patient.diet} onChange={(e) => this.setState({ diet: e.target.value })}>
+                              <option value="" selected>Select</option>
+                              <option value="Veg">Veg</option>
+                              <option value="Non-Veg">Non-Veg</option>                       
+                            </AvInput>                      
+                          <AvFeedback>Please select Diet!</AvFeedback>
+                        </AvGroup>
+                      </div>
+                      <div className="col-md-12"></div>
+                      <div className="col-md-4">
+                        <AvGroup>            
+                          <Label for='menstrualhistory'>Menstrual History</Label>
+                          <AvInput type='select' name='menstrualhistory' id='menstrualhistory' required value={patient.menstrual_history} onChange={(e) => this.showMenstrualHistory(e.target.value)}>
+                              <option value="" selected>Select</option>
+                              <option value="Regular">Regular</option>
+                              <option value="Irregular">Irregular</option>                       
+                            </AvInput>                      
+                          <AvFeedback>Please select Menstrual History!</AvFeedback>
+                        </AvGroup>
+                      </div>
+                      {showMenstrualHistory && (
+                        <div className="col-md-4">
+                                      
+                            <Label for='ifirregular'>If Irregular</Label>
+                            <AvCheckboxGroup name='ifirregular' id="ifirregular" required >
+                              {this.getCheckedData()}                              
+                            </AvCheckboxGroup>                            
+                        </div>
+                      )} 
+                      <div className="col-md-12"><hr /></div>
+                      <div className="col-md-12"><h4 style={{ color: "#000" }}>Reproductive History</h4></div>
+                      <div className="col-md-3">
+                        <AvGroup>
+                          <Label for='gravida'>Gravida</Label>
+                          <AvField name='gravida' id='gravida' value={patient.reproductivew_history_gravida} onChange={(e) => this.setState({ reproductivew_history_gravida: e.target.value})} required  />
+                          <AvFeedback>Please enter Gravida!</AvFeedback>
+                        </AvGroup>
+                      </div>
+                      <div className="col-md-3">
+                        <AvGroup>
+                          <Label for='para'>Para</Label>
+                          <AvField name='para' id='para' value={patient.reproductivew_history_para} onChange={(e) => this.setState({ reproductivew_history_para: e.target.value})} required  />
+                          <AvFeedback>Please enter Para!</AvFeedback>
+                        </AvGroup>
+                      </div>
+                      <div className="col-md-3">
+                        <AvGroup>
+                          <Label for='abortion'>Abortion</Label>
+                          <AvField name='abortion' id='abortion' value={patient.reproductivew_history_abortion} onChange={(e) => this.setState({ reproductivew_history_abortion: e.target.value})} required  />
+                          <AvFeedback>Please enter Abortion!</AvFeedback>
+                        </AvGroup>
+                      </div>
+                      <div className="col-md-3">
+                        <AvGroup>
+                          <Label for='ageatmenarcy'>Age at Menarcy</Label>
+                          <AvField name='ageatmenarcy' id='ageatmenarcy' value={patient.reproductivew_history_age_of_menarcy} onChange={(e) => this.setState({ reproductivew_history_age_of_menarcy: e.target.value})} required  />
+                          <AvFeedback>Please enter Age at Menarcy!</AvFeedback>
+                        </AvGroup>
+                      </div>
+                      <div className="col-md-3">
+                        <AvGroup>
+                          <Label for='ageatmenopause'>Age at Menopause</Label>
+                          <AvField name='ageatmenopause' id='ageatmenopause' value={patient.reproductivew_history_age_of_menopause} onChange={(e) => this.setState({ reproductivew_history_age_of_menopause: e.target.value})} required  />
+                          <AvFeedback>Please enter Age at Menopause!</AvFeedback>
+                        </AvGroup>
+                      </div>
+                      <div className="col-md-3">
+                        <AvGroup>            
+                          <Label for='hrtuse'>HRT use</Label>
+                          <AvInput type='select' name='hrtuse' id='hrtuse' required value={patient.reproductivew_history_hrt_use} onChange={(e) => this.showHRTuse(e.target.value)}>
+                              <option value="" selected>Select</option>
+                              <option value="Yes">Yes</option>
+                              <option value="No">No</option>                       
+                            </AvInput>                      
+                          <AvFeedback>Please select HRT use!</AvFeedback>
+                        </AvGroup>
+                      </div>
+                      {showHRTuse && (
+                        <div className="col-md-3">
+                          <AvGroup>            
+                            <Label for='ifhrtuseyes'>HRT Type</Label>
+                            <AvInput type='select' name='ifhrtuseyes' id='ifhrtuseyes' required value={patient.reproductivew_history_hrt_use_if_yes} onChange={(e) => this.setState({ reproductivew_history_hrt_use_if_yes: e.target.value })} required>
+                                <option value="" selected>Select</option>
+                                <option value="Combination">Combination</option>
+                                <option value="Progesterone">Progesterone</option>                      
+                              </AvInput>                      
+                            <AvFeedback>Please select HRT Type!</AvFeedback>
+                          </AvGroup>
+                        </div>
+                      )}
+                      <div className="col-md-3">
+                        <AvGroup>
+                          <Label for='noofyearsused'>No of years used</Label>
+                          <AvField name='noofyearsused' id='noofyearsused' value={patient.reproductivew_history_no_of_years_used} onChange={(e) => this.setState({ reproductivew_history_no_of_years_used: e.target.value})} required  />
+                          <AvFeedback>Please enter No of years used!</AvFeedback>
+                        </AvGroup>
+                      </div>
                       <div className="col-md-12">
                       <Button color='primary' type='submit' /*disabled={!patient_name.length || !city.length || !country.length || !hospital_id.length || !patients_initial.length || !patients_dob.length || !age_of_diagnosis.length || !date_of_diagnosis.length || !paraffin_blocks.length || !profession.length || !ethnicity.length || !family_have_cancer.length || !age_at_diagnosis.length || !presenting_symptoms.length || !family_income_type.length || !amount.length || !co_morbidities.length }*/ onClick={ () => this.sendPatientDetails }>
                         Submit

@@ -131,7 +131,7 @@ componentDidMount() {
       )
   }
 
-  sendFollowUpDetails = e => {   
+  handleValidSubmit = (event, values) => {
     //alert(this.state.areaofrecurrence)
     //alert(this.state.code)
     const { history } = this.props;
@@ -234,7 +234,8 @@ return (
                 patients.map(patient => {
                     const {recurrence, date_of_recurrence, area_of_recurrence, code, if_metastases, metastases_if_other, detection_of_recurrence, lost_to_follow_up, date_of_death, date_of_last_follow_up } = patient;
                     return (
-              <AvForm  onSubmit= {() => this.sendFollowUpDetails()}>
+              <AvForm onValidSubmit={this.handleValidSubmit}
+                      onInvalidSubmit={this.handleInvalidSubmit}>
               <div className="row">
                 
                 <div className="col-md-2">
@@ -260,13 +261,12 @@ return (
                       </AvGroup>
                   </div>
                   <div className="col-md-8">
-                  <Label for='areofrecurrence'>Area of Recurrence</Label>
-                  <AvInput type='select' name='recurrence' id='recurrence' required value={patient.recurrence} onChange={(e) => this.showRecurrence(e.target.value)}>
+                  <Label for='areofrecurrence'>Area of Recurrence</Label>                  
                   <AvCheckboxGroup name='areofrecurrence' >
                     <div className="row">
                         {this.getAreaCheckedData()}
                     </div>
-                  </AvCheckboxGroup></AvInput>                  
+                  </AvCheckboxGroup>
                   </div> 
                   <div className="col-md-4">
                     <AvGroup>            
@@ -313,7 +313,7 @@ return (
                 <div className="col-md-4">
                   <AvGroup>
                       <Label for='dateofdeath'>Date of Death</Label><br />
-                      <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control date-picker-block w-100" dateFormat="dd-MM-yyyy" name="dod" id="dod" selected={this.state.startDateDOD} onSelect={this.handleSelect} onChange={this.handleChangeDOD} />    
+                      <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control date-picker-block w-100" dateFormat="dd-MM-yyyy" name="dod" id="dod" selected={this.state.startDateDOD} onSelect={this.handleSelect} onChange={this.handleChangeDOD} required />    
                       <AvInput type="text" value={patient.date_of_death} name="dateofdeath" id="dateofdeath" className="custom-date-input" onChange={(e) => this.setState({ date_of_death: e.target.value})} />                    
                       <AvFeedback>Please enter Date of Death!</AvFeedback>
                     </AvGroup>
@@ -321,13 +321,13 @@ return (
                 <div className="col-md-4">
                   <AvGroup>
                       <Label for='dateoflastfollowup'>Date of Last Follow Up</Label><br />
-                      <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control date-picker-block w-100" dateFormat="dd-MM-yyyy" name="dolf" id="dolf" selected={this.state.startDateLFU} onSelect={this.handleSelect} onChange={this.handleChangeLFU} />       
+                      <DatePicker peekNextMonth showMonthDropdown showYearDropdown dropdownMode= "scroll" className="form-control date-picker-block w-100" dateFormat="dd-MM-yyyy" name="dolf" id="dolf" selected={this.state.startDateLFU} onSelect={this.handleSelect} onChange={this.handleChangeLFU} required />       
                       <AvInput type="text" value={patient.date_of_last_follow_up} name="dateoflastfollowup" id="dateoflastfollowup" className="custom-date-input" onChange={(e) => this.setState({ date_of_last_follow_up: e.target.value })} />                 
                       <AvFeedback>Please enter Date of Last Follow Up!</AvFeedback>
                     </AvGroup>
                 </div>
                 <div className="col-md-12">
-                <Button color='primary' type='submit' onClick={ () => this.sendTreatmentDetails }>
+                <Button color='primary' type='submit'>
                   Submit
                 </Button>              
                 </div>

@@ -126,22 +126,20 @@ import axios from 'axios';
           const hospital_id = user.hospitalid   
           
           axios.post(`https://shona-nag-cms.herokuapp.com/patientdetails`, { patient_name: this.state.patient_name, city: this.state.city, country: this.state.country, patient_initial: this.state.patient_initial, date_of_birth: this.state.date_of_birth, age_of_diagnosis: this.state.age_of_diagnosis, date_of_diagnosis: this.state.date_of_diagnosis, praffin: this.state.praffin, profession: this.state.profession, other_profession: this.state.other_profession, indian: this.state.indian, ethnicity: this.state.ethnicity, other_ethnicity: this.state.other_ethnicity, height: this.state.height, weight: this.state.weight, bmi: this.state.bmivalue, bsa: this.state.bsavalue, family_ho_cancer: this.state.family_ho_cancer, family_has_cancer: this.state.family_has_cancer, other_family_has_cancer: this.state.other_family_has_cancer, type_of_cancer: this.state.type_of_cancer, age_at_diagnosis_of_relative: this.state.age_at_diagnosis_of_relative, presenting_symptom: this.state.presenting_symptom, monthly_family_income: this.state.monthly_family_income, amount: this.state.amount, co_morbidities: this.state.co_morbidities, other_co_morbodities: this.state.other_co_morbodities, code: code, status: 1, date_created: Math.floor(Date.now()/1000), name_of_institution: name_of_institution, submited_by: userid, hospital_id: hospital_id, metastases_types: this.state.metastases_types, first_treatment_given: this.state.first_treatment_given, areaofrecurrence: this.state.areaofrecurrence, tobacco_addiction: this.state.tobacco_addiction, tobacco_addiction_type: this.state.tobacco_addiction_type, tobacco_no_of_years: this.state.tobacco_no_of_years, alcohol_addiction: this.state.alcohol_addiction, no_of_peg_per_day: this.state.no_of_peg_per_day, alcohol_no_of_years: this.state.alcohol_no_of_years, diet: this.state.diet, menstrual_history: this.state.menstrual_history, menstrual_history_irregular: this.state.menstrual_history_irregular, reproductivew_history_gravida: this.state.reproductivew_history_gravida, reproductivew_history_para: this.state.reproductivew_history_para, reproductivew_history_abortion: this.state.reproductivew_history_abortion, reproductivew_history_age_of_menarcy: this.state.reproductivew_history_age_of_menarcy, reproductivew_history_age_of_menopause: this.state.reproductivew_history_age_of_menopause, reproductivew_history_hrt_use: this.state.reproductivew_history_hrt_use, reproductivew_history_hrt_use_if_yes: this.state.reproductivew_history_hrt_use_if_yes, reproductivew_history_no_of_years_used: this.state.reproductivew_history_no_of_years_used  })
-          .then(function (response) {
-          console.log(JSON.stringify(response.data));
-          if(response.success === 'Demographics Submitted Sucessfully!'){            
-            //let history = useHistory();
-            //const { history } = this.props;
-            //this.context.history.push(`/initial-presentation/${code}`);
-            this.setState({ loading: false });
-            history.push(`/initial-presentation/${code}`)
-          }else{
-            this.setState({
-              //demographicsStatus: response.data.status,
-              loading:false
-            });
-          }
-        })
-        .catch(error => this.setState({ error, isLoading: false }));       
+          .then((response) => {
+            //console.log(JSON.stringify(response));
+            if(response.data.success === 'Demographics Submitted Sucessfully!'){
+              this.setState({ loading: false });
+              history.push(`/initial-presentation/${code}`)               
+            }else{
+              this.setState({
+                demographicsStatus: response.data.failed,
+                loading:false
+              });
+            }
+          }).catch(function (error) {
+            console.log(error);
+          });     
         };
       
         /*handleInvalidSubmit = (event, errors, values) => {
